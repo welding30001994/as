@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html lang="en" >
-<head>
-  <meta charset="UTF-8">
-  <title>fasx</title>
-  
 
-</head>
-<body>
-<!-- partial:index.partial.html -->
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -135,7 +126,7 @@
 <body>
 
     <header>
-        <h1 style="color:white;">FANTASIAS BBW</h1>
+        <h1>FANTASIAS BBW</h1>
         <nav class="navegador">
             <ul>
                 <li><a href="#"><i class="fas fa-home"></i> INICIO</a></li>
@@ -146,23 +137,9 @@
         </nav>
     </header>
 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
     <div class="contenedor-grifd">
-  
-          <div class="comment-box">
+
+       <div class="comment-box">
         <input type="text" id="commentInput" placeholder="ESCRIBE TU COMENTARIO">
         <label class="upload-icon">📷
             <input type="file" id="imageInput" accept="image/*" onchange="handleImageUpload(event)">
@@ -172,27 +149,7 @@
 
     <div id="commentsSection"></div>
       
-      
-      
-      
-      
-      
-      
-      
     </div>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
 
     <footer>
         <p>Bienvenidos a Fantasía BBW</p>
@@ -200,43 +157,51 @@
 
   
   
+  
+  
+  
+  
+  
       <style>
-    .preview-container img {
-    max-width: 50px;
-    max-height: 50px;
-    border-radius: 5px;
-    margin-left: 10px;
-    display: none; /* Ocultar por defecto */
-} 
-      
-        body {
-          
-        }
+
         .comment-box, .comment {
             background: rgba(255, 255, 255, 0.9);
             padding: 15px;
             border-radius: 10px;
+            max-width: 90%;
             width: 400px;
             margin: 10px;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
         }
-        .comment-box input, .reply-input {
-            width: 70%;
+        .comment-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .comment-box input {
+            flex-grow: 1;
             padding: 10px;
             border: none;
             border-radius: 20px;
             outline: none;
+            font-size: 14px;
         }
-        .comment-box button, .reply-button {
+        .comment-box button {
             background: black;
             color: white;
             padding: 10px;
             border: none;
             border-radius: 50%;
             cursor: pointer;
+            margin-left: 5px;
         }
-        .comment p {
-            font-weight: bold;
+        .upload-icon {
+            cursor: pointer;
+            font-size: 20px;
+            margin-left: 10px;
+        }
+        .upload-icon input {
+            display: none;
         }
         .actions {
             display: flex;
@@ -249,7 +214,7 @@
             margin-right: 10px;
         }
         .replies {
-            display: none; 
+            display: none;
             margin-left: 20px;
             padding-left: 10px;
             border-left: 2px solid gray;
@@ -274,22 +239,29 @@
             margin-top: 10px;
             border-radius: 10px;
         }
-        .upload-icon {
-            cursor: pointer;
-            font-size: 20px;
-            margin-left: 10px;
-        }
-        .upload-icon input {
-            display: none;
+        
+        /* Responsive */
+        @media screen and (max-width: 600px) {
+            .comment-box, .comment {
+                max-width: 95%;
+                width: auto;
+            }
+            .comment-box input {
+                font-size: 12px;
+            }
+            .comment-box button {
+                padding: 8px;
+            }
         }
     </style>
+  
     <script>
-        let selectedImage = null; // Variable para guardar la imagen seleccionada
+         let selectedImage = null;
 
         function handleImageUpload(event) {
-            const file = event.target.files[0]; // Obtener el archivo seleccionado
+            const file = event.target.files[0];
             if (file) {
-                selectedImage = file; // Guardamos temporalmente la imagen
+                selectedImage = file;
             }
         }
 
@@ -309,14 +281,12 @@
 
                 var likeSpan = document.createElement("span");
                 likeSpan.innerHTML = "👍 Me gusta (<span class='like-count'>0</span>)";
-                likeSpan.style.cursor = "pointer";
                 likeSpan.onclick = function () {
                     likeComment(likeSpan);
                 };
 
                 var commentSpan = document.createElement("span");
                 commentSpan.innerHTML = "💬 Comentar";
-                commentSpan.style.cursor = "pointer";
                 commentSpan.onclick = function () {
                     toggleReplies(repliesDiv);
                 };
@@ -337,7 +307,7 @@
                     var imgElement = document.createElement("img");
                     imgElement.src = URL.createObjectURL(selectedImage);
                     commentContainer.appendChild(imgElement);
-                    selectedImage = null; // Limpiamos la variable después de publicar
+                    selectedImage = null;
                 }
 
                 commentContainer.appendChild(actionsDiv);
@@ -374,7 +344,6 @@
 
                 var replyButton = document.createElement("button");
                 replyButton.innerText = "➤";
-                replyButton.classList.add("reply-button");
                 replyButton.onclick = function () {
                     postReply(repliesDiv, replyInput);
                 };
@@ -404,36 +373,8 @@
             }
         }
       
-function handleImageUpload(event) {
-    const file = event.target.files[0];
-    if (file) {
-        selectedImage = file;
-        showPreview(file);
-    }
-}
-
-function showPreview(file) {
-    const reader = new FileReader();
-    reader.onload = function (e) {
-        const preview = document.getElementById("imagePreview");
-        preview.src = e.target.result;
-        preview.style.display = "block"; // Mostrar la imagen
-    };
-    reader.readAsDataURL(file);
-}
-     
-      
-      
       
     </script>
-  
-  
-  
-  
-  
-</body>
-</html>
-<!-- partial -->
-  
+
 </body>
 </html>
