@@ -124,6 +124,28 @@
     </style>
 </head>
 <body>
+    <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyD3MI1klgBSHs1h6QT4VPNoScCfCwMV_Ck",
+        authDomain: "usuario-b0384.firebaseapp.com",
+        projectId: "usuario-b0384",
+        storageBucket: "usuario-b0384.firebasestorage.app",
+        messagingSenderId: "196266170863",
+        appId: "1:196266170863:web:4ea57f489df94aba94fe1a"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    onAuthStateChanged(auth, (user) => {
+        if (!user) {
+            window.location.href = "URL_DE_TU_PAGINA_DE_LOGIN"; // Redirigir si no está autenticado
+        }
+    });
+</script>
 
     <header>
         <h1>FANTASIAS BBW</h1>
