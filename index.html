@@ -144,10 +144,9 @@
     
    onAuthStateChanged(auth, (user) => {
     console.log("Estado de autenticación:", user);
-    if (!user && window.location.pathname !== "/login.html") {  
-        console.log("Usuario no autenticado, redirigiendo...");
-        window.location.href = "https://as-delta-wheat.vercel.app";  
-    }
+ if (window.location.pathname !== "/login.html") {
+    window.location.replace("https://as-delta-wheat.vercel.app");
+}
 });
     </script>
     <header>
