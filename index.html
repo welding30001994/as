@@ -125,34 +125,8 @@
 </head>
 <body>
 <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-    // Configuración de Firebase
-    const firebaseConfig = {
-        apiKey: "AIzaSyD3MI1klgBSHs1h6QT4VPNoScCfCwMV_Ck",
-        authDomain: "usuario-b0384.firebaseapp.com",
-        projectId: "usuario-b0384",
-        storageBucket: "usuario-b0384.appspot.com",
-        messagingSenderId: "196266170863",
-        appId: "1:196266170863:web:4ea57f489df94aba94fe1a"
-    };
-
-    // Inicializar Firebase
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-
-    // Verificar si el usuario está autenticado
-    onAuthStateChanged(auth, (user) => {
-        console.log("Estado de autenticación:", user);
-
-        // Verifica que no esté en la página de login antes de redirigir
-        const currentPage = window.location.pathname;
-        if (!user && !currentPage.includes("login.html")) {
-            console.log("Redirigiendo al login...");
-            window.location.href = "https://appbbw.netlify.app/login.html";
-        }
-    });
+    
 </script>
     <header>
         <h1>FANTASIAS BBW</h1>
