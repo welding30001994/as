@@ -124,7 +124,7 @@
     </style>
 </head>
 <body>
-  <script type="module">
+<script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
@@ -150,7 +150,7 @@
         const currentPage = window.location.pathname;
         if (!user && !currentPage.includes("login.html")) {
             console.log("Redirigiendo al login...");
-            window.location.href = "/login.html";  // Redirige a la misma raíz del dominio
+            window.location.href = "https://appbbw.netlify.app/login.html";
         }
     });
 </script>
