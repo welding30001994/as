@@ -258,126 +258,106 @@
         }
     </style>
   
-    <script>
-         let selectedImage = null;
+<script>
+    let selectedImage = null;
 
-        function handleImageUpload(event) {
-            const file = event.target.files[0];
-            if (file) {
-                selectedImage = file;
-            }
+    document.addEventListener("DOMContentLoaded", loadComments);
+
+    function handleImageUpload(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                selectedImage = e.target.result; // Guarda la imagen como Base64
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    function postComment() {
+        var input = document.getElementById("commentInput");
+        var commentText = input.value.trim();
+        
+        if (commentText !== "" || selectedImage) {
+            let commentData = {
+                text: commentText,
+                image: selectedImage,
+                likes: 0
+            };
+            
+            let comments = JSON.parse(localStorage.getItem("comments")) || [];
+            comments.push(commentData);
+            localStorage.setItem("comments", JSON.stringify(comments));
+            
+            addCommentToDOM(commentData);
+            
+            input.value = "";
+            document.getElementById("imageInput").value = "";
+            selectedImage = null;
+        }
+    }
+
+    function addCommentToDOM(commentData) {
+        var commentContainer = document.createElement("div");
+        commentContainer.classList.add("comment");
+
+        var commentParagraph = document.createElement("p");
+        commentParagraph.innerText = commentData.text;
+
+        var actionsDiv = document.createElement("div");
+        actionsDiv.classList.add("actions");
+
+        var likeSpan = document.createElement("span");
+        likeSpan.innerHTML = `👍 Me gusta (<span class='like-count'>${commentData.likes}</span>)`;
+        likeSpan.onclick = function () {
+            likeComment(likeSpan, commentData);
+        };
+
+        var deleteSpan = document.createElement("span");
+        deleteSpan.innerHTML = "🗑 Eliminar";
+        deleteSpan.onclick = function () {
+            deleteComment(commentContainer, commentData);
+        };
+
+        actionsDiv.appendChild(likeSpan);
+        actionsDiv.appendChild(deleteSpan);
+
+        commentContainer.appendChild(commentParagraph);
+
+        if (commentData.image) {
+            var imgElement = document.createElement("img");
+            imgElement.src = commentData.image;
+            commentContainer.appendChild(imgElement);
         }
 
-        function postComment() {
-            var input = document.getElementById("commentInput");
-            var commentText = input.value.trim();
+        commentContainer.appendChild(actionsDiv);
+        document.getElementById("commentsSection").appendChild(commentContainer);
+    }
 
-            if (commentText !== "" || selectedImage) {
-                var commentContainer = document.createElement("div");
-                commentContainer.classList.add("comment");
+    function loadComments() {
+        let comments = JSON.parse(localStorage.getItem("comments")) || [];
+        comments.forEach(addCommentToDOM);
+    }
 
-                var commentParagraph = document.createElement("p");
-                commentParagraph.innerText = commentText;
-
-                var actionsDiv = document.createElement("div");
-                actionsDiv.classList.add("actions");
-
-                var likeSpan = document.createElement("span");
-                likeSpan.innerHTML = "👍 Me gusta (<span class='like-count'>0</span>)";
-                likeSpan.onclick = function () {
-                    likeComment(likeSpan);
-                };
-
-                var commentSpan = document.createElement("span");
-                commentSpan.innerHTML = "💬 Comentar";
-                commentSpan.onclick = function () {
-                    toggleReplies(repliesDiv);
-                };
-
-                var shareSpan = document.createElement("span");
-                shareSpan.innerHTML = "🔄 Compartir";
-
-                actionsDiv.appendChild(likeSpan);
-                actionsDiv.appendChild(commentSpan);
-                actionsDiv.appendChild(shareSpan);
-
-                var repliesDiv = document.createElement("div");
-                repliesDiv.classList.add("replies");
-
-                commentContainer.appendChild(commentParagraph);
-
-                if (selectedImage) {
-                    var imgElement = document.createElement("img");
-                    imgElement.src = URL.createObjectURL(selectedImage);
-                    commentContainer.appendChild(imgElement);
-                    selectedImage = null;
-                }
-
-                commentContainer.appendChild(actionsDiv);
-                commentContainer.appendChild(repliesDiv);
-
-                document.getElementById("commentsSection").appendChild(commentContainer);
-
-                input.value = "";
-                document.getElementById("imageInput").value = "";
-            }
+    function likeComment(likeSpan, commentData) {
+        let comments = JSON.parse(localStorage.getItem("comments")) || [];
+        let commentIndex = comments.findIndex(c => c.text === commentData.text && c.image === commentData.image);
+        
+        if (commentIndex !== -1) {
+            comments[commentIndex].likes++;
+            localStorage.setItem("comments", JSON.stringify(comments));
+            likeSpan.querySelector(".like-count").innerText = comments[commentIndex].likes;
         }
+    }
 
-        function likeComment(likeSpan) {
-            var likeCount = likeSpan.querySelector(".like-count");
-            var currentLikes = parseInt(likeCount.innerText);
-            likeCount.innerText = currentLikes + 1;
-        }
+    function deleteComment(commentElement, commentData) {
+        let comments = JSON.parse(localStorage.getItem("comments")) || [];
+        comments = comments.filter(c => c.text !== commentData.text || c.image !== commentData.image);
+        localStorage.setItem("comments", JSON.stringify(comments));
+        commentElement.remove();
+    }
+</script>
 
-        function toggleReplies(repliesDiv) {
-            if (repliesDiv.style.display === "none" || repliesDiv.style.display === "") {
-                repliesDiv.style.display = "block";
-                addReplyBox(repliesDiv);
-            } else {
-                repliesDiv.style.display = "none";
-            }
-        }
-
-        function addReplyBox(repliesDiv) {
-            if (!repliesDiv.querySelector(".reply-input")) { 
-                var replyInput = document.createElement("input");
-                replyInput.type = "text";
-                replyInput.classList.add("reply-input");
-                replyInput.placeholder = "Escribe una respuesta...";
-
-                var replyButton = document.createElement("button");
-                replyButton.innerText = "➤";
-                replyButton.onclick = function () {
-                    postReply(repliesDiv, replyInput);
-                };
-
-                var replyContainer = document.createElement("div");
-                replyContainer.appendChild(replyInput);
-                replyContainer.appendChild(replyButton);
-
-                repliesDiv.appendChild(replyContainer);
-            }
-        }
-
-        function postReply(repliesDiv, replyInput) {
-            var replyText = replyInput.value.trim();
-
-            if (replyText !== "") {
-                var replyContainer = document.createElement("div");
-                replyContainer.classList.add("comment");
-
-                var replyParagraph = document.createElement("p");
-                replyParagraph.innerText = replyText;
-
-                replyContainer.appendChild(replyParagraph);
-                repliesDiv.appendChild(replyContainer);
-
-                replyInput.value = "";
-            }
-        }
-      
-      
-    </script>
 
 </body>
 </html>
