@@ -127,9 +127,9 @@
 <script type="module">
 // Importa las funciones necesarias de Firebase
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, addDoc, getDocs, onSnapshot, deleteDoc, doc } from "firebase/firestore";
+import { getFirestore, collection, addDoc, getDocs, onSnapshot, deleteDoc, doc, query, orderBy } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { getAuth, signInAnonymously, onAuthStateChanged } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 
 // Configuración de Firebase
 const firebaseConfig = {
@@ -147,17 +147,15 @@ const db = getFirestore(app);
 const storage = getStorage(app);
 const auth = getAuth(app);
 
-// Iniciar sesión anónima
-auth.onAuthStateChanged((user) => {
-  if (!user) {
-    signInAnonymously(auth).catch((error) => {
-      console.error("Error en inicio de sesión anónima", error);
-    });
-  }
-});
+// Registrar usuario
+async function registerUser(email, password) {
+  await createUserWithEmailAndPassword(auth, email, password);
+}
 
-// Referencia a la colección de comentarios
-const commentsCollection = collection(db, "comments");
+// Iniciar sesión
+async function loginUser(email, password) {
+  await signInWithEmailAndPassword(auth, email, password);
+}
 
 // Manejar la subida de imágenes
 async function uploadImage(file) {
@@ -166,68 +164,87 @@ async function uploadImage(file) {
   return await getDownloadURL(storageRef);
 }
 
-// Guardar comentario en Firebase
-async function postComment() {
+// Guardar publicación en Firebase
+async function postContent() {
   const input = document.getElementById("commentInput");
   const fileInput = document.getElementById("imageInput");
-  const commentText = input.value.trim();
+  const contentText = input.value.trim();
   const file = fileInput.files[0];
   const user = auth.currentUser;
 
-  if (commentText || file) {
+  if (contentText || file) {
     let imageUrl = "";
     if (file) {
       imageUrl = await uploadImage(file);
     }
-    await addDoc(commentsCollection, {
-      text: commentText,
+    await addDoc(collection(db, "posts"), {
+      text: contentText,
       image: imageUrl,
       timestamp: new Date(),
-      userId: user.uid
+      userId: user.uid,
+      userEmail: user.email
     });
-
     input.value = "";
     fileInput.value = "";
   }
 }
 
-// Eliminar comentario si el usuario es el creador
-async function deleteComment(commentId, commentUserId) {
+// Guardar comentario en una publicación
+async function postComment(postId, commentText) {
   const user = auth.currentUser;
-  if (user.uid === commentUserId) {
-    await deleteDoc(doc(db, "comments", commentId));
-  } else {
-    alert("Solo el autor puede eliminar este comentario.");
+  if (commentText.trim()) {
+    await addDoc(collection(db, `posts/${postId}/comments`), {
+      text: commentText,
+      timestamp: new Date(),
+      userId: user.uid,
+      userEmail: user.email
+    });
   }
 }
 
-// Cargar comentarios en tiempo real
+// Eliminar publicación si el usuario es el creador
+async function deletePost(postId, postUserId) {
+  const user = auth.currentUser;
+  if (user.uid === postUserId) {
+    await deleteDoc(doc(db, "posts", postId));
+  } else {
+    alert("Solo el autor puede eliminar esta publicación.");
+  }
+}
+
+// Cargar publicaciones y comentarios en tiempo real
 document.addEventListener("DOMContentLoaded", () => {
-  onSnapshot(commentsCollection, (snapshot) => {
+  onSnapshot(query(collection(db, "posts"), orderBy("timestamp", "desc")), (snapshot) => {
     const commentsSection = document.getElementById("commentsSection");
     commentsSection.innerHTML = "";
     snapshot.forEach((doc) => {
-      const comment = doc.data();
-      const commentDiv = document.createElement("div");
-      commentDiv.classList.add("comment");
-      commentDiv.innerHTML = `<p>${comment.text}</p>`;
-      if (comment.image) {
+      const post = doc.data();
+      const postDiv = document.createElement("div");
+      postDiv.classList.add("post");
+      postDiv.innerHTML = `<p><strong>${post.userEmail}:</strong> ${post.text}</p>`;
+      if (post.image) {
         const img = document.createElement("img");
-        img.src = comment.image;
-        commentDiv.appendChild(img);
+        img.src = post.image;
+        postDiv.appendChild(img);
       }
-      if (auth.currentUser && auth.currentUser.uid === comment.userId) {
+      const commentInput = document.createElement("input");
+      commentInput.placeholder = "Escribe un comentario...";
+      const commentButton = document.createElement("button");
+      commentButton.innerText = "Comentar";
+      commentButton.onclick = () => postComment(doc.id, commentInput.value);
+      postDiv.appendChild(commentInput);
+      postDiv.appendChild(commentButton);
+      if (auth.currentUser && auth.currentUser.uid === post.userId) {
         const deleteButton = document.createElement("button");
         deleteButton.innerText = "Eliminar";
-        deleteButton.onclick = () => deleteComment(doc.id, comment.userId);
-        commentDiv.appendChild(deleteButton);
+        deleteButton.onclick = () => deletePost(doc.id, post.userId);
+        postDiv.appendChild(deleteButton);
       }
-      commentsSection.appendChild(commentDiv);
+      commentsSection.appendChild(postDiv);
     });
   });
 });
 
-    
 </script>
     <header>
         <h1>FANTASIAS BBW</h1>
