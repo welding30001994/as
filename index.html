@@ -2,19 +2,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oxxomax Trading | Futuro Digital</title>
+    <title>Fantasías BBW - Comparte tus imágenes</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #00f0ff;
+            --primary: #ff2d7b;
             --secondary: #7b2dff;
-            --dark: #0a0a20;
-            --light: #e0f8ff;
-            --accent: #ff2d7b;
+            --dark: #1a1a2e;
+            --light: #f8f8f8;
         }
         
         body {
-            font-family: 'Orbitron', 'Arial', sans-serif;
+            font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
             background: var(--dark);
@@ -24,22 +23,16 @@
             flex-direction: column;
             background-image: 
                 radial-gradient(circle at 25% 25%, rgba(123, 45, 255, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 75% 75%, rgba(0, 240, 255, 0.15) 0%, transparent 50%),
-                linear-gradient(to bottom, #0a0a20, #000000);
-            overflow-x: hidden;
-        }
-
-        @font-face {
-            font-family: 'Orbitron';
-            src: url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+                radial-gradient(circle at 75% 75%, rgba(255, 45, 123, 0.15) 0%, transparent 50%);
         }
 
         header {
-            background: rgba(10, 10, 32, 0.8);
+            background: rgba(26, 26, 46, 0.9);
             padding: 1rem 2rem;
             border-bottom: 1px solid var(--primary);
             backdrop-filter: blur(10px);
-            position: relative;
+            position: sticky;
+            top: 0;
             z-index: 100;
         }
 
@@ -57,20 +50,6 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            text-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
-        }
-
-        .logo-icon {
-            font-size: 2rem;
-            margin-right: 1rem;
-            color: var(--primary);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { opacity: 0.7; }
-            50% { opacity: 1; }
-            100% { opacity: 0.7; }
         }
 
         .navegador ul {
@@ -93,31 +72,12 @@
             padding: 0.8rem 1.5rem;
             border-radius: 30px;
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(0, 240, 255, 0.3);
-            background: rgba(0, 240, 255, 0.05);
-        }
-
-        .navegador ul li a::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.2), transparent);
-            transition: 0.5s;
+            background: rgba(255, 255, 255, 0.1);
         }
 
         .navegador ul li a:hover {
-            color: var(--primary);
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+            background: rgba(255, 45, 123, 0.2);
             transform: translateY(-2px);
-        }
-
-        .navegador ul li a:hover::before {
-            left: 100%;
         }
 
         .navegador ul li a i {
@@ -132,309 +92,160 @@
             width: 100%;
         }
 
-        .dashboard {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .card {
-            background: rgba(10, 10, 32, 0.6);
-            border-radius: 15px;
-            padding: 1.5rem;
-            border: 1px solid rgba(0, 240, 255, 0.2);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 240, 255, 0.1);
-            border-color: rgba(0, 240, 255, 0.4);
-        }
-
-        .card::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-        }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .card-title {
-            font-size: 1.3rem;
-            margin: 0;
-            color: var(--primary);
-        }
-
-        .card-value {
-            font-size: 2rem;
-            font-weight: bold;
-            margin: 1rem 0;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .card-change {
-            display: flex;
-            align-items: center;
-            color: #4caf50;
-            font-size: 0.9rem;
-        }
-
-        .card-change.negative {
-            color: #f44336;
-        }
-
-        .trading-section {
-            margin-top: 3rem;
-        }
-
         .section-title {
             font-size: 1.8rem;
             margin-bottom: 1.5rem;
             color: var(--primary);
-            position: relative;
-            display: inline-block;
+            text-align: center;
         }
 
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, var(--primary), transparent);
-        }
-
-        .trading-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .asset-card {
-            background: rgba(10, 10, 32, 0.6);
-            border-radius: 12px;
+        .post-box {
+            background: rgba(26, 26, 46, 0.7);
+            border-radius: 15px;
             padding: 1.5rem;
-            border: 1px solid rgba(0, 240, 255, 0.2);
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 45, 123, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .post-input-container {
+            display: flex;
+            margin-bottom: 1rem;
+        }
+
+        .post-input {
+            flex: 1;
+            padding: 1rem;
+            border-radius: 20px;
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--light);
+            font-family: inherit;
+            font-size: 1rem;
+            outline: none;
             transition: all 0.3s ease;
+        }
+
+        .post-input:focus {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .upload-btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            margin-left: 1rem;
             cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .asset-card:hover {
+        .upload-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(255, 45, 123, 0.5);
+        }
+
+        .upload-btn input {
+            display: none;
+        }
+
+        .post-submit {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 0.8rem 2rem;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .post-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 45, 123, 0.4);
+        }
+
+        .posts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .post {
+            background: rgba(26, 26, 46, 0.7);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 45, 123, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .post:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 240, 255, 0.1);
-            border-color: var(--primary);
+            box-shadow: 0 10px 25px rgba(255, 45, 123, 0.3);
         }
 
-        .asset-header {
+        .post-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+
+        .post-content {
+            padding: 1.5rem;
+        }
+
+        .post-text {
+            margin: 0 0 1rem 0;
+            line-height: 1.5;
+        }
+
+        .post-user {
             display: flex;
             align-items: center;
             margin-bottom: 1rem;
         }
 
-        .asset-icon {
-            width: 40px;
-            height: 40px;
-            background: rgba(0, 240, 255, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 1rem;
-            font-size: 1.2rem;
-            color: var(--primary);
-        }
-
-        .asset-name {
-            font-size: 1.1rem;
-            margin: 0;
-        }
-
-        .asset-price {
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin: 0.5rem 0;
-        }
-
-        .asset-change {
-            display: inline-block;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            background: rgba(76, 175, 80, 0.2);
-            color: #4caf50;
-        }
-
-        .asset-change.negative {
-            background: rgba(244, 67, 54, 0.2);
-            color: #f44336;
-        }
-
-        .comment-section {
-            margin-top: 3rem;
-            background: rgba(10, 10, 32, 0.6);
-            border-radius: 15px;
-            padding: 2rem;
-            border: 1px solid rgba(0, 240, 255, 0.2);
-        }
-
-        .comment-box {
-            display: flex;
-            margin-bottom: 2rem;
-            position: relative;
-        }
-
-        .comment-input {
-            flex: 1;
-            padding: 1rem;
-            border-radius: 30px;
-            border: none;
-            background: rgba(0, 240, 255, 0.05);
-            color: var(--light);
-            font-family: inherit;
-            font-size: 1rem;
-            border: 1px solid rgba(0, 240, 255, 0.3);
-            outline: none;
-            transition: all 0.3s ease;
-            padding-right: 50px;
-        }
-
-        .comment-input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
-        }
-
-        .comment-submit {
-            position: absolute;
-            right: 5px;
-            top: 5px;
+        .user-avatar {
             width: 40px;
             height: 40px;
             border-radius: 50%;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: var(--dark);
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-
-        .comment-submit:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
-        }
-
-        .upload-icon {
-            position: absolute;
-            right: 60px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--primary);
-            cursor: pointer;
-            font-size: 1.2rem;
-        }
-
-        .upload-icon input {
-            display: none;
-        }
-
-        .comments-container {
-            max-height: 500px;
-            overflow-y: auto;
-            padding-right: 1rem;
-        }
-
-        .comment {
-            background: rgba(0, 240, 255, 0.05);
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            border: 1px solid rgba(0, 240, 255, 0.1);
-            position: relative;
-        }
-
-        .comment::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            background: linear-gradient(to bottom, var(--primary), var(--secondary));
-            border-radius: 12px 0 0 12px;
-        }
-
-        .comment-user {
-            display: flex;
-            align-items: center;
-            margin-bottom: 0.5rem;
-        }
-
-        .user-avatar {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background: rgba(0, 240, 255, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 0.8rem;
-            font-size: 0.8rem;
-            color: var(--primary);
+            margin-right: 1rem;
+            color: white;
+            font-weight: bold;
         }
 
         .user-name {
             font-weight: bold;
             margin: 0;
-            color: var(--primary);
         }
 
-        .comment-time {
-            font-size: 0.7rem;
-            color: rgba(224, 248, 255, 0.6);
-            margin-left: 0.8rem;
+        .post-time {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-left: auto;
         }
 
-        .comment-text {
-            margin: 0.8rem 0;
-            line-height: 1.5;
-        }
-
-        .comment-image {
-            max-width: 100%;
-            border-radius: 8px;
-            margin-top: 1rem;
-            border: 1px solid rgba(0, 240, 255, 0.2);
-        }
-
-        .comment-actions {
+        .post-actions {
             display: flex;
-            margin-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 1rem;
         }
 
         .action-btn {
             background: none;
             border: none;
-            color: rgba(224, 248, 255, 0.7);
+            color: rgba(255, 255, 255, 0.7);
             cursor: pointer;
             margin-right: 1.5rem;
             font-size: 0.9rem;
@@ -452,42 +263,19 @@
         }
 
         footer {
-            background: rgba(10, 10, 32, 0.8);
+            background: rgba(26, 26, 46, 0.9);
             padding: 1.5rem;
             text-align: center;
-            border-top: 1px solid rgba(0, 240, 255, 0.2);
+            border-top: 1px solid rgba(255, 45, 123, 0.3);
             margin-top: 3rem;
         }
 
         .footer-text {
             margin: 0;
-            color: rgba(224, 248, 255, 0.7);
+            color: rgba(255, 255, 255, 0.7);
             font-size: 0.9rem;
         }
 
-        .footer-link {
-            color: var(--primary);
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .footer-link:hover {
-            text-decoration: underline;
-            color: var(--secondary);
-        }
-
-        /* Animations */
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
-        }
-
-        .floating {
-            animation: float 6s ease-in-out infinite;
-        }
-
-        /* Responsive */
         @media (max-width: 768px) {
             .navegador ul {
                 flex-direction: column;
@@ -500,7 +288,7 @@
                 text-align: center;
             }
             
-            .dashboard {
+            .posts-container {
                 grid-template-columns: 1fr;
             }
             
@@ -508,404 +296,174 @@
                 font-size: 1.8rem;
             }
         }
-
-        /* Trading chart placeholder */
-        .chart-placeholder {
-            height: 300px;
-            background: rgba(0, 240, 255, 0.05);
-            border-radius: 12px;
-            border: 1px dashed rgba(0, 240, 255, 0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: rgba(0, 240, 255, 0.5);
-            margin-bottom: 2rem;
-        }
-
-        /* Glow effects */
-        .glow {
-            text-shadow: 0 0 10px rgba(0, 240, 255, 0.7);
-        }
-
-        .pulse {
-            animation: pulse 2s infinite;
-        }
-
-        /* Crypto ticker */
-        .ticker-container {
-            overflow: hidden;
-            white-space: nowrap;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 0.8rem 0;
-            margin-bottom: 2rem;
-            border-top: 1px solid rgba(0, 240, 255, 0.2);
-            border-bottom: 1px solid rgba(0, 240, 255, 0.2);
-        }
-
-        .ticker {
-            display: inline-block;
-            padding-left: 100%;
-            animation: ticker 30s linear infinite;
-        }
-
-        .ticker-item {
-            display: inline-block;
-            margin-right: 3rem;
-            color: var(--light);
-        }
-
-        .ticker-name {
-            color: var(--primary);
-            margin-right: 0.5rem;
-        }
-
-        .ticker-price {
-            font-weight: bold;
-        }
-
-        .ticker-change {
-            margin-left: 0.5rem;
-        }
-
-        .ticker-change.positive {
-            color: #4caf50;
-        }
-
-        .ticker-change.negative {
-            color: #f44336;
-        }
-
-        @keyframes ticker {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-100%); }
-        }
     </style>
 </head>
 <body>
     <header>
         <div class="logo">
-            <div class="logo-icon">
-                <i class="fas fa-rocket"></i>
-            </div>
-            <h1>OXXOMAX TRADING</h1>
+            <h1>FANTASÍAS BBW</h1>
         </div>
         <nav class="navegador">
             <ul>
-                <li><a href="#"><i class="fas fa-chart-line"></i> DASHBOARD</a></li>
-                <li><a href="#"><i class="fas fa-exchange-alt"></i> MERCADOS</a></li>
-                <li><a href="#"><i class="fas fa-wallet"></i> CARTERA</a></li>
-                <li><a href="#"><i class="fas fa-comments"></i> COMUNIDAD</a></li>
-                <li><a href="#"><i class="fas fa-cog"></i> AJUSTES</a></li>
+                <li><a href="#"><i class="fas fa-home"></i> INICIO</a></li>
+                <li><a href="#"><i class="fas fa-image"></i> GALERÍA</a></li>
+                <li><a href="#"><i class="fas fa-comments"></i> CHAT</a></li>
+                <li><a href="#"><i class="fas fa-user"></i> PERFIL</a></li>
             </ul>
         </nav>
     </header>
 
     <div class="main-container">
-        <!-- Crypto ticker -->
-        <div class="ticker-container">
-            <div class="ticker">
-                <div class="ticker-item">
-                    <span class="ticker-name">BTC:</span>
-                    <span class="ticker-price">$42,876.34</span>
-                    <span class="ticker-change positive">+2.34%</span>
-                </div>
-                <div class="ticker-item">
-                    <span class="ticker-name">ETH:</span>
-                    <span class="ticker-price">$2,345.67</span>
-                    <span class="ticker-change positive">+1.56%</span>
-                </div>
-                <div class="ticker-item">
-                    <span class="ticker-name">XRP:</span>
-                    <span class="ticker-price">$0.5678</span>
-                    <span class="ticker-change negative">-0.78%</span>
-                </div>
-                <div class="ticker-item">
-                    <span class="ticker-name">SOL:</span>
-                    <span class="ticker-price">$102.45</span>
-                    <span class="ticker-change positive">+5.23%</span>
-                </div>
-                <div class="ticker-item">
-                    <span class="ticker-name">ADA:</span>
-                    <span class="ticker-price">$0.3456</span>
-                    <span class="ticker-change negative">-1.23%</span>
-                </div>
-                <div class="ticker-item">
-                    <span class="ticker-name">DOT:</span>
-                    <span class="ticker-price">$6.789</span>
-                    <span class="ticker-change positive">+0.45%</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Dashboard -->
-        <div class="dashboard">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Saldo Total</h3>
-                    <i class="fas fa-coins" style="color: var(--primary);"></i>
-                </div>
-                <div class="card-value">$24,568.90</div>
-                <div class="card-change positive">
-                    <i class="fas fa-arrow-up"></i> 12.5% (24h)
-                </div>
-            </div>
-            
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Rendimiento</h3>
-                    <i class="fas fa-chart-line" style="color: var(--primary);"></i>
-                </div>
-                <div class="card-value">+34.7%</div>
-                <div class="card-change positive">
-                    <i class="fas fa-arrow-up"></i> 5.2% (7d)
-                </div>
-            </div>
-            
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Activos</h3>
-                    <i class="fas fa-wallet" style="color: var(--primary);"></i>
-                </div>
-                <div class="card-value">14</div>
-                <div class="card-change">
-                    <i class="fas fa-plus" style="color: var(--primary);"></i> 3 nuevos
-                </div>
-            </div>
-        </div>
-
-        <!-- Trading Chart Placeholder -->
-        <div class="chart-placeholder">
-            <i class="fas fa-chart-bar" style="font-size: 3rem; margin-right: 1rem;"></i>
-            <span>GRÁFICO DE TRADING EN TIEMPO REAL</span>
-        </div>
-
-        <!-- Markets Section -->
-        <div class="trading-section">
-            <h2 class="section-title">MERCADOS PRINCIPALES</h2>
-            <div class="trading-grid">
-                <div class="asset-card">
-                    <div class="asset-header">
-                        <div class="asset-icon">
-                            <i class="fab fa-bitcoin"></i>
-                        </div>
-                        <h3 class="asset-name">Bitcoin</h3>
-                    </div>
-                    <div class="asset-price">$42,876.34</div>
-                    <span class="asset-change positive">+2.34%</span>
-                </div>
-                
-                <div class="asset-card">
-                    <div class="asset-header">
-                        <div class="asset-icon">
-                            <i class="fab fa-ethereum"></i>
-                        </div>
-                        <h3 class="asset-name">Ethereum</h3>
-                    </div>
-                    <div class="asset-price">$2,345.67</div>
-                    <span class="asset-change positive">+1.56%</span>
-                </div>
-                
-                <div class="asset-card">
-                    <div class="asset-header">
-                        <div class="asset-icon">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
-                        <h3 class="asset-name">Solana</h3>
-                    </div>
-                    <div class="asset-price">$102.45</div>
-                    <span class="asset-change positive">+5.23%</span>
-                </div>
-                
-                <div class="asset-card">
-                    <div class="asset-header">
-                        <div class="asset-icon">
-                            <i class="fas fa-link"></i>
-                        </div>
-                        <h3 class="asset-name">Chainlink</h3>
-                    </div>
-                    <div class="asset-price">$15.67</div>
-                    <span class="asset-change negative">-0.89%</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Community Section -->
-        <div class="comment-section">
-            <h2 class="section-title">COMUNIDAD OXXOMAX</h2>
-            <div class="comment-box">
-                <input type="text" class="comment-input" placeholder="Comparte tu análisis o estrategia...">
-                <label class="upload-icon">
+        <h2 class="section-title">COMPARTE TUS IMÁGENES</h2>
+        
+        <div class="post-box">
+            <div class="post-input-container">
+                <input type="text" class="post-input" id="postText" placeholder="Escribe un comentario...">
+                <label class="upload-btn">
                     <i class="fas fa-image"></i>
-                    <input type="file" id="imageInput" accept="image/*">
+                    <input type="file" id="imageUpload" accept="image/*">
                 </label>
-                <button class="comment-submit">
-                    <i class="fas fa-paper-plane"></i>
-                </button>
             </div>
-            
-            <div class="comments-container">
-                <div class="comment">
-                    <div class="comment-user">
-                        <div class="user-avatar">TA</div>
-                        <h4 class="user-name">TraderAnónimo</h4>
-                        <span class="comment-time">Hace 2 horas</span>
-                    </div>
-                    <p class="comment-text">BTC rompió la resistencia clave de $42,000. Espero un rally hasta $45,000 en los próximos días si mantiene este nivel. ¿Alguien más está largo?</p>
-                    <div class="comment-actions">
-                        <button class="action-btn"><i class="fas fa-thumbs-up"></i> Me gusta (24)</button>
-                        <button class="action-btn"><i class="fas fa-reply"></i> Responder</button>
-                        <button class="action-btn"><i class="fas fa-share"></i> Compartir</button>
-                    </div>
-                </div>
-                
-                <div class="comment">
-                    <div class="comment-user">
-                        <div class="user-avatar">CE</div>
-                        <h4 class="user-name">CryptoExpert</h4>
-                        <span class="comment-time">Hace 5 horas</span>
-                    </div>
-                    <p class="comment-text">Aquí está mi análisis técnico de ETH para esta semana. Como pueden ver en el gráfico, hay una formación de copa y mango muy clara.</p>
-                    <img src="https://via.placeholder.com/600x300/0a0a20/00f0ff?text=ETH+Technical+Analysis" class="comment-image" alt="ETH Analysis">
-                    <div class="comment-actions">
-                        <button class="action-btn"><i class="fas fa-thumbs-up"></i> Me gusta (56)</button>
-                        <button class="action-btn"><i class="fas fa-reply"></i> Responder</button>
-                        <button class="action-btn"><i class="fas fa-share"></i> Compartir</button>
-                    </div>
-                </div>
-                
-                <div class="comment">
-                    <div class="comment-user">
-                        <div class="user-avatar">NF</div>
-                        <h4 class="user-name">NuevoFortuna</h4>
-                        <span class="comment-time">Ayer</span>
-                    </div>
-                    <p class="comment-text">¡Acabo de obtener un 120% de ganancia en mi operación de SOL! Gracias a todos por sus consejos en este grupo.</p>
-                    <div class="comment-actions">
-                        <button class="action-btn"><i class="fas fa-thumbs-up"></i> Me gusta (89)</button>
-                        <button class="action-btn"><i class="fas fa-reply"></i> Responder</button>
-                        <button class="action-btn"><i class="fas fa-share"></i> Compartir</button>
-                    </div>
-                </div>
-            </div>
+            <button class="post-submit" id="submitPost">PUBLICAR</button>
+        </div>
+        
+        <div class="posts-container" id="postsContainer">
+            <!-- Las publicaciones se agregarán aquí dinámicamente -->
         </div>
     </div>
 
     <footer>
-        <p class="footer-text">© 2023 Oxxomax Trading Platform | <a href="#" class="footer-link">Términos de Servicio</a> | <a href="#" class="footer-link">Política de Privacidad</a></p>
-        <p class="footer-text">El trading de criptomonedas conlleva riesgos. Solo opere con capital que pueda permitirse perder.</p>
+        <p class="footer-text">© 2023 Fantasías BBW - Plataforma para compartir imágenes</p>
     </footer>
 
     <script>
-        // Simulated data updates
-        function updateTicker() {
-            const tickerItems = document.querySelectorAll('.ticker-item');
-            tickerItems.forEach(item => {
-                const priceElement = item.querySelector('.ticker-price');
-                const changeElement = item.querySelector('.ticker-change');
-                
-                // Random small price change
-                const currentPrice = parseFloat(priceElement.textContent.replace('$', '').replace(',', ''));
-                const changePercent = (Math.random() * 2 - 1) * 0.3; // -0.3% to +0.3%
-                const newPrice = currentPrice * (1 + changePercent / 100);
-                
-                // Update display
-                priceElement.textContent = '$' + newPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                
-                // Update change indicator
-                changeElement.textContent = (changePercent > 0 ? '+' : '') + changePercent.toFixed(2) + '%';
-                changeElement.className = changePercent >= 0 ? 'ticker-change positive' : 'ticker-change negative';
-            });
-        }
-
-        // Update every 5 seconds
-        setInterval(updateTicker, 5000);
-
-        // Simulate asset price changes
-        function updateAssetPrices() {
-            const assetCards = document.querySelectorAll('.asset-card');
-            assetCards.forEach(card => {
-                const priceElement = card.querySelector('.asset-price');
-                const changeElement = card.querySelector('.asset-change');
-                
-                const currentPrice = parseFloat(priceElement.textContent.replace('$', '').replace(',', ''));
-                const changePercent = (Math.random() * 2 - 1) * 2; // -2% to +2%
-                const newPrice = currentPrice * (1 + changePercent / 100);
-                
-                priceElement.textContent = '$' + newPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                
-                changeElement.textContent = (changePercent > 0 ? '+' : '') + changePercent.toFixed(2) + '%';
-                changeElement.className = changePercent >= 0 ? 'asset-change positive' : 'asset-change negative';
-            });
-        }
-
-        // Update every 8 seconds
-        setInterval(updateAssetPrices, 8000);
-
-        // Comment submission
-        document.querySelector('.comment-submit').addEventListener('click', function() {
-            const commentInput = document.querySelector('.comment-input');
-            const commentText = commentInput.value.trim();
+        // Array para almacenar las publicaciones
+        let posts = JSON.parse(localStorage.getItem('bbwPosts')) || [];
+        
+        // Elementos del DOM
+        const postText = document.getElementById('postText');
+        const imageUpload = document.getElementById('imageUpload');
+        const submitPost = document.getElementById('submitPost');
+        const postsContainer = document.getElementById('postsContainer');
+        
+        // Función para renderizar las publicaciones
+        function renderPosts() {
+            postsContainer.innerHTML = '';
             
-            if (commentText) {
-                const commentsContainer = document.querySelector('.comments-container');
-                const newComment = document.createElement('div');
-                newComment.className = 'comment';
-                newComment.innerHTML = `
-                    <div class="comment-user">
-                        <div class="user-avatar">YO</div>
-                        <h4 class="user-name">Tú</h4>
-                        <span class="comment-time">Ahora</span>
-                    </div>
-                    <p class="comment-text">${commentText}</p>
-                    <div class="comment-actions">
-                        <button class="action-btn"><i class="fas fa-thumbs-up"></i> Me gusta (0)</button>
-                        <button class="action-btn"><i class="fas fa-reply"></i> Responder</button>
-                        <button class="action-btn"><i class="fas fa-share"></i> Compartir</button>
+            posts.forEach((post, index) => {
+                const postElement = document.createElement('div');
+                postElement.className = 'post';
+                
+                let imageHTML = '';
+                if (post.image) {
+                    imageHTML = `<img src="${post.image}" class="post-image" alt="Publicación">`;
+                }
+                
+                postElement.innerHTML = `
+                    ${imageHTML}
+                    <div class="post-content">
+                        <div class="post-user">
+                            <div class="user-avatar">${post.user.charAt(0)}</div>
+                            <h4 class="user-name">${post.user}</h4>
+                            <span class="post-time">${post.time}</span>
+                        </div>
+                        <p class="post-text">${post.text}</p>
+                        <div class="post-actions">
+                            <button class="action-btn" onclick="likePost(${index})">
+                                <i class="fas fa-heart"></i> Me gusta (${post.likes})
+                            </button>
+                            <button class="action-btn" onclick="commentOnPost(${index})">
+                                <i class="fas fa-comment"></i> Comentar
+                            </button>
+                            <button class="action-btn" onclick="sharePost(${index})">
+                                <i class="fas fa-share"></i> Compartir
+                            </button>
+                        </div>
                     </div>
                 `;
                 
-                commentsContainer.insertBefore(newComment, commentsContainer.firstChild);
-                commentInput.value = '';
+                postsContainer.appendChild(postElement);
+            });
+        }
+        
+        // Función para manejar la publicación
+        async function handlePost() {
+            const text = postText.value.trim();
+            const file = imageUpload.files[0];
+            
+            if (!text && !file) return;
+            
+            let imageUrl = '';
+            if (file) {
+                imageUrl = await readFileAsDataURL(file);
             }
-        });
-
-        // Allow Enter key to submit comment
-        document.querySelector('.comment-input').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                document.querySelector('.comment-submit').click();
-            }
-        });
-
-        // Image upload preview (simulated)
-        document.getElementById('imageInput').addEventListener('change', function(e) {
-            if (this.files && this.files[0]) {
+            
+            const newPost = {
+                user: 'Usuario Actual', // En una app real sería el nombre del usuario logueado
+                text: text,
+                image: imageUrl,
+                time: new Date().toLocaleString(),
+                likes: 0,
+                comments: []
+            };
+            
+            posts.unshift(newPost); // Agregar al inicio del array
+            localStorage.setItem('bbwPosts', JSON.stringify(posts));
+            
+            // Limpiar inputs
+            postText.value = '';
+            imageUpload.value = '';
+            
+            // Volver a renderizar
+            renderPosts();
+        }
+        
+        // Función para leer archivo como Data URL
+        function readFileAsDataURL(file) {
+            return new Promise((resolve) => {
                 const reader = new FileReader();
-                reader.onload = function(event) {
-                    // In a real app, you would upload the image and get a URL
-                    // For this demo, we'll just simulate it
-                    const commentsContainer = document.querySelector('.comments-container');
-                    const newComment = document.createElement('div');
-                    newComment.className = 'comment';
-                    newComment.innerHTML = `
-                        <div class="comment-user">
-                            <div class="user-avatar">YO</div>
-                            <h4 class="user-name">Tú</h4>
-                            <span class="comment-time">Ahora</span>
-                        </div>
-                        <img src="${event.target.result}" class="comment-image" alt="Uploaded image">
-                        <div class="comment-actions">
-                            <button class="action-btn"><i class="fas fa-thumbs-up"></i> Me gusta (0)</button>
-                            <button class="action-btn"><i class="fas fa-reply"></i> Responder</button>
-                            <button class="action-btn"><i class="fas fa-share"></i> Compartir</button>
-                        </div>
-                    `;
-                    
-                    commentsContainer.insertBefore(newComment, commentsContainer.firstChild);
-                };
-                reader.readAsDataURL(this.files[0]);
-                this.value = ''; // Reset input
+                reader.onload = (e) => resolve(e.target.result);
+                reader.readAsDataURL(file);
+            });
+        }
+        
+        // Funciones de interacción
+        function likePost(index) {
+            posts[index].likes++;
+            localStorage.setItem('bbwPosts', JSON.stringify(posts));
+            renderPosts();
+        }
+        
+        function commentOnPost(index) {
+            const comment = prompt('Escribe tu comentario:');
+            if (comment) {
+                posts[index].comments.push({
+                    user: 'Usuario Actual',
+                    text: comment,
+                    time: new Date().toLocaleString()
+                });
+                localStorage.setItem('bbwPosts', JSON.stringify(posts));
+                renderPosts();
+            }
+        }
+        
+        function sharePost(index) {
+            alert(`Compartiendo publicación: "${posts[index].text.substring(0, 20)}..."`);
+            // En una app real, aquí iría la lógica para compartir
+        }
+        
+        // Event listeners
+        submitPost.addEventListener('click', handlePost);
+        
+        // Permitir publicar con Enter
+        postText.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                handlePost();
             }
         });
+        
+        // Renderizar publicaciones al cargar la página
+        document.addEventListener('DOMContentLoaded', renderPosts);
     </script>
 </body>
 </html>
