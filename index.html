@@ -2,480 +2,910 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fantasias BBW</title>
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-
+    <title>Oxxomax Trading | Futuro Digital</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary: #00f0ff;
+            --secondary: #7b2dff;
+            --dark: #0a0a20;
+            --light: #e0f8ff;
+            --accent: #ff2d7b;
+        }
+        
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Orbitron', 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            background: url('https://raw.githubusercontent.com/welding30001994/IMAGENES-CC/refs/heads/main/fushia-minimalist-wallpaper-free-photo.jpg') no-repeat center center fixed;
-            background-size: cover;
-            color: black;
-            text-align: center;
+            background: var(--dark);
+            color: var(--light);
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(123, 45, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(0, 240, 255, 0.15) 0%, transparent 50%),
+                linear-gradient(to bottom, #0a0a20, #000000);
+            overflow-x: hidden;
         }
-        /* Capa de opacidad en el fondo */
-        body::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.4); /* Aquí controlas la opacidad del fondo */
-            z-index: -1; /* Asegura que el contenido esté encima del fondo */
+
+        @font-face {
+            font-family: 'Orbitron';
+            src: url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
         }
+
         header {
-            background: rgba(0, 0, 0, 0.5);
-            padding: 20px;
+            background: rgba(10, 10, 32, 0.8);
+            padding: 1rem 2rem;
+            border-bottom: 1px solid var(--primary);
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 100;
         }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .logo h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+            margin-right: 1rem;
+            color: var(--primary);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.7; }
+            50% { opacity: 1; }
+            100% { opacity: 0.7; }
+        }
+
         .navegador ul {
             list-style: none;
             padding: 0;
-        }
-        .navegador ul li {
-            display: inline;
-            margin: 0 10px;
-        }
-        .navegador ul li a {
-            color: white;
-            text-decoration: none;
-            font-size: 18px;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-            transition: opacity 0.3s ease-in-out;
-        }
-        .navegador ul li a:hover {
-            opacity: 0.7;
-            cursor: pointer;
-        }
-        .contenedor-grifd {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 20px;
-            border-radius: 15px;
-            margin: 10px auto;
-            max-width: 90%;
-            min-height: 500px;
-        }
-        .grifd-boton-arriba {
-            margin-bottom: 20px;
-        }
-        .grifd-boton {
-            background: #444;
-            border: none;
-            padding: 15px 30px;
-            font-size: 16px;
-            color: white;
-            border-radius: 10px;
-            cursor: pointer;
-        }
-        .grifd {
+            margin: 0;
             display: flex;
             justify-content: center;
-            gap: 15px;
-            padding: 20px;
             flex-wrap: wrap;
+        }
+
+        .navegador ul li {
+            margin: 0 1rem;
+        }
+
+        .navegador ul li a {
+            color: var(--light);
+            text-decoration: none;
+            font-size: 1.1rem;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            background: rgba(0, 240, 255, 0.05);
+        }
+
+        .navegador ul li a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .navegador ul li a:hover {
+            color: var(--primary);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .navegador ul li a:hover::before {
+            left: 100%;
+        }
+
+        .navegador ul li a i {
+            margin-right: 0.5rem;
+        }
+
+        .main-container {
+            flex: 1;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
             width: 100%;
         }
-        .grifd .image {
-            width: 300px;
-            height: 400px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: rgba(10, 10, 32, 0.6);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 240, 255, 0.1);
+            border-color: rgba(0, 240, 255, 0.4);
+        }
+
+        .card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        .card-header {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+            margin-bottom: 1rem;
         }
-        .grifd .image img {
+
+        .card-title {
+            font-size: 1.3rem;
+            margin: 0;
+            color: var(--primary);
+        }
+
+        .card-value {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 1rem 0;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .card-change {
+            display: flex;
+            align-items: center;
+            color: #4caf50;
+            font-size: 0.9rem;
+        }
+
+        .card-change.negative {
+            color: #f44336;
+        }
+
+        .trading-section {
+            margin-top: 3rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), transparent);
+        }
+
+        .trading-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .asset-card {
+            background: rgba(10, 10, 32, 0.6);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .asset-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 240, 255, 0.1);
+            border-color: var(--primary);
+        }
+
+        .asset-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .asset-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(0, 240, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+
+        .asset-name {
+            font-size: 1.1rem;
+            margin: 0;
+        }
+
+        .asset-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0.5rem 0;
+        }
+
+        .asset-change {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            background: rgba(76, 175, 80, 0.2);
+            color: #4caf50;
+        }
+
+        .asset-change.negative {
+            background: rgba(244, 67, 54, 0.2);
+            color: #f44336;
+        }
+
+        .comment-section {
+            margin-top: 3rem;
+            background: rgba(10, 10, 32, 0.6);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 1px solid rgba(0, 240, 255, 0.2);
+        }
+
+        .comment-box {
+            display: flex;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .comment-input {
+            flex: 1;
+            padding: 1rem;
+            border-radius: 30px;
+            border: none;
+            background: rgba(0, 240, 255, 0.05);
+            color: var(--light);
+            font-family: inherit;
+            font-size: 1rem;
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            outline: none;
+            transition: all 0.3s ease;
+            padding-right: 50px;
+        }
+
+        .comment-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+        }
+
+        .comment-submit {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--dark);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .comment-submit:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
+        }
+
+        .upload-icon {
+            position: absolute;
+            right: 60px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary);
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .upload-icon input {
+            display: none;
+        }
+
+        .comments-container {
+            max-height: 500px;
+            overflow-y: auto;
+            padding-right: 1rem;
+        }
+
+        .comment {
+            background: rgba(0, 240, 255, 0.05);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(0, 240, 255, 0.1);
+            position: relative;
+        }
+
+        .comment::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+            border-radius: 12px 0 0 12px;
+        }
+
+        .comment-user {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .user-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(0, 240, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 0.8rem;
+            font-size: 0.8rem;
+            color: var(--primary);
+        }
+
+        .user-name {
+            font-weight: bold;
+            margin: 0;
+            color: var(--primary);
+        }
+
+        .comment-time {
+            font-size: 0.7rem;
+            color: rgba(224, 248, 255, 0.6);
+            margin-left: 0.8rem;
+        }
+
+        .comment-text {
+            margin: 0.8rem 0;
+            line-height: 1.5;
+        }
+
+        .comment-image {
             max-width: 100%;
-            max-height: 100%;
-            border-radius: 10px;
+            border-radius: 8px;
+            margin-top: 1rem;
+            border: 1px solid rgba(0, 240, 255, 0.2);
         }
+
+        .comment-actions {
+            display: flex;
+            margin-top: 1rem;
+        }
+
+        .action-btn {
+            background: none;
+            border: none;
+            color: rgba(224, 248, 255, 0.7);
+            cursor: pointer;
+            margin-right: 1.5rem;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            transition: color 0.3s ease;
+        }
+
+        .action-btn:hover {
+            color: var(--primary);
+        }
+
+        .action-btn i {
+            margin-right: 0.5rem;
+        }
+
         footer {
-            background: rgba(0, 0, 0, 0.5);
-            padding: 10px;
-            margin-top: auto;
+            background: rgba(10, 10, 32, 0.8);
+            padding: 1.5rem;
+            text-align: center;
+            border-top: 1px solid rgba(0, 240, 255, 0.2);
+            margin-top: 3rem;
         }
-        @media (max-width: 400px) {
+
+        .footer-text {
+            margin: 0;
+            color: rgba(224, 248, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        .footer-link {
+            color: var(--primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-link:hover {
+            text-decoration: underline;
+            color: var(--secondary);
+        }
+
+        /* Animations */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
             .navegador ul {
-                display: inline;
-                flex-direction: column-reverse;
-                align-items: center;
-            }
-            .navegador ul li {
-                display: block;
-                margin: 45px 0;
-            }
-            .grifd {
                 flex-direction: column;
                 align-items: center;
             }
-            .grifd .image {
-                width: 200px;
-                height: 200px;
+            
+            .navegador ul li {
+                margin: 0.5rem 0;
+                width: 100%;
+                text-align: center;
             }
+            
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .logo h1 {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* Trading chart placeholder */
+        .chart-placeholder {
+            height: 300px;
+            background: rgba(0, 240, 255, 0.05);
+            border-radius: 12px;
+            border: 1px dashed rgba(0, 240, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(0, 240, 255, 0.5);
+            margin-bottom: 2rem;
+        }
+
+        /* Glow effects */
+        .glow {
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.7);
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* Crypto ticker */
+        .ticker-container {
+            overflow: hidden;
+            white-space: nowrap;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 0.8rem 0;
+            margin-bottom: 2rem;
+            border-top: 1px solid rgba(0, 240, 255, 0.2);
+            border-bottom: 1px solid rgba(0, 240, 255, 0.2);
+        }
+
+        .ticker {
+            display: inline-block;
+            padding-left: 100%;
+            animation: ticker 30s linear infinite;
+        }
+
+        .ticker-item {
+            display: inline-block;
+            margin-right: 3rem;
+            color: var(--light);
+        }
+
+        .ticker-name {
+            color: var(--primary);
+            margin-right: 0.5rem;
+        }
+
+        .ticker-price {
+            font-weight: bold;
+        }
+
+        .ticker-change {
+            margin-left: 0.5rem;
+        }
+
+        .ticker-change.positive {
+            color: #4caf50;
+        }
+
+        .ticker-change.negative {
+            color: #f44336;
+        }
+
+        @keyframes ticker {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
         }
     </style>
 </head>
 <body>
-<script type="module">
-// Importa las funciones necesarias de Firebase
-import { initializeApp } from "firebase/app";
-import { getFirestore, collection, addDoc, getDocs, onSnapshot, deleteDoc, doc, query, orderBy } from "firebase/firestore";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
-
-// Configuración de Firebase
-const firebaseConfig = {
-  apiKey: "AIzaSyD3MI1klgBSHs1h6QT4VPNoScCfCwMV_Ck",
-  authDomain: "usuario-b0384.firebaseapp.com",
-  projectId: "usuario-b0384",
-  storageBucket: "usuario-b0384.appspot.com",
-  messagingSenderId: "196266170863",
-  appId: "1:196266170863:web:4ea57f489df94aba94fe1a"
-};
-
-// Inicializar Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const storage = getStorage(app);
-const auth = getAuth(app);
-
-// Registrar usuario
-async function registerUser(email, password) {
-  await createUserWithEmailAndPassword(auth, email, password);
-}
-
-// Iniciar sesión
-async function loginUser(email, password) {
-  await signInWithEmailAndPassword(auth, email, password);
-}
-
-// Manejar la subida de imágenes
-async function uploadImage(file) {
-  const storageRef = ref(storage, `images/${file.name}`);
-  await uploadBytes(storageRef, file);
-  return await getDownloadURL(storageRef);
-}
-
-// Guardar publicación en Firebase
-async function postContent() {
-  const input = document.getElementById("commentInput");
-  const fileInput = document.getElementById("imageInput");
-  const contentText = input.value.trim();
-  const file = fileInput.files[0];
-  const user = auth.currentUser;
-
-  if (contentText || file) {
-    let imageUrl = "";
-    if (file) {
-      imageUrl = await uploadImage(file);
-    }
-    await addDoc(collection(db, "posts"), {
-      text: contentText,
-      image: imageUrl,
-      timestamp: new Date(),
-      userId: user.uid,
-      userEmail: user.email
-    });
-    input.value = "";
-    fileInput.value = "";
-  }
-}
-
-// Guardar comentario en una publicación
-async function postComment(postId, commentText) {
-  const user = auth.currentUser;
-  if (commentText.trim()) {
-    await addDoc(collection(db, `posts/${postId}/comments`), {
-      text: commentText,
-      timestamp: new Date(),
-      userId: user.uid,
-      userEmail: user.email
-    });
-  }
-}
-
-// Eliminar publicación si el usuario es el creador
-async function deletePost(postId, postUserId) {
-  const user = auth.currentUser;
-  if (user.uid === postUserId) {
-    await deleteDoc(doc(db, "posts", postId));
-  } else {
-    alert("Solo el autor puede eliminar esta publicación.");
-  }
-}
-
-// Cargar publicaciones y comentarios en tiempo real
-document.addEventListener("DOMContentLoaded", () => {
-  onSnapshot(query(collection(db, "posts"), orderBy("timestamp", "desc")), (snapshot) => {
-    const commentsSection = document.getElementById("commentsSection");
-    commentsSection.innerHTML = "";
-    snapshot.forEach((doc) => {
-      const post = doc.data();
-      const postDiv = document.createElement("div");
-      postDiv.classList.add("post");
-      postDiv.innerHTML = `<p><strong>${post.userEmail}:</strong> ${post.text}</p>`;
-      if (post.image) {
-        const img = document.createElement("img");
-        img.src = post.image;
-        postDiv.appendChild(img);
-      }
-      const commentInput = document.createElement("input");
-      commentInput.placeholder = "Escribe un comentario...";
-      const commentButton = document.createElement("button");
-      commentButton.innerText = "Comentar";
-      commentButton.onclick = () => postComment(doc.id, commentInput.value);
-      postDiv.appendChild(commentInput);
-      postDiv.appendChild(commentButton);
-      if (auth.currentUser && auth.currentUser.uid === post.userId) {
-        const deleteButton = document.createElement("button");
-        deleteButton.innerText = "Eliminar";
-        deleteButton.onclick = () => deletePost(doc.id, post.userId);
-        postDiv.appendChild(deleteButton);
-      }
-      commentsSection.appendChild(postDiv);
-    });
-  });
-});
-
-</script>
     <header>
-        <h1>FANTASIAS BBW</h1>
+        <div class="logo">
+            <div class="logo-icon">
+                <i class="fas fa-rocket"></i>
+            </div>
+            <h1>OXXOMAX TRADING</h1>
+        </div>
         <nav class="navegador">
             <ul>
-                <li><a href="#"><i class="fas fa-home"></i> INICIO</a></li>
-                <li><a href="#"><i class="fas fa-image"></i> GALERIA</a></li>
-                <li><a href="#"><i class="fas fa-comments"></i> CHAT</a></li>
-                <li><a href="#"><i class="fas fa-phone"></i> CONTACTO</a></li>
+                <li><a href="#"><i class="fas fa-chart-line"></i> DASHBOARD</a></li>
+                <li><a href="#"><i class="fas fa-exchange-alt"></i> MERCADOS</a></li>
+                <li><a href="#"><i class="fas fa-wallet"></i> CARTERA</a></li>
+                <li><a href="#"><i class="fas fa-comments"></i> COMUNIDAD</a></li>
+                <li><a href="#"><i class="fas fa-cog"></i> AJUSTES</a></li>
             </ul>
         </nav>
     </header>
 
-    <div class="contenedor-grifd">
+    <div class="main-container">
+        <!-- Crypto ticker -->
+        <div class="ticker-container">
+            <div class="ticker">
+                <div class="ticker-item">
+                    <span class="ticker-name">BTC:</span>
+                    <span class="ticker-price">$42,876.34</span>
+                    <span class="ticker-change positive">+2.34%</span>
+                </div>
+                <div class="ticker-item">
+                    <span class="ticker-name">ETH:</span>
+                    <span class="ticker-price">$2,345.67</span>
+                    <span class="ticker-change positive">+1.56%</span>
+                </div>
+                <div class="ticker-item">
+                    <span class="ticker-name">XRP:</span>
+                    <span class="ticker-price">$0.5678</span>
+                    <span class="ticker-change negative">-0.78%</span>
+                </div>
+                <div class="ticker-item">
+                    <span class="ticker-name">SOL:</span>
+                    <span class="ticker-price">$102.45</span>
+                    <span class="ticker-change positive">+5.23%</span>
+                </div>
+                <div class="ticker-item">
+                    <span class="ticker-name">ADA:</span>
+                    <span class="ticker-price">$0.3456</span>
+                    <span class="ticker-change negative">-1.23%</span>
+                </div>
+                <div class="ticker-item">
+                    <span class="ticker-name">DOT:</span>
+                    <span class="ticker-price">$6.789</span>
+                    <span class="ticker-change positive">+0.45%</span>
+                </div>
+            </div>
+        </div>
 
-       <div class="comment-box">
-        <input type="text" id="commentInput" placeholder="ESCRIBE TU COMENTARIO">
-        <label class="upload-icon">📷
-            <input type="file" id="imageInput" accept="image/*" onchange="handleImageUpload(event)">
-        </label>
-        <button onclick="postComment()">➤</button>
-    </div>
+        <!-- Dashboard -->
+        <div class="dashboard">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Saldo Total</h3>
+                    <i class="fas fa-coins" style="color: var(--primary);"></i>
+                </div>
+                <div class="card-value">$24,568.90</div>
+                <div class="card-change positive">
+                    <i class="fas fa-arrow-up"></i> 12.5% (24h)
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Rendimiento</h3>
+                    <i class="fas fa-chart-line" style="color: var(--primary);"></i>
+                </div>
+                <div class="card-value">+34.7%</div>
+                <div class="card-change positive">
+                    <i class="fas fa-arrow-up"></i> 5.2% (7d)
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Activos</h3>
+                    <i class="fas fa-wallet" style="color: var(--primary);"></i>
+                </div>
+                <div class="card-value">14</div>
+                <div class="card-change">
+                    <i class="fas fa-plus" style="color: var(--primary);"></i> 3 nuevos
+                </div>
+            </div>
+        </div>
 
-    <div id="commentsSection"></div>
-      
+        <!-- Trading Chart Placeholder -->
+        <div class="chart-placeholder">
+            <i class="fas fa-chart-bar" style="font-size: 3rem; margin-right: 1rem;"></i>
+            <span>GRÁFICO DE TRADING EN TIEMPO REAL</span>
+        </div>
+
+        <!-- Markets Section -->
+        <div class="trading-section">
+            <h2 class="section-title">MERCADOS PRINCIPALES</h2>
+            <div class="trading-grid">
+                <div class="asset-card">
+                    <div class="asset-header">
+                        <div class="asset-icon">
+                            <i class="fab fa-bitcoin"></i>
+                        </div>
+                        <h3 class="asset-name">Bitcoin</h3>
+                    </div>
+                    <div class="asset-price">$42,876.34</div>
+                    <span class="asset-change positive">+2.34%</span>
+                </div>
+                
+                <div class="asset-card">
+                    <div class="asset-header">
+                        <div class="asset-icon">
+                            <i class="fab fa-ethereum"></i>
+                        </div>
+                        <h3 class="asset-name">Ethereum</h3>
+                    </div>
+                    <div class="asset-price">$2,345.67</div>
+                    <span class="asset-change positive">+1.56%</span>
+                </div>
+                
+                <div class="asset-card">
+                    <div class="asset-header">
+                        <div class="asset-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3 class="asset-name">Solana</h3>
+                    </div>
+                    <div class="asset-price">$102.45</div>
+                    <span class="asset-change positive">+5.23%</span>
+                </div>
+                
+                <div class="asset-card">
+                    <div class="asset-header">
+                        <div class="asset-icon">
+                            <i class="fas fa-link"></i>
+                        </div>
+                        <h3 class="asset-name">Chainlink</h3>
+                    </div>
+                    <div class="asset-price">$15.67</div>
+                    <span class="asset-change negative">-0.89%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Community Section -->
+        <div class="comment-section">
+            <h2 class="section-title">COMUNIDAD OXXOMAX</h2>
+            <div class="comment-box">
+                <input type="text" class="comment-input" placeholder="Comparte tu análisis o estrategia...">
+                <label class="upload-icon">
+                    <i class="fas fa-image"></i>
+                    <input type="file" id="imageInput" accept="image/*">
+                </label>
+                <button class="comment-submit">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+            
+            <div class="comments-container">
+                <div class="comment">
+                    <div class="comment-user">
+                        <div class="user-avatar">TA</div>
+                        <h4 class="user-name">TraderAnónimo</h4>
+                        <span class="comment-time">Hace 2 horas</span>
+                    </div>
+                    <p class="comment-text">BTC rompió la resistencia clave de $42,000. Espero un rally hasta $45,000 en los próximos días si mantiene este nivel. ¿Alguien más está largo?</p>
+                    <div class="comment-actions">
+                        <button class="action-btn"><i class="fas fa-thumbs-up"></i> Me gusta (24)</button>
+                        <button class="action-btn"><i class="fas fa-reply"></i> Responder</button>
+                        <button class="action-btn"><i class="fas fa-share"></i> Compartir</button>
+                    </div>
+                </div>
+                
+                <div class="comment">
+                    <div class="comment-user">
+                        <div class="user-avatar">CE</div>
+                        <h4 class="user-name">CryptoExpert</h4>
+                        <span class="comment-time">Hace 5 horas</span>
+                    </div>
+                    <p class="comment-text">Aquí está mi análisis técnico de ETH para esta semana. Como pueden ver en el gráfico, hay una formación de copa y mango muy clara.</p>
+                    <img src="https://via.placeholder.com/600x300/0a0a20/00f0ff?text=ETH+Technical+Analysis" class="comment-image" alt="ETH Analysis">
+                    <div class="comment-actions">
+                        <button class="action-btn"><i class="fas fa-thumbs-up"></i> Me gusta (56)</button>
+                        <button class="action-btn"><i class="fas fa-reply"></i> Responder</button>
+                        <button class="action-btn"><i class="fas fa-share"></i> Compartir</button>
+                    </div>
+                </div>
+                
+                <div class="comment">
+                    <div class="comment-user">
+                        <div class="user-avatar">NF</div>
+                        <h4 class="user-name">NuevoFortuna</h4>
+                        <span class="comment-time">Ayer</span>
+                    </div>
+                    <p class="comment-text">¡Acabo de obtener un 120% de ganancia en mi operación de SOL! Gracias a todos por sus consejos en este grupo.</p>
+                    <div class="comment-actions">
+                        <button class="action-btn"><i class="fas fa-thumbs-up"></i> Me gusta (89)</button>
+                        <button class="action-btn"><i class="fas fa-reply"></i> Responder</button>
+                        <button class="action-btn"><i class="fas fa-share"></i> Compartir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <footer>
-        <p>Bienvenidos a Fantasía BBW</p>
+        <p class="footer-text">© 2023 Oxxomax Trading Platform | <a href="#" class="footer-link">Términos de Servicio</a> | <a href="#" class="footer-link">Política de Privacidad</a></p>
+        <p class="footer-text">El trading de criptomonedas conlleva riesgos. Solo opere con capital que pueda permitirse perder.</p>
     </footer>
 
-  
-  
-  
-  
-  
-  
-  
-      <style>
+    <script>
+        // Simulated data updates
+        function updateTicker() {
+            const tickerItems = document.querySelectorAll('.ticker-item');
+            tickerItems.forEach(item => {
+                const priceElement = item.querySelector('.ticker-price');
+                const changeElement = item.querySelector('.ticker-change');
+                
+                // Random small price change
+                const currentPrice = parseFloat(priceElement.textContent.replace('$', '').replace(',', ''));
+                const changePercent = (Math.random() * 2 - 1) * 0.3; // -0.3% to +0.3%
+                const newPrice = currentPrice * (1 + changePercent / 100);
+                
+                // Update display
+                priceElement.textContent = '$' + newPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                
+                // Update change indicator
+                changeElement.textContent = (changePercent > 0 ? '+' : '') + changePercent.toFixed(2) + '%';
+                changeElement.className = changePercent >= 0 ? 'ticker-change positive' : 'ticker-change negative';
+            });
+        }
 
-        .comment-box, .comment {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 15px;
-            border-radius: 10px;
-            max-width: 90%;
-            width: 400px;
-            margin: 10px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-        }
-        .comment-box {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .comment-box input {
-            flex-grow: 1;
-            padding: 10px;
-            border: none;
-            border-radius: 20px;
-            outline: none;
-            font-size: 14px;
-        }
-        .comment-box button {
-            background: black;
-            color: white;
-            padding: 10px;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            margin-left: 5px;
-        }
-        .upload-icon {
-            cursor: pointer;
-            font-size: 20px;
-            margin-left: 10px;
-        }
-        .upload-icon input {
-            display: none;
-        }
-        .actions {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 10px;
-            font-size: 14px;
-        }
-        .actions span {
-            cursor: pointer;
-            margin-right: 10px;
-        }
-        .replies {
-            display: none;
-            margin-left: 20px;
-            padding-left: 10px;
-            border-left: 2px solid gray;
-            max-width: 90%;
-        }
-        .replies .comment {
-            width: 90%;
-            background: rgba(255, 255, 255, 0.85);
-            padding: 10px;
-            border-radius: 8px;
-            margin: 5px 0;
-            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        #commentsSection {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            align-items: center;
-        }
-        .comment img {
-            max-width: 100%;
-            margin-top: 10px;
-            border-radius: 10px;
-        }
-        
-        /* Responsive */
-        @media screen and (max-width: 600px) {
-            .comment-box, .comment {
-                max-width: 95%;
-                width: auto;
-            }
-            .comment-box input {
-                font-size: 12px;
-            }
-            .comment-box button {
-                padding: 8px;
-            }
-        }
-    </style>
-  
-<script>
-    let selectedImage = null;
+        // Update every 5 seconds
+        setInterval(updateTicker, 5000);
 
-    document.addEventListener("DOMContentLoaded", loadComments);
-
-    function handleImageUpload(event) {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                selectedImage = e.target.result; // Guarda la imagen como Base64
-            };
-            reader.readAsDataURL(file);
+        // Simulate asset price changes
+        function updateAssetPrices() {
+            const assetCards = document.querySelectorAll('.asset-card');
+            assetCards.forEach(card => {
+                const priceElement = card.querySelector('.asset-price');
+                const changeElement = card.querySelector('.asset-change');
+                
+                const currentPrice = parseFloat(priceElement.textContent.replace('$', '').replace(',', ''));
+                const changePercent = (Math.random() * 2 - 1) * 2; // -2% to +2%
+                const newPrice = currentPrice * (1 + changePercent / 100);
+                
+                priceElement.textContent = '$' + newPrice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                
+                changeElement.textContent = (changePercent > 0 ? '+' : '') + changePercent.toFixed(2) + '%';
+                changeElement.className = changePercent >= 0 ? 'asset-change positive' : 'asset-change negative';
+            });
         }
-    }
 
-    function postComment() {
-        var input = document.getElementById("commentInput");
-        var commentText = input.value.trim();
-        
-        if (commentText !== "" || selectedImage) {
-            let commentData = {
-                text: commentText,
-                image: selectedImage,
-                likes: 0
-            };
+        // Update every 8 seconds
+        setInterval(updateAssetPrices, 8000);
+
+        // Comment submission
+        document.querySelector('.comment-submit').addEventListener('click', function() {
+            const commentInput = document.querySelector('.comment-input');
+            const commentText = commentInput.value.trim();
             
-            let comments = JSON.parse(localStorage.getItem("comments")) || [];
-            comments.push(commentData);
-            localStorage.setItem("comments", JSON.stringify(comments));
-            
-            addCommentToDOM(commentData);
-            
-            input.value = "";
-            document.getElementById("imageInput").value = "";
-            selectedImage = null;
-        }
-    }
+            if (commentText) {
+                const commentsContainer = document.querySelector('.comments-container');
+                const newComment = document.createElement('div');
+                newComment.className = 'comment';
+                newComment.innerHTML = `
+                    <div class="comment-user">
+                        <div class="user-avatar">YO</div>
+                        <h4 class="user-name">Tú</h4>
+                        <span class="comment-time">Ahora</span>
+                    </div>
+                    <p class="comment-text">${commentText}</p>
+                    <div class="comment-actions">
+                        <button class="action-btn"><i class="fas fa-thumbs-up"></i> Me gusta (0)</button>
+                        <button class="action-btn"><i class="fas fa-reply"></i> Responder</button>
+                        <button class="action-btn"><i class="fas fa-share"></i> Compartir</button>
+                    </div>
+                `;
+                
+                commentsContainer.insertBefore(newComment, commentsContainer.firstChild);
+                commentInput.value = '';
+            }
+        });
 
-    function addCommentToDOM(commentData) {
-        var commentContainer = document.createElement("div");
-        commentContainer.classList.add("comment");
+        // Allow Enter key to submit comment
+        document.querySelector('.comment-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.querySelector('.comment-submit').click();
+            }
+        });
 
-        var commentParagraph = document.createElement("p");
-        commentParagraph.innerText = commentData.text;
-
-        var actionsDiv = document.createElement("div");
-        actionsDiv.classList.add("actions");
-
-        var likeSpan = document.createElement("span");
-        likeSpan.innerHTML = `👍 Me gusta (<span class='like-count'>${commentData.likes}</span>)`;
-        likeSpan.onclick = function () {
-            likeComment(likeSpan, commentData);
-        };
-
-        var deleteSpan = document.createElement("span");
-        deleteSpan.innerHTML = "🗑 Eliminar";
-        deleteSpan.onclick = function () {
-            deleteComment(commentContainer, commentData);
-        };
-
-        actionsDiv.appendChild(likeSpan);
-        actionsDiv.appendChild(deleteSpan);
-
-        commentContainer.appendChild(commentParagraph);
-
-        if (commentData.image) {
-            var imgElement = document.createElement("img");
-            imgElement.src = commentData.image;
-            commentContainer.appendChild(imgElement);
-        }
-
-        commentContainer.appendChild(actionsDiv);
-        document.getElementById("commentsSection").appendChild(commentContainer);
-    }
-
-    function loadComments() {
-        let comments = JSON.parse(localStorage.getItem("comments")) || [];
-        comments.forEach(addCommentToDOM);
-    }
-
-    function likeComment(likeSpan, commentData) {
-        let comments = JSON.parse(localStorage.getItem("comments")) || [];
-        let commentIndex = comments.findIndex(c => c.text === commentData.text && c.image === commentData.image);
-        
-        if (commentIndex !== -1) {
-            comments[commentIndex].likes++;
-            localStorage.setItem("comments", JSON.stringify(comments));
-            likeSpan.querySelector(".like-count").innerText = comments[commentIndex].likes;
-        }
-    }
-
-    function deleteComment(commentElement, commentData) {
-        let comments = JSON.parse(localStorage.getItem("comments")) || [];
-        comments = comments.filter(c => c.text !== commentData.text || c.image !== commentData.image);
-        localStorage.setItem("comments", JSON.stringify(comments));
-        commentElement.remove();
-    }
-</script>
-
-
+        // Image upload preview (simulated)
+        document.getElementById('imageInput').addEventListener('change', function(e) {
+            if (this.files && this.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    // In a real app, you would upload the image and get a URL
+                    // For this demo, we'll just simulate it
+                    const commentsContainer = document.querySelector('.comments-container');
+                    const newComment = document.createElement('div');
+                    newComment.className = 'comment';
+                    newComment.innerHTML = `
+                        <div class="comment-user">
+                            <div class="user-avatar">YO</div>
+                            <h4 class="user-name">Tú</h4>
+                            <span class="comment-time">Ahora</span>
+                        </div>
+                        <img src="${event.target.result}" class="comment-image" alt="Uploaded image">
+                        <div class="comment-actions">
+                            <button class="action-btn"><i class="fas fa-thumbs-up"></i> Me gusta (0)</button>
+                            <button class="action-btn"><i class="fas fa-reply"></i> Responder</button>
+                            <button class="action-btn"><i class="fas fa-share"></i> Compartir</button>
+                        </div>
+                    `;
+                    
+                    commentsContainer.insertBefore(newComment, commentsContainer.firstChild);
+                };
+                reader.readAsDataURL(this.files[0]);
+                this.value = ''; // Reset input
+            }
+        });
+    </script>
 </body>
 </html>
