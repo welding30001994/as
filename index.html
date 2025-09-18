@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Asistente Virtual por Voz</title>
+    <title>Asistente Beaver Trading</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -23,15 +24,17 @@
         
         .container {
             width: 100%;
-            max-width: 800px;
+            max-width: 1000px;
             background-color: rgba(255, 255, 255, 0.95);
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
         
         header {
-            background: linear-gradient(90deg, #4b6cb7, #182848);
+            background: linear-gradient(90deg, #1a2a6c, #2c3e50);
             color: white;
             padding: 25px;
             text-align: center;
@@ -41,6 +44,15 @@
         h1 {
             font-size: 2.2rem;
             margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .logo {
+            font-size: 2.5rem;
+            color: #fdbb2d;
         }
         
         .subtitle {
@@ -66,10 +78,32 @@
             background-color: #4cc759;
             border-radius: 50%;
             margin-right: 8px;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        .content {
+            display: flex;
+            flex: 1;
         }
         
         .main-content {
+            flex: 7;
             padding: 30px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .sidebar {
+            flex: 3;
+            background-color: #f8f9fa;
+            padding: 25px;
+            border-left: 1px solid #e9ecef;
         }
         
         .voice-controls {
@@ -106,18 +140,13 @@
             animation: pulse 1.5s infinite;
         }
         
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-        
         .status-text {
             font-size: 1.2rem;
             margin-bottom: 15px;
             text-align: center;
             min-height: 30px;
             color: #333;
+            font-weight: 500;
         }
         
         .conversation {
@@ -136,6 +165,7 @@
             border-radius: 18px;
             max-width: 80%;
             line-height: 1.5;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         
         .user-message {
@@ -156,6 +186,7 @@
             flex-wrap: wrap;
             gap: 10px;
             justify-content: center;
+            margin-bottom: 20px;
         }
         
         .suggestion-btn {
@@ -166,10 +197,79 @@
             cursor: pointer;
             transition: background-color 0.2s;
             font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
         
         .suggestion-btn:hover {
             background-color: #dde1e6;
+        }
+        
+        .search-box {
+            display: flex;
+            margin-top: 15px;
+        }
+        
+        .search-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 25px 0 0 25px;
+            font-size: 1rem;
+            outline: none;
+        }
+        
+        .search-btn {
+            padding: 12px 20px;
+            background: linear-gradient(90deg, #4b6cb7, #182848);
+            color: white;
+            border: none;
+            border-radius: 0 25px 25px 0;
+            cursor: pointer;
+        }
+        
+        .sidebar-title {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #fdbb2d;
+        }
+        
+        .info-section {
+            margin-bottom: 25px;
+        }
+        
+        .info-section h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .info-section p {
+            color: #555;
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+        
+        .feature-list {
+            list-style-type: none;
+            margin-top: 10px;
+        }
+        
+        .feature-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .feature-list li i {
+            color: #4b6cb7;
         }
         
         footer {
@@ -178,9 +278,19 @@
             background-color: #f8f9fa;
             color: #6c757d;
             font-size: 0.9rem;
+            border-top: 1px solid #e9ecef;
         }
         
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
+            .content {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                border-left: none;
+                border-top: 1px solid #e9ecef;
+            }
+            
             h1 {
                 font-size: 1.8rem;
             }
@@ -199,38 +309,80 @@
 <body>
     <div class="container">
         <header>
-            <h1>Asistente Virtual por Voz</h1>
-            <p class="subtitle">Habla conmigo y te responderé al instante</p>
+            <h1><i class="fas fa-robot logo"></i> Asistente Beaver Trading</h1>
+            <p class="subtitle">Habla conmigo y te proporcionaré información de trading y búsquedas web</p>
             <div class="status">
                 <div class="status-dot"></div>
                 <span>Conectado</span>
             </div>
         </header>
         
-        <div class="main-content">
-            <div class="voice-controls">
-                <button class="mic-btn" id="micButton">
-                    <i>🎤</i>
-                </button>
-                <div class="status-text" id="statusText">Presiona el botón y habla</div>
-            </div>
-            
-            <div class="conversation" id="conversation">
-                <div class="message ai-message">
-                    Hola! Soy tu asistente virtual. Presiona el botón de micrófono y habla para que pueda responderte.
+        <div class="content">
+            <div class="main-content">
+                <div class="voice-controls">
+                    <button class="mic-btn" id="micButton">
+                        <i class="fas fa-microphone"></i>
+                    </button>
+                    <div class="status-text" id="statusText">Presiona el botón y habla</div>
+                </div>
+                
+                <div class="conversation" id="conversation">
+                    <div class="message ai-message">
+                        <strong>Asistente:</strong> Hola! Soy tu asistente de Beaver Trading. Puedes preguntarme sobre trading, análisis técnico o pedirme que busque información en Google.
+                    </div>
+                </div>
+                
+                <div class="suggestions">
+                    <button class="suggestion-btn" data-query="¿Qué es Beaver Trading?">
+                        <i class="fas fa-building"></i> Beaver Trading
+                    </button>
+                    <button class="suggestion-btn" data-query="Explícame los FVG">
+                        <i class="fas fa-chart-line"></i> Concepto FVG
+                    </button>
+                    <button class="suggestion-btn" data-query="Busca noticias de trading">
+                        <i class="fas fa-search"></i> Noticias Trading
+                    </button>
+                    <button class="suggestion-btn" data-query="¿Qué es un sweep?">
+                        <i class="fas fa-exchange-alt"></i> Sweep Trading
+                    </button>
+                </div>
+                
+                <div class="search-box">
+                    <input type="text" class="search-input" id="searchInput" placeholder="Escribe aquí para buscar en Google...">
+                    <button class="search-btn" id="searchBtn">
+                        <i class="fas fa-search"></i>
+                    </button>
                 </div>
             </div>
             
-            <div class="suggestions">
-                <button class="suggestion-btn" data-query="¿Qué puedes hacer?">¿Qué puedes hacer?</button>
-                <button class="suggestion-btn" data-query="Explícame los FVG">Explícame los FVG</button>
-                <button class="suggestion-btn" data-query="¿Qué es un sweep?">¿Qué es un sweep?</button>
-                <button class="suggestion-btn" data-query="Conceptos de trading">Conceptos de trading</button>
+            <div class="sidebar">
+                <h2 class="sidebar-title">Beaver Trading</h2>
+                
+                <div class="info-section">
+                    <h3><i class="fas fa-info-circle"></i> Acerca de nosotros</h3>
+                    <p>Beaver Trading es una empresa especializada en educación y herramientas para traders. Ofrecemos cursos, señales de trading y software de análisis técnico.</p>
+                </div>
+                
+                <div class="info-section">
+                    <h3><i class="fas fa-graduation-cap"></i> Nuestros Servicios</h3>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check"></i> Cursos de trading para todos los niveles</li>
+                        <li><i class="fas fa-check"></i> Señales de trading en tiempo real</li>
+                        <li><i class="fas fa-check"></i> Herramientas de análisis técnico</li>
+                        <li><i class="fas fa-check"></i> Mentoría personalizada</li>
+                        <li><i class="fas fa-check"></i> Comunidad de traders</li>
+                    </ul>
+                </div>
+                
+                <div class="info-section">
+                    <h3><i class="fas fa-lightbulb"></i> Consejos de Trading</h3>
+                    <p>Nunca inviertas más de lo que estás dispuesto a perder. Diversifica tu portfolio y mantén una estrategia de gestión de riesgos.</p>
+                </div>
             </div>
         </div>
         
         <footer>
-            <p>Asistente Virtual &copy; 2023 - Habla claro y con un ritmo normal para mejor reconocimiento</p>
+            <p>Asistente Virtual Beaver Trading &copy; 2023 - Habla claro y con un ritmo normal para mejor reconocimiento</p>
         </footer>
     </div>
 
@@ -240,6 +392,8 @@
             const statusText = document.getElementById('statusText');
             const conversation = document.getElementById('conversation');
             const suggestionButtons = document.querySelectorAll('.suggestion-btn');
+            const searchInput = document.getElementById('searchInput');
+            const searchBtn = document.getElementById('searchBtn');
             
             // Comprobar compatibilidad con reconocimiento de voz
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -314,11 +468,38 @@
                 });
             });
             
+            // Funcionalidad de búsqueda
+            searchBtn.addEventListener('click', function() {
+                const query = searchInput.value.trim();
+                if (query) {
+                    addMessage(query, 'user');
+                    searchInput.value = '';
+                    
+                    setTimeout(() => {
+                        const response = getResponse(query, true);
+                        addMessage(response, 'ai');
+                        speakResponse(response);
+                    }, 500);
+                }
+            });
+            
+            // También buscar al presionar Enter
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    searchBtn.click();
+                }
+            });
+            
             function addMessage(text, type) {
                 const messageElement = document.createElement('div');
                 messageElement.classList.add('message');
                 messageElement.classList.add(type === 'user' ? 'user-message' : 'ai-message');
-                messageElement.textContent = text;
+                
+                if (type === 'user') {
+                    messageElement.innerHTML = `<strong>Tú:</strong> ${text}`;
+                } else {
+                    messageElement.innerHTML = `<strong>Asistente:</strong> ${text}`;
+                }
                 
                 conversation.appendChild(messageElement);
                 conversation.scrollTop = conversation.scrollHeight;
@@ -337,12 +518,14 @@
                 synth.speak(utterance);
             }
             
-            function getResponse(query) {
+            function getResponse(query, isSearch = false) {
                 query = query.toLowerCase();
                 
                 // Respuestas predefinidas según las palabras clave
                 if (query.includes('hola') || query.includes('buenos días') || query.includes('buenas tardes')) {
-                    return "¡Hola! Soy tu asistente virtual. Puedes preguntarme sobre trading, análisis técnico o cualquier otro tema. ¿En qué puedo ayudarte?";
+                    return "¡Hola! Soy tu asistente de Beaver Trading. Puedes preguntarme sobre trading, análisis técnico o pedirme que busque información en Google.";
+                } else if (query.includes('beaver trading') || query.includes('beaver') || query.includes('empresa')) {
+                    return "Beaver Trading es una empresa líder en educación y herramientas para traders. Ofrecemos cursos de trading para todos los niveles, señales en tiempo real, herramientas de análisis técnico y mentoría personalizada. Nuestro enfoque es proporcionar educación de calidad y herramientas prácticas para ayudar a los traders a mejorar sus resultados.";
                 } else if (query.includes('fvg') || query.includes('fair value gap')) {
                     return "FVG son las siglas de Fair Value Gap. Es un concepto de trading que se refiere a un espacio de valor justo en el gráfico de precios. Ocurre cuando hay una diferencia significativa entre el cierre de una vela y la apertura de la siguiente, dejando un 'hueco' en el gráfico. Los traders suelen observar estos espacios como posibles zonas de soporte o resistencia en el futuro.";
                 } else if (query.includes('sweep')) {
@@ -350,11 +533,15 @@
                 } else if (query.includes('trading') || query.includes('conceptos')) {
                     return "Conceptos básicos de trading incluyen: 1) Soporte y resistencia - niveles donde el precio tiende a rebotar, 2) Tendencia - dirección general del mercado, 3) Velas japonesas - representación visual de movimientos de precio, 4) Indicadores técnicos - herramientas para analizar el mercado, y 5) Gestión de riesgo - proteger tu capital con stops y posición sizing.";
                 } else if (query.includes('qué puedes hacer') || query.includes('qué sabes')) {
-                    return "Puedo explicarte conceptos de trading como FVG, sweeps, soporte y resistencia, tendencias y más. También puedo responder preguntas generales. Solo tienes que preguntar!";
+                    return "Puedo explicarte conceptos de trading como FVG, sweeps, soporte y resistencia, tendencias y más. También puedo buscar información en Google sobre temas que me pidas. Solo tienes que preguntar!";
                 } else if (query.includes('gracias')) {
                     return "De nada! Estoy aquí para ayudarte cuando lo necesites. ¿Hay algo más en lo que pueda asistirte?";
+                } else if (isSearch || query.includes('busca') || query.includes('buscar') || query.includes('noticias')) {
+                    // Simular búsqueda en Google
+                    const searchTopic = query.replace(/busca|buscar|noticias|sobre|de/gi, '').trim();
+                    return `He buscado información sobre "${searchTopic}" en Google. Según los resultados más recientes, te recomiendo: 1) Revisar las últimas noticias del mercado, 2) Consultar análisis técnico actualizado, 3) Verificar el calendario económico para eventos relevantes. ¿Te gustaría que profundice en algún aspecto específico de ${searchTopic}?`;
                 } else {
-                    return "Interesante pregunta. Basándome en tu consulta sobre '" + query + "', te recomiendo estudiar más sobre análisis técnico y patrones de precio. ¿Te gustaría que profundice en algún concepto específico de trading?";
+                    return "Interesante pregunta. Basándome en tu consulta sobre '" + query + "', te recomiendo estudiar más sobre análisis técnico y patrones de precio. ¿Te gustaría que busque más información en Google sobre este tema?";
                 }
             }
         });
