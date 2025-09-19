@@ -125,6 +125,8 @@
             border-radius: 10px;
             padding: 20px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            max-height: 600px;
+            overflow-y: auto;
         }
         
         .section-title {
@@ -239,6 +241,56 @@
         .notification.error {
             background: #e74c3c;
         }
+        
+        /* Estilos para la visualización de archivos */
+        .file-viewer {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            padding: 20px;
+        }
+        
+        .viewer-content {
+            background: white;
+            width: 90%;
+            height: 90%;
+            margin: 2% auto;
+            border-radius: 8px;
+            padding: 20px;
+            position: relative;
+            color: #2c3e50;
+        }
+        
+        .close-viewer {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+        .viewer-iframe {
+            width: 100%;
+            height: calc(100% - 40px);
+            border: none;
+            margin-top: 30px;
+        }
+        
+        .viewer-message {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 1.2rem;
+        }
     </style>
 </head>
 <body>
@@ -281,6 +333,15 @@
     </div>
     
     <div class="notification" id="notification">Archivo subido correctamente!</div>
+    
+    <div class="file-viewer" id="fileViewer">
+        <div class="viewer-content">
+            <button class="close-viewer" id="closeViewer">X</button>
+            <div id="viewerContent">
+                <p class="viewer-message">Cargando contenido...</p>
+            </div>
+        </div>
+    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -290,6 +351,9 @@
             const browseBtn = document.getElementById('browseBtn');
             const filesContainer = document.getElementById('filesContainer');
             const notification = document.getElementById('notification');
+            const fileViewer = document.getElementById('fileViewer');
+            const closeViewer = document.getElementById('closeViewer');
+            const viewerContent = document.getElementById('viewerContent');
             
             // Cargar archivos almacenados al iniciar
             loadStoredFiles();
@@ -322,6 +386,10 @@
                 }
             });
             
+            closeViewer.addEventListener('click', () => {
+                fileViewer.style.display = 'none';
+            });
+            
             // Función para manejar la selección de archivos
             function handleFileSelect(e) {
                 handleFiles(e.target.files);
@@ -339,23 +407,32 @@
             
             // Función para almacenar el archivo (simulado con localStorage)
             function storeFile(file) {
-                // En una aplicación real, aquí se enviaría el archivo al servidor
-                // Para esta demo, guardamos información básica en localStorage
-                const fileInfo = {
-                    name: file.name,
-                    type: file.type,
-                    size: file.size,
-                    uploadDate: new Date().toISOString()
-                };
-                
-                // Obtener archivos existentes
-                const storedFiles = JSON.parse(localStorage.getItem('beaverFiles')) || [];
-                
-                // Agregar el nuevo archivo
-                storedFiles.push(fileInfo);
-                
-                // Guardar de nuevo en localStorage
-                localStorage.setItem('beaverFiles', JSON.stringify(storedFiles));
+                return new Promise((resolve) => {
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(e) {
+                        const fileData = {
+                            name: file.name,
+                            type: file.type,
+                            size: file.size,
+                            uploadDate: new Date().toISOString(),
+                            data: e.target.result
+                        };
+                        
+                        // Obtener archivos existentes
+                        const storedFiles = JSON.parse(localStorage.getItem('beaverFiles')) || [];
+                        
+                        // Agregar el nuevo archivo
+                        storedFiles.push(fileData);
+                        
+                        // Guardar de nuevo en localStorage
+                        localStorage.setItem('beaverFiles', JSON.stringify(storedFiles));
+                        
+                        resolve(fileData);
+                    };
+                    
+                    reader.readAsDataURL(file);
+                });
             }
             
             // Función para cargar archivos almacenados
@@ -371,6 +448,7 @@
             function displayFile(file) {
                 const fileCard = document.createElement('div');
                 fileCard.className = 'file-card';
+                fileCard.dataset.name = file.name;
                 
                 // Determinar el icono según el tipo de archivo
                 let iconClass = 'fas fa-file';
@@ -380,6 +458,10 @@
                     iconClass += ' doc-icon';
                 } else if (file.type.includes('image')) {
                     iconClass += ' img-icon';
+                } else if (file.type.includes('zip') || file.type.includes('compressed')) {
+                    iconClass = 'fas fa-file-archive';
+                } else if (file.type.includes('text')) {
+                    iconClass = 'fas fa-file-alt';
                 }
                 
                 // Formatear el tamaño del archivo
@@ -393,13 +475,73 @@
                     <div class="file-date">Subido: ${new Date(file.uploadDate).toLocaleDateString()}</div>
                     <div class="file-details">Tipo: ${file.type || 'Desconocido'} | ${fileSize}</div>
                     <div class="file-actions">
-                        <button class="action-btn"><i class="fas fa-eye"></i> Ver</button>
-                        <button class="action-btn"><i class="fas fa-download"></i> Descargar</button>
+                        <button class="action-btn view-btn"><i class="fas fa-eye"></i> Ver</button>
+                        <button class="action-btn download-btn"><i class="fas fa-download"></i> Descargar</button>
                         <button class="action-btn delete-btn"><i class="fas fa-trash"></i> Eliminar</button>
                     </div>
                 `;
                 
+                // Añadir event listeners a los botones
+                const viewBtn = fileCard.querySelector('.view-btn');
+                const downloadBtn = fileCard.querySelector('.download-btn');
+                const deleteBtn = fileCard.querySelector('.delete-btn');
+                
+                viewBtn.addEventListener('click', () => viewFile(file));
+                downloadBtn.addEventListener('click', () => downloadFile(file));
+                deleteBtn.addEventListener('click', () => deleteFile(file, fileCard));
+                
                 filesContainer.appendChild(fileCard);
+            }
+            
+            // Función para visualizar un archivo
+            function viewFile(file) {
+                viewerContent.innerHTML = '<p class="viewer-message">Cargando contenido...</p>';
+                fileViewer.style.display = 'block';
+                
+                if (file.type.includes('image')) {
+                    viewerContent.innerHTML = `<img src="${file.data}" style="max-width: 100%; max-height: 100%; display: block; margin: 0 auto;">`;
+                } else if (file.type.includes('pdf')) {
+                    viewerContent.innerHTML = `<iframe class="viewer-iframe" src="${file.data}"></iframe>`;
+                } else if (file.type.includes('text')) {
+                    // Para texto, intentamos leer el contenido
+                    try {
+                        const base64Data = file.data.split(',')[1];
+                        const textContent = atob(base64Data);
+                        viewerContent.innerHTML = `<pre style="white-space: pre-wrap; word-wrap: break-word; padding: 20px;">${textContent}</pre>`;
+                    } catch (e) {
+                        viewerContent.innerHTML = '<p class="viewer-message">No se puede visualizar este tipo de archivo. Por favor, descárguelo para verlo.</p>';
+                    }
+                } else {
+                    viewerContent.innerHTML = '<p class="viewer-message">No se puede visualizar este tipo de archivo. Por favor, descárguelo para verlo.</p>';
+                }
+            }
+            
+            // Función para descargar un archivo
+            function downloadFile(file) {
+                const link = document.createElement('a');
+                link.href = file.data;
+                link.download = file.name;
+                link.style.display = 'none';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                showNotification(`Descargando ${file.name}`);
+            }
+            
+            // Función para eliminar un archivo
+            function deleteFile(file, fileCard) {
+                if (confirm(`¿Estás seguro de que quieres eliminar "${file.name}"?`)) {
+                    // Eliminar de localStorage
+                    const storedFiles = JSON.parse(localStorage.getItem('beaverFiles')) || [];
+                    const updatedFiles = storedFiles.filter(f => f.name !== file.name);
+                    localStorage.setItem('beaverFiles', JSON.stringify(updatedFiles));
+                    
+                    // Eliminar de la interfaz
+                    fileCard.remove();
+                    
+                    showNotification(`Archivo "${file.name}" eliminado`);
+                }
             }
             
             // Función para formatear el tamaño del archivo
