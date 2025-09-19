@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Beaver Trading - Almacenamiento de Archivos</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Beaver Trading - Transcripción por Voz</title>
     <style>
         * {
             margin: 0;
@@ -14,558 +13,360 @@
         }
         
         body {
-            background: linear-gradient(135deg, #2c3e50, #1a2a3a);
-            color: #ecf0f1;
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
             min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             padding: 20px;
         }
         
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        header {
+            background-color: rgba(255, 255, 255, 0.92);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 700px;
+            padding: 30px;
             text-align: center;
-            padding: 20px 0;
-            margin-bottom: 30px;
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 10px;
-        }
-        
-        .logo i {
-            font-size: 2.5rem;
-            color: #e67e22;
         }
         
         h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
             font-size: 2.5rem;
-            color: #e67e22;
         }
         
-        .subtitle {
-            font-size: 1.2rem;
-            color: #bdc3c7;
-            margin-bottom: 20px;
-        }
-        
-        .main-content {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 20px;
-        }
-        
-        @media (max-width: 768px) {
-            .main-content {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        .upload-section {
-            background: rgba(44, 62, 80, 0.7);
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
-        
-        .upload-area {
-            border: 2px dashed #3498db;
-            border-radius: 8px;
-            padding: 30px;
-            text-align: center;
-            margin-bottom: 20px;
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-        
-        .upload-area:hover {
-            background: rgba(52, 152, 219, 0.1);
-        }
-        
-        .upload-area i {
-            font-size: 3rem;
-            color: #3498db;
-            margin-bottom: 15px;
-        }
-        
-        .upload-area p {
-            margin: 10px 0;
-        }
-        
-        .btn {
-            background: #e67e22;
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 600;
-            transition: background 0.3s;
-            display: inline-block;
-            text-align: center;
-        }
-        
-        .btn:hover {
-            background: #d35400;
-        }
-        
-        .btn i {
-            margin-right: 8px;
-        }
-        
-        .file-list {
-            background: rgba(44, 62, 80, 0.7);
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            max-height: 600px;
-            overflow-y: auto;
-        }
-        
-        .section-title {
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #3498db;
-            color: #e67e22;
-        }
-        
-        .files-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 15px;
-        }
-        
-        .file-card {
-            background: rgba(52, 73, 94, 0.8);
-            border-radius: 8px;
-            padding: 15px;
-            transition: transform 0.3s;
-        }
-        
-        .file-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-        
-        .file-icon {
-            font-size: 2.5rem;
-            text-align: center;
+        .logo {
+            font-size: 2.8rem;
             margin-bottom: 10px;
-        }
-        
-        .pdf-icon {
-            color: #e74c3c;
-        }
-        
-        .doc-icon {
-            color: #3498db;
-        }
-        
-        .img-icon {
-            color: #2ecc71;
-        }
-        
-        .file-name {
-            font-weight: 600;
-            margin-bottom: 5px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        
-        .file-date {
-            font-size: 0.8rem;
-            color: #bdc3c7;
-            margin-bottom: 15px;
-        }
-        
-        .file-actions {
-            display: flex;
-            justify-content: space-between;
-        }
-        
-        .action-btn {
-            background: transparent;
-            border: none;
-            color: #3498db;
-            cursor: pointer;
-            font-size: 1rem;
-        }
-        
-        .action-btn:hover {
-            color: #2980b9;
-        }
-        
-        .delete-btn {
-            color: #e74c3c;
-        }
-        
-        .delete-btn:hover {
-            color: #c0392b;
-        }
-        
-        footer {
-            text-align: center;
-            margin-top: 40px;
-            padding: 20px;
-            color: #bdc3c7;
-            font-size: 0.9rem;
-        }
-        
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 15px 20px;
-            border-radius: 5px;
-            background: #2ecc71;
-            color: white;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-            transform: translateX(100%);
-            transition: transform 0.3s;
-            z-index: 1000;
-        }
-        
-        .notification.show {
-            transform: translateX(0);
-        }
-        
-        .notification.error {
-            background: #e74c3c;
-        }
-        
-        /* Estilos para la visualización de archivos */
-        .file-viewer {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            z-index: 2000;
-            padding: 20px;
-        }
-        
-        .viewer-content {
-            background: white;
-            width: 90%;
-            height: 90%;
-            margin: 2% auto;
-            border-radius: 8px;
-            padding: 20px;
-            position: relative;
             color: #2c3e50;
         }
         
-        .close-viewer {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: #e74c3c;
+        .instructions {
+            background-color: #e8f4fc;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            text-align: left;
+            border-left: 5px solid #3498db;
+        }
+        
+        .instructions h2 {
+            color: #2980b9;
+            margin-bottom: 10px;
+        }
+        
+        .instructions ul {
+            padding-left: 20px;
+            margin: 10px 0;
+        }
+        
+        .instructions li {
+            margin-bottom: 8px;
+        }
+        
+        .command {
+            display: inline-block;
+            background-color: #3498db;
             color: white;
-            border: none;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            cursor: pointer;
+            padding: 2px 8px;
+            border-radius: 5px;
+            font-weight: bold;
         }
         
-        .viewer-iframe {
-            width: 100%;
-            height: calc(100% - 40px);
-            border: none;
-            margin-top: 30px;
-        }
-        
-        .viewer-message {
-            text-align: center;
-            margin-top: 40px;
+        .status {
+            margin: 20px 0;
             font-size: 1.2rem;
+            font-weight: bold;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        
+        .listening {
+            background-color: #ffeaa7;
+            color: #d35400;
+        }
+        
+        .stopped {
+            background-color: #d5f5e3;
+            color: #27ae60;
+        }
+        
+        .text-output {
+            background-color: #f7f9fa;
+            border: 2px solid #bdc3c7;
+            border-radius: 10px;
+            padding: 20px;
+            min-height: 200px;
+            max-height: 300px;
+            overflow-y: auto;
+            text-align: left;
+            margin: 20px 0;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        button {
+            padding: 14px 28px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .btn-start {
+            background-color: #2ecc71;
+            color: white;
+        }
+        
+        .btn-start:hover {
+            background-color: #27ae60;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(46, 204, 113, 0.4);
+        }
+        
+        .btn-stop {
+            background-color: #e74c3c;
+            color: white;
+        }
+        
+        .btn-stop:hover {
+            background-color: #c0392b;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+        }
+        
+        .btn-read {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .btn-read:hover {
+            background-color: #2980b9;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+        
+        .btn-clear {
+            background-color: #95a5a6;
+            color: white;
+        }
+        
+        .btn-clear:hover {
+            background-color: #7f8c8d;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(149, 165, 166, 0.4);
+        }
+        
+        .mic-icon {
+            font-size: 1.5rem;
+        }
+        
+        .footer {
+            margin-top: 20px;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 600px) {
+            .btn-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            button {
+                width: 100%;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <header>
-            <div class="logo">
-                <i class="fas fa-file-export"></i>
-                <h1>Beaver Trading</h1>
-            </div>
-            <p class="subtitle">Sistema de almacenamiento y compartición de archivos</p>
-        </header>
+        <div class="logo">🦫</div>
+        <h1>Beaver Trading - Transcripción por Voz</h1>
         
-        <div class="main-content">
-            <section class="upload-section">
-                <h2 class="section-title">Subir archivos</h2>
-                <div class="upload-area" id="dropArea">
-                    <i class="fas fa-cloud-upload-alt"></i>
-                    <h3>Arrastra y suelta archivos aquí</h3>
-                    <p>o</p>
-                    <input type="file" id="fileInput" multiple style="display: none;">
-                    <button class="btn" id="browseBtn"><i class="fas fa-folder-open"></i> Seleccionar archivos</button>
-                </div>
-                <div class="upload-info">
-                    <p><i class="fas fa-info-circle"></i> Formatos soportados: PDF, DOC, XLS, imágenes, y más.</p>
-                    <p><i class="fas fa-database"></i> Almacenamiento persistente entre sesiones.</p>
-                </div>
-            </section>
-            
-            <section class="file-list">
-                <h2 class="section-title">Archivos almacenados</h2>
-                <div class="files-grid" id="filesContainer">
-                    <!-- Los archivos se mostrarán aquí dinámicamente -->
-                </div>
-            </section>
+        <div class="instructions">
+            <h2>Instrucciones:</h2>
+            <ul>
+                <li>Haz clic en <span class="command">Iniciar Transcripción</span> o di <span class="command">"iniciar"</span> para comenzar a grabar</li>
+                <li>Haz clic en <span class="command">Detener Transcripción</span> o di <span class="command">"detener"</span> para finalizar</li>
+                <li>Haz clic en <span class="command">Leer Texto</span> para que el sistema lea el texto transcrito</li>
+                <li>Usa <span class="command">Limpiar Texto</span> para borrar el contenido</li>
+            </ul>
+            <p>Asegúrate de permitir el acceso al micrófono cuando tu navegador lo solicite.</p>
         </div>
         
-        <footer>
-            <p>Beaver Trading Storage System &copy; 2023 - Todos los derechos reservados</p>
-        </footer>
-    </div>
-    
-    <div class="notification" id="notification">Archivo subido correctamente!</div>
-    
-    <div class="file-viewer" id="fileViewer">
-        <div class="viewer-content">
-            <button class="close-viewer" id="closeViewer">X</button>
-            <div id="viewerContent">
-                <p class="viewer-message">Cargando contenido...</p>
-            </div>
+        <div id="status" class="status stopped">En espera de comandos...</div>
+        
+        <div class="text-output" id="textOutput">
+            El texto transcrito aparecerá aquí...
+        </div>
+        
+        <div class="btn-container">
+            <button id="btnStart" class="btn-start"><span class="mic-icon">🎙️</span> Iniciar Transcripción</button>
+            <button id="btnStop" class="btn-stop"><span class="mic-icon">⏹️</span> Detener Transcripción</button>
+        </div>
+        
+        <div class="btn-container">
+            <button id="btnRead" class="btn-read"><span class="mic-icon">🔊</span> Leer Texto</button>
+            <button id="btnClear" class="btn-clear"><span class="mic-icon">🧹</span> Limpiar Texto</button>
+        </div>
+        
+        <div class="footer">
+            <p>Beaver Trading &copy; 2023 - Transcripción de Voz a Texto</p>
         </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Elementos del DOM
-            const dropArea = document.getElementById('dropArea');
-            const fileInput = document.getElementById('fileInput');
-            const browseBtn = document.getElementById('browseBtn');
-            const filesContainer = document.getElementById('filesContainer');
-            const notification = document.getElementById('notification');
-            const fileViewer = document.getElementById('fileViewer');
-            const closeViewer = document.getElementById('closeViewer');
-            const viewerContent = document.getElementById('viewerContent');
+            const btnStart = document.getElementById('btnStart');
+            const btnStop = document.getElementById('btnStop');
+            const btnRead = document.getElementById('btnRead');
+            const btnClear = document.getElementById('btnClear');
+            const textOutput = document.getElementById('textOutput');
+            const statusDiv = document.getElementById('status');
             
-            // Cargar archivos almacenados al iniciar
-            loadStoredFiles();
+            let recognition;
+            let isListening = false;
+            let finalTranscript = '';
             
-            // Event listeners
-            browseBtn.addEventListener('click', () => {
-                fileInput.click();
-            });
-            
-            fileInput.addEventListener('change', handleFileSelect);
-            
-            dropArea.addEventListener('dragover', (e) => {
-                e.preventDefault();
-                dropArea.style.borderColor = '#2ecc71';
-                dropArea.style.backgroundColor = 'rgba(46, 204, 113, 0.1)';
-            });
-            
-            dropArea.addEventListener('dragleave', () => {
-                dropArea.style.borderColor = '#3498db';
-                dropArea.style.backgroundColor = 'transparent';
-            });
-            
-            dropArea.addEventListener('drop', (e) => {
-                e.preventDefault();
-                dropArea.style.borderColor = '#3498db';
-                dropArea.style.backgroundColor = 'transparent';
+            // Verificar compatibilidad del navegador
+            if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                recognition = new SpeechRecognition();
+                recognition.continuous = true;
+                recognition.interimResults = true;
+                recognition.lang = 'es-ES';
                 
-                if (e.dataTransfer.files.length) {
-                    handleFiles(e.dataTransfer.files);
-                }
-            });
-            
-            closeViewer.addEventListener('click', () => {
-                fileViewer.style.display = 'none';
-            });
-            
-            // Función para manejar la selección de archivos
-            function handleFileSelect(e) {
-                handleFiles(e.target.files);
-            }
-            
-            // Función para procesar los archivos
-            function handleFiles(files) {
-                for (let i = 0; i < files.length; i++) {
-                    const file = files[i];
-                    storeFile(file);
-                    displayFile(file);
-                }
-                showNotification('Archivo(s) subido(s) correctamente!');
-            }
-            
-            // Función para almacenar el archivo (simulado con localStorage)
-            function storeFile(file) {
-                return new Promise((resolve) => {
-                    const reader = new FileReader();
+                recognition.onstart = function() {
+                    isListening = true;
+                    statusDiv.textContent = 'Escuchando... Habla ahora';
+                    statusDiv.className = 'status listening';
+                };
+                
+                recognition.onresult = function(event) {
+                    let interimTranscript = '';
                     
-                    reader.onload = function(e) {
-                        const fileData = {
-                            name: file.name,
-                            type: file.type,
-                            size: file.size,
-                            uploadDate: new Date().toISOString(),
-                            data: e.target.result
-                        };
-                        
-                        // Obtener archivos existentes
-                        const storedFiles = JSON.parse(localStorage.getItem('beaverFiles')) || [];
-                        
-                        // Agregar el nuevo archivo
-                        storedFiles.push(fileData);
-                        
-                        // Guardar de nuevo en localStorage
-                        localStorage.setItem('beaverFiles', JSON.stringify(storedFiles));
-                        
-                        resolve(fileData);
-                    };
-                    
-                    reader.readAsDataURL(file);
-                });
-            }
-            
-            // Función para cargar archivos almacenados
-            function loadStoredFiles() {
-                const storedFiles = JSON.parse(localStorage.getItem('beaverFiles')) || [];
-                
-                storedFiles.forEach(fileInfo => {
-                    displayFile(fileInfo);
-                });
-            }
-            
-            // Función para mostrar el archivo en la lista
-            function displayFile(file) {
-                const fileCard = document.createElement('div');
-                fileCard.className = 'file-card';
-                fileCard.dataset.name = file.name;
-                
-                // Determinar el icono según el tipo de archivo
-                let iconClass = 'fas fa-file';
-                if (file.type.includes('pdf')) {
-                    iconClass += ' pdf-icon';
-                } else if (file.type.includes('word') || file.type.includes('document')) {
-                    iconClass += ' doc-icon';
-                } else if (file.type.includes('image')) {
-                    iconClass += ' img-icon';
-                } else if (file.type.includes('zip') || file.type.includes('compressed')) {
-                    iconClass = 'fas fa-file-archive';
-                } else if (file.type.includes('text')) {
-                    iconClass = 'fas fa-file-alt';
-                }
-                
-                // Formatear el tamaño del archivo
-                const fileSize = file.size ? formatFileSize(file.size) : 'Tamaño desconocido';
-                
-                fileCard.innerHTML = `
-                    <div class="file-icon">
-                        <i class="${iconClass}"></i>
-                    </div>
-                    <div class="file-name">${file.name}</div>
-                    <div class="file-date">Subido: ${new Date(file.uploadDate).toLocaleDateString()}</div>
-                    <div class="file-details">Tipo: ${file.type || 'Desconocido'} | ${fileSize}</div>
-                    <div class="file-actions">
-                        <button class="action-btn view-btn"><i class="fas fa-eye"></i> Ver</button>
-                        <button class="action-btn download-btn"><i class="fas fa-download"></i> Descargar</button>
-                        <button class="action-btn delete-btn"><i class="fas fa-trash"></i> Eliminar</button>
-                    </div>
-                `;
-                
-                // Añadir event listeners a los botones
-                const viewBtn = fileCard.querySelector('.view-btn');
-                const downloadBtn = fileCard.querySelector('.download-btn');
-                const deleteBtn = fileCard.querySelector('.delete-btn');
-                
-                viewBtn.addEventListener('click', () => viewFile(file));
-                downloadBtn.addEventListener('click', () => downloadFile(file));
-                deleteBtn.addEventListener('click', () => deleteFile(file, fileCard));
-                
-                filesContainer.appendChild(fileCard);
-            }
-            
-            // Función para visualizar un archivo
-            function viewFile(file) {
-                viewerContent.innerHTML = '<p class="viewer-message">Cargando contenido...</p>';
-                fileViewer.style.display = 'block';
-                
-                if (file.type.includes('image')) {
-                    viewerContent.innerHTML = `<img src="${file.data}" style="max-width: 100%; max-height: 100%; display: block; margin: 0 auto;">`;
-                } else if (file.type.includes('pdf')) {
-                    viewerContent.innerHTML = `<iframe class="viewer-iframe" src="${file.data}"></iframe>`;
-                } else if (file.type.includes('text')) {
-                    // Para texto, intentamos leer el contenido
-                    try {
-                        const base64Data = file.data.split(',')[1];
-                        const textContent = atob(base64Data);
-                        viewerContent.innerHTML = `<pre style="white-space: pre-wrap; word-wrap: break-word; padding: 20px;">${textContent}</pre>`;
-                    } catch (e) {
-                        viewerContent.innerHTML = '<p class="viewer-message">No se puede visualizar este tipo de archivo. Por favor, descárguelo para verlo.</p>';
+                    for (let i = event.resultIndex; i < event.results.length; i++) {
+                        if (event.results[i].isFinal) {
+                            finalTranscript += event.results[i][0].transcript + ' ';
+                        } else {
+                            interimTranscript += event.results[i][0].transcript;
+                        }
                     }
-                } else {
-                    viewerContent.innerHTML = '<p class="viewer-message">No se puede visualizar este tipo de archivo. Por favor, descárguelo para verlo.</p>';
-                }
-            }
-            
-            // Función para descargar un archivo
-            function downloadFile(file) {
-                const link = document.createElement('a');
-                link.href = file.data;
-                link.download = file.name;
-                link.style.display = 'none';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                
-                showNotification(`Descargando ${file.name}`);
-            }
-            
-            // Función para eliminar un archivo
-            function deleteFile(file, fileCard) {
-                if (confirm(`¿Estás seguro de que quieres eliminar "${file.name}"?`)) {
-                    // Eliminar de localStorage
-                    const storedFiles = JSON.parse(localStorage.getItem('beaverFiles')) || [];
-                    const updatedFiles = storedFiles.filter(f => f.name !== file.name);
-                    localStorage.setItem('beaverFiles', JSON.stringify(updatedFiles));
                     
-                    // Eliminar de la interfaz
-                    fileCard.remove();
-                    
-                    showNotification(`Archivo "${file.name}" eliminado`);
-                }
-            }
-            
-            // Función para formatear el tamaño del archivo
-            function formatFileSize(bytes) {
-                if (bytes === 0) return '0 Bytes';
-                const k = 1024;
-                const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-                const i = Math.floor(Math.log(bytes) / Math.log(k));
-                return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-            }
-            
-            // Función para mostrar notificación
-            function showNotification(message, isError = false) {
-                notification.textContent = message;
-                notification.className = 'notification';
-                if (isError) {
-                    notification.classList.add('error');
-                }
-                notification.classList.add('show');
+                    textOutput.innerHTML = finalTranscript + '<i style="color:#888;">' + interimTranscript + '</i>';
+                };
                 
-                setTimeout(() => {
-                    notification.classList.remove('show');
-                }, 3000);
+                recognition.onerror = function(event) {
+                    console.error('Error de reconocimiento de voz: ', event.error);
+                    statusDiv.textContent = 'Error: ' + event.error;
+                    statusDiv.className = 'status stopped';
+                    isListening = false;
+                };
+                
+                recognition.onend = function() {
+                    if (isListening) {
+                        // Si aún debería estar escuchando, reiniciar
+                        recognition.start();
+                    }
+                };
+                
+                // Comandos de voz para iniciar y detener
+                recognition.onresult = function(event) {
+                    let interimTranscript = '';
+                    let commandDetected = false;
+                    
+                    for (let i = event.resultIndex; i < event.results.length; i++) {
+                        const transcript = event.results[i][0].transcript.toLowerCase().trim();
+                        
+                        if (event.results[i].isFinal) {
+                            // Detectar comandos de voz
+                            if (transcript.includes('iniciar')) {
+                                startRecognition();
+                                commandDetected = true;
+                            } else if (transcript.includes('detener')) {
+                                stopRecognition();
+                                commandDetected = true;
+                            } else {
+                                finalTranscript += event.results[i][0].transcript + ' ';
+                            }
+                        } else {
+                            interimTranscript += event.results[i][0].transcript;
+                        }
+                    }
+                    
+                    if (!commandDetected) {
+                        textOutput.innerHTML = finalTranscript + '<i style="color:#888;">' + interimTranscript + '</i>';
+                    }
+                };
+                
+            } else {
+                // Navegador no compatible
+                textOutput.textContent = 'Tu navegador no es compatible con la API de reconocimiento de voz. Por favor, utiliza Chrome o Edge.';
+                btnStart.disabled = true;
+                btnStop.disabled = true;
+                btnRead.disabled = true;
             }
+            
+            function startRecognition() {
+                if (!isListening) {
+                    finalTranscript = textOutput.textContent;
+                    recognition.start();
+                }
+            }
+            
+            function stopRecognition() {
+                if (isListening) {
+                    recognition.stop();
+                    isListening = false;
+                    statusDiv.textContent = 'Transcripción detenida';
+                    statusDiv.className = 'status stopped';
+                    textOutput.innerHTML = finalTranscript;
+                }
+            }
+            
+            function readText() {
+                if (finalTranscript.trim() !== '') {
+                    const speech = new SpeechSynthesisUtterance();
+                    speech.text = finalTranscript;
+                    speech.lang = 'es-ES';
+                    speech.volume = 1;
+                    speech.rate = 1;
+                    speech.pitch = 1;
+                    
+                    window.speechSynthesis.speak(speech);
+                }
+            }
+            
+            function clearText() {
+                finalTranscript = '';
+                textOutput.textContent = '';
+            }
+            
+            // Event listeners para botones
+            btnStart.addEventListener('click', startRecognition);
+            btnStop.addEventListener('click', stopRecognition);
+            btnRead.addEventListener('click', readText);
+            btnClear.addEventListener('click', clearText);
         });
     </script>
 </body>
