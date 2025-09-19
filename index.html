@@ -22,7 +22,7 @@
         }
         
         .container {
-            background-color: rgba(255, 255, 255, 0.92);
+            background-color: rgba(255, 255, 255, 0.95);
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             width: 90%;
@@ -247,6 +247,7 @@
             let recognition;
             let isListening = false;
             let finalTranscript = '';
+            let interimTranscript = '';
             
             // Verificar compatibilidad del navegador
             if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
@@ -263,17 +264,38 @@
                 };
                 
                 recognition.onresult = function(event) {
-                    let interimTranscript = '';
+                    interimTranscript = '';
                     
                     for (let i = event.resultIndex; i < event.results.length; i++) {
                         if (event.results[i].isFinal) {
-                            finalTranscript += event.results[i][0].transcript + ' ';
+                            // Solo agregar si es nuevo texto, no repetir
+                            const newText = event.results[i][0].transcript;
+                            if (!finalTranscript.includes(newText)) {
+                                finalTranscript += newText + ' ';
+                            }
                         } else {
                             interimTranscript += event.results[i][0].transcript;
                         }
                     }
                     
+                    // Mostrar solo el texto final más el interim actual
                     textOutput.innerHTML = finalTranscript + '<i style="color:#888;">' + interimTranscript + '</i>';
+                    
+                    // Detectar comandos de voz
+                    const lastResult = event.results[event.results.length - 1];
+                    if (lastResult.isFinal) {
+                        const transcript = lastResult[0].transcript.toLowerCase().trim();
+                        
+                        if (transcript.includes('iniciar')) {
+                            if (!isListening) {
+                                startRecognition();
+                            }
+                        } else if (transcript.includes('detener')) {
+                            if (isListening) {
+                                stopRecognition();
+                            }
+                        }
+                    }
                 };
                 
                 recognition.onerror = function(event) {
@@ -286,36 +308,14 @@
                 recognition.onend = function() {
                     if (isListening) {
                         // Si aún debería estar escuchando, reiniciar
-                        recognition.start();
-                    }
-                };
-                
-                // Comandos de voz para iniciar y detener
-                recognition.onresult = function(event) {
-                    let interimTranscript = '';
-                    let commandDetected = false;
-                    
-                    for (let i = event.resultIndex; i < event.results.length; i++) {
-                        const transcript = event.results[i][0].transcript.toLowerCase().trim();
-                        
-                        if (event.results[i].isFinal) {
-                            // Detectar comandos de voz
-                            if (transcript.includes('iniciar')) {
-                                startRecognition();
-                                commandDetected = true;
-                            } else if (transcript.includes('detener')) {
-                                stopRecognition();
-                                commandDetected = true;
-                            } else {
-                                finalTranscript += event.results[i][0].transcript + ' ';
-                            }
-                        } else {
-                            interimTranscript += event.results[i][0].transcript;
+                        try {
+                            recognition.start();
+                        } catch (e) {
+                            console.log('No se pudo reiniciar el reconocimiento:', e);
+                            isListening = false;
+                            statusDiv.textContent = 'Transcripción detenida';
+                            statusDiv.className = 'status stopped';
                         }
-                    }
-                    
-                    if (!commandDetected) {
-                        textOutput.innerHTML = finalTranscript + '<i style="color:#888;">' + interimTranscript + '</i>';
                     }
                 };
                 
@@ -329,15 +329,18 @@
             
             function startRecognition() {
                 if (!isListening) {
-                    finalTranscript = textOutput.textContent;
-                    recognition.start();
+                    try {
+                        recognition.start();
+                    } catch (e) {
+                        console.log('Error al iniciar:', e);
+                    }
                 }
             }
             
             function stopRecognition() {
                 if (isListening) {
-                    recognition.stop();
                     isListening = false;
+                    recognition.stop();
                     statusDiv.textContent = 'Transcripción detenida';
                     statusDiv.className = 'status stopped';
                     textOutput.innerHTML = finalTranscript;
@@ -359,6 +362,7 @@
             
             function clearText() {
                 finalTranscript = '';
+                interimTranscript = '';
                 textOutput.textContent = '';
             }
             
