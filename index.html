@@ -41,6 +41,10 @@
             text-align: center;
             border-radius: 8px 8px 0 0;
             margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
         }
         
         h1 {
@@ -56,6 +60,16 @@
         @media (max-width: 768px) {
             .app-container {
                 grid-template-columns: 1fr;
+            }
+            
+            header {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .header-buttons {
+                display: flex;
+                gap: 10px;
             }
         }
         
@@ -99,6 +113,7 @@
             display: flex;
             gap: 10px;
             justify-content: center;
+            flex-wrap: wrap;
         }
         
         button {
@@ -156,6 +171,12 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
+        }
+        
+        @media (max-width: 768px) {
+            .product-form {
+                grid-template-columns: 1fr;
+            }
         }
         
         .form-group {
@@ -291,111 +312,304 @@
             color: #7f8c8d;
             font-size: 14px;
         }
+        
+        /* Nuevos estilos para las mejoras */
+        
+        /* Vista de solo lectura */
+        .view-mode {
+            background-color: var(--light-color);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .view-mode h2 {
+            color: var(--dark-color);
+            margin-bottom: 15px;
+        }
+        
+        /* Grid de imágenes */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .product-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            cursor: pointer;
+        }
+        
+        .product-info {
+            padding: 15px;
+        }
+        
+        .product-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+        
+        .product-code {
+            color: #7f8c8d;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        
+        .product-prices {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        
+        .wholesale-price {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        .retail-price {
+            color: var(--success-color);
+            font-weight: bold;
+        }
+        
+        /* Modal para imagen completa */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        /* Barra de búsqueda */
+        .search-container {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .search-input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .search-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+        
+        /* Vista de solo lectura */
+        .readonly-view {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .readonly-view h2 {
+            color: var(--dark-color);
+            margin-bottom: 15px;
+        }
+        
+        /* Responsive para teléfono */
+        @media (max-width: 480px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .card {
+                padding: 15px;
+            }
+            
+            .camera-container, .scanner-container {
+                height: 250px;
+            }
+            
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .camera-controls {
+                flex-direction: column;
+            }
+            
+            .camera-controls button {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
             <h1>Sistema de Gestión de Productos</h1>
+            <div class="header-buttons">
+                <button id="view-mode-btn" class="btn-primary">Modo Vista</button>
+                <button id="edit-mode-btn" class="btn-success">Modo Edición</button>
+            </div>
         </header>
         
-        <div class="app-container">
-            <!-- Sección de captura de fotos -->
-            <div class="card">
-                <h2>Captura de Imagen del Producto</h2>
-                <div class="camera-section">
-                    <div class="camera-container">
-                        <video id="camera-preview" autoplay playsinline></video>
-                        <canvas id="camera-capture" class="hidden"></canvas>
-                    </div>
-                    <div class="camera-controls">
-                        <button id="start-camera" class="btn-primary">Iniciar Cámara</button>
-                        <button id="switch-camera" class="btn-primary">Cambiar Cámara</button>
-                        <button id="capture-photo" class="btn-success" disabled>Capturar Foto</button>
-                    </div>
-                    <div id="captured-image-container" class="hidden">
-                        <h3>Imagen Capturada:</h3>
-                        <img id="captured-image" class="captured-image" alt="Imagen capturada">
-                        <button id="retake-photo" class="btn-danger">Volver a Tomar</button>
-                    </div>
-                </div>
+        <!-- Vista de solo lectura -->
+        <div id="readonly-view" class="readonly-view hidden">
+            <h2>Lista de Productos (Solo Lectura)</h2>
+            <div class="search-container">
+                <input type="text" id="search-input" class="search-input" placeholder="Buscar productos...">
+                <button id="search-btn" class="search-button">Buscar</button>
             </div>
-            
-            <!-- Sección de escaneo de código -->
-            <div class="card">
-                <h2>Escanear Código de Producto</h2>
-                <div class="scanner-section">
-                    <div class="scanner-container">
-                        <div id="scanner-preview"></div>
-                        <div class="scanner-overlay">
-                            <div class="scanner-line"></div>
-                        </div>
-                    </div>
-                    <div class="camera-controls">
-                        <button id="start-scanner" class="btn-primary">Iniciar Escáner</button>
-                        <button id="stop-scanner" class="btn-danger" disabled>Detener Escáner</button>
-                    </div>
-                    <div class="form-group">
-                        <label for="product-code">Código del Producto:</label>
-                        <input type="text" id="product-code" placeholder="Código escaneado aparecerá aquí">
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Formulario de información del producto -->
-            <div class="card product-form">
-                <h2>Información del Producto</h2>
-                <div class="form-group">
-                    <label for="product-name">Nombre del Producto:</label>
-                    <input type="text" id="product-name" placeholder="Ingrese el nombre del producto">
-                </div>
-                <div class="form-group">
-                    <label for="product-description">Descripción:</label>
-                    <textarea id="product-description" rows="3" placeholder="Descripción del producto"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="wholesale-price">Precio por Mayor:</label>
-                    <input type="number" id="wholesale-price" step="0.01" placeholder="0.00">
-                </div>
-                <div class="form-group">
-                    <label for="retail-price">Precio de Venta:</label>
-                    <input type="number" id="retail-price" step="0.01" placeholder="0.00">
-                </div>
-                <div class="form-group">
-                    <button id="save-product" class="btn-success">Guardar Producto</button>
-                    <button id="clear-form" class="btn-danger">Limpiar Formulario</button>
-                </div>
-            </div>
-            
-            <!-- Lista de productos -->
-            <div class="card product-list">
-                <h2>Lista de Productos</h2>
-                <table id="products-table">
-                    <thead>
-                        <tr>
-                            <th>Código</th>
-                            <th>Imagen</th>
-                            <th>Nombre</th>
-                            <th>Precio Mayor</th>
-                            <th>Precio Venta</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody id="products-list">
-                        <!-- Los productos se agregarán aquí dinámicamente -->
-                    </tbody>
-                </table>
+            <div id="products-grid" class="products-grid">
+                <!-- Los productos se mostrarán aquí en formato grid -->
             </div>
         </div>
         
-        <!-- Botón de impresión -->
-        <div class="print-section">
-            <button id="print-list" class="btn-print">Imprimir Lista de Productos</button>
+        <!-- Vista de edición -->
+        <div id="edit-view">
+            <div class="app-container">
+                <!-- Sección de captura de fotos -->
+                <div class="card">
+                    <h2>Captura de Imagen del Producto</h2>
+                    <div class="camera-section">
+                        <div class="camera-container">
+                            <video id="camera-preview" autoplay playsinline></video>
+                            <canvas id="camera-capture" class="hidden"></canvas>
+                        </div>
+                        <div class="camera-controls">
+                            <button id="start-camera" class="btn-primary">Iniciar Cámara</button>
+                            <button id="switch-camera" class="btn-primary">Cambiar Cámara</button>
+                            <button id="capture-photo" class="btn-success" disabled>Capturar Foto</button>
+                        </div>
+                        <div id="captured-image-container" class="hidden">
+                            <h3>Imagen Capturada:</h3>
+                            <img id="captured-image" class="captured-image" alt="Imagen capturada">
+                            <button id="retake-photo" class="btn-danger">Volver a Tomar</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Sección de escaneo de código -->
+                <div class="card">
+                    <h2>Escanear Código de Producto</h2>
+                    <div class="scanner-section">
+                        <div class="scanner-container">
+                            <div id="scanner-preview"></div>
+                            <div class="scanner-overlay">
+                                <div class="scanner-line"></div>
+                            </div>
+                        </div>
+                        <div class="camera-controls">
+                            <button id="start-scanner" class="btn-primary">Iniciar Escáner</button>
+                            <button id="stop-scanner" class="btn-danger" disabled>Detener Escáner</button>
+                        </div>
+                        <div class="form-group">
+                            <label for="product-code">Código del Producto:</label>
+                            <input type="text" id="product-code" placeholder="Código escaneado aparecerá aquí">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Formulario de información del producto -->
+                <div class="card product-form">
+                    <h2>Información del Producto</h2>
+                    <div class="form-group">
+                        <label for="product-name">Nombre del Producto:</label>
+                        <input type="text" id="product-name" placeholder="Ingrese el nombre del producto">
+                    </div>
+                    <div class="form-group">
+                        <label for="product-description">Descripción:</label>
+                        <textarea id="product-description" rows="3" placeholder="Descripción del producto"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="wholesale-price">Precio por Mayor:</label>
+                        <input type="number" id="wholesale-price" step="0.01" placeholder="0.00">
+                    </div>
+                    <div class="form-group">
+                        <label for="retail-price">Precio de Venta:</label>
+                        <input type="number" id="retail-price" step="0.01" placeholder="0.00">
+                    </div>
+                    <div class="form-group">
+                        <button id="save-product" class="btn-success">Guardar Producto</button>
+                        <button id="clear-form" class="btn-danger">Limpiar Formulario</button>
+                    </div>
+                </div>
+                
+                <!-- Lista de productos -->
+                <div class="card product-list">
+                    <h2>Lista de Productos</h2>
+                    <table id="products-table">
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Imagen</th>
+                                <th>Nombre</th>
+                                <th>Precio Mayor</th>
+                                <th>Precio Venta</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="products-list">
+                            <!-- Los productos se agregarán aquí dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Botón de impresión -->
+            <div class="print-section">
+                <button id="print-list" class="btn-print">Imprimir Lista de Productos</button>
+            </div>
         </div>
         
         <footer>
             <p>Sistema de Gestión de Productos &copy; 2023</p>
         </footer>
+    </div>
+    
+    <!-- Modal para imagen completa -->
+    <div id="image-modal" class="modal">
+        <span class="close-modal">&times;</span>
+        <img id="full-image" class="modal-content">
     </div>
     
     <!-- Notificación -->
@@ -408,6 +622,7 @@
         let capturedImageData = null;
         let scannerActive = false;
         let products = JSON.parse(localStorage.getItem('products')) || [];
+        let currentView = 'edit'; // 'edit' o 'view'
 
         // Elementos DOM
         const cameraPreview = document.getElementById('camera-preview');
@@ -430,11 +645,22 @@
         const productsList = document.getElementById('products-list');
         const printListBtn = document.getElementById('print-list');
         const notification = document.getElementById('notification');
+        const viewModeBtn = document.getElementById('view-mode-btn');
+        const editModeBtn = document.getElementById('edit-mode-btn');
+        const readonlyView = document.getElementById('readonly-view');
+        const editView = document.getElementById('edit-view');
+        const productsGrid = document.getElementById('products-grid');
+        const searchInput = document.getElementById('search-input');
+        const searchBtn = document.getElementById('search-btn');
+        const imageModal = document.getElementById('image-modal');
+        const fullImage = document.getElementById('full-image');
+        const closeModal = document.querySelector('.close-modal');
 
         // Inicialización
         document.addEventListener('DOMContentLoaded', function() {
             loadProducts();
             updateProductsTable();
+            updateProductsGrid();
             
             // Event listeners
             startCameraBtn.addEventListener('click', startCamera);
@@ -446,6 +672,20 @@
             saveProductBtn.addEventListener('click', saveProduct);
             clearFormBtn.addEventListener('click', clearForm);
             printListBtn.addEventListener('click', printList);
+            viewModeBtn.addEventListener('click', switchToViewMode);
+            editModeBtn.addEventListener('click', switchToEditMode);
+            searchBtn.addEventListener('click', searchProducts);
+            searchInput.addEventListener('keyup', function(event) {
+                if (event.key === 'Enter') {
+                    searchProducts();
+                }
+            });
+            closeModal.addEventListener('click', closeImageModal);
+            imageModal.addEventListener('click', function(event) {
+                if (event.target === imageModal) {
+                    closeImageModal();
+                }
+            });
         });
 
         // Funciones de cámara
@@ -618,6 +858,7 @@
             
             // Actualizar la tabla
             updateProductsTable();
+            updateProductsGrid();
             
             // Limpiar formulario
             clearForm();
@@ -651,7 +892,7 @@
                 // Imagen pequeña o placeholder
                 let imageHtml = '<div style="width: 50px; height: 50px; background: #eee; display: flex; align-items: center; justify-content: center;">Sin imagen</div>';
                 if (product.image) {
-                    imageHtml = `<img src="${product.image}" alt="${product.name}" style="width: 50px; height: 50px; object-fit: cover;">`;
+                    imageHtml = `<img src="${product.image}" alt="${product.name}" style="width: 50px; height: 50px; object-fit: cover; cursor: pointer;" onclick="openImageModal('${product.image}')">`;
                 }
                 
                 row.innerHTML = `
@@ -667,6 +908,42 @@
                 `;
                 
                 productsList.appendChild(row);
+            });
+        }
+
+        function updateProductsGrid(filteredProducts = null) {
+            const productsToShow = filteredProducts || products;
+            productsGrid.innerHTML = '';
+            
+            if (productsToShow.length === 0) {
+                productsGrid.innerHTML = '<p style="grid-column: 1 / -1; text-align: center;">No hay productos para mostrar</p>';
+                return;
+            }
+            
+            productsToShow.forEach(product => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                
+                // Imagen o placeholder
+                let imageHtml = '<div style="width: 100%; height: 200px; background: #eee; display: flex; align-items: center; justify-content: center; color: #7f8c8d;">Sin imagen</div>';
+                if (product.image) {
+                    imageHtml = `<img src="${product.image}" alt="${product.name}" class="product-image" onclick="openImageModal('${product.image}')">`;
+                }
+                
+                card.innerHTML = `
+                    ${imageHtml}
+                    <div class="product-info">
+                        <div class="product-name">${product.name}</div>
+                        <div class="product-code">Código: ${product.code}</div>
+                        <div class="product-description">${product.description || 'Sin descripción'}</div>
+                        <div class="product-prices">
+                            <div class="wholesale-price">$${product.wholesalePrice.toFixed(2)}</div>
+                            <div class="retail-price">$${product.retailPrice.toFixed(2)}</div>
+                        </div>
+                    </div>
+                `;
+                
+                productsGrid.appendChild(card);
             });
         }
 
@@ -695,6 +972,7 @@
                 products = products.filter(p => p.code !== code);
                 localStorage.setItem('products', JSON.stringify(products));
                 updateProductsTable();
+                updateProductsGrid();
                 showNotification('Producto eliminado correctamente', 'success');
             }
         }
@@ -713,9 +991,59 @@
             }, 3000);
         }
 
+        // Funciones para cambiar entre modos de vista
+        function switchToViewMode() {
+            currentView = 'view';
+            readonlyView.classList.remove('hidden');
+            editView.classList.add('hidden');
+            viewModeBtn.disabled = true;
+            editModeBtn.disabled = false;
+            
+            // Detener cámara y escáner si están activos
+            stopCamera();
+            stopScanner();
+        }
+
+        function switchToEditMode() {
+            currentView = 'edit';
+            readonlyView.classList.add('hidden');
+            editView.classList.remove('hidden');
+            viewModeBtn.disabled = false;
+            editModeBtn.disabled = true;
+        }
+
+        // Función de búsqueda
+        function searchProducts() {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            
+            if (!searchTerm) {
+                updateProductsGrid();
+                return;
+            }
+            
+            const filteredProducts = products.filter(product => 
+                product.name.toLowerCase().includes(searchTerm) ||
+                product.code.toLowerCase().includes(searchTerm) ||
+                (product.description && product.description.toLowerCase().includes(searchTerm))
+            );
+            
+            updateProductsGrid(filteredProducts);
+        }
+
+        // Función para abrir imagen en modal
+        function openImageModal(imageSrc) {
+            fullImage.src = imageSrc;
+            imageModal.style.display = 'flex';
+        }
+
+        function closeImageModal() {
+            imageModal.style.display = 'none';
+        }
+
         // Hacer las funciones disponibles globalmente para los botones
         window.editProduct = editProduct;
         window.deleteProduct = deleteProduct;
+        window.openImageModal = openImageModal;
     </script>
 </body>
 </html>
