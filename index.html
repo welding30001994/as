@@ -13,14 +13,13 @@
             --accent-color: #7e42ff;
             --success-color: #00d26a;
             --danger-color: #ff2e63;
-            --dark-bg: #0a0a0f;
-            --darker-bg: #050508;
-            --card-bg: rgba(15, 15, 25, 0.85);
+            --dark-bg: #0f1525;
+            --darker-bg: #0a0f1a;
+            --card-bg: rgba(20, 25, 40, 0.8);
             --text-color: #e0e0ff;
-            --text-muted: #8a8aaa;
-            --glass-effect: rgba(255, 255, 255, 0.08);
-            --border-glow: 0 0 15px rgba(0, 198, 255, 0.4);
-            --hover-glow: 0 0 20px rgba(0, 198, 255, 0.6);
+            --text-muted: #a0a0c0;
+            --glass-effect: rgba(255, 255, 255, 0.05);
+            --border-glow: 0 0 10px rgba(0, 198, 255, 0.3);
         }
         
         * {
@@ -36,7 +35,6 @@
             line-height: 1.6;
             min-height: 100vh;
             padding: 15px;
-            background-attachment: fixed;
         }
         
         .container {
@@ -47,11 +45,11 @@
         header {
             text-align: center;
             margin-bottom: 20px;
-            padding: 20px;
+            padding: 15px;
             background: var(--card-bg);
-            border-radius: 20px;
+            border-radius: 16px;
             box-shadow: var(--border-glow);
-            backdrop-filter: blur(15px);
+            backdrop-filter: blur(10px);
             border: 1px solid var(--glass-effect);
             position: relative;
             overflow: hidden;
@@ -63,14 +61,8 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, var(--primary-color), var(--accent-color), transparent);
-            animation: headerGlow 3s infinite;
-        }
-        
-        @keyframes headerGlow {
-            0%, 100% { opacity: 0.7; }
-            50% { opacity: 1; }
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
         }
         
         h1 {
@@ -80,24 +72,11 @@
             -webkit-text-fill-color: transparent;
             margin-bottom: 8px;
             text-shadow: 0 0 20px rgba(0, 198, 255, 0.5);
-            font-weight: 700;
         }
         
         .subtitle {
             color: var(--text-muted);
             font-size: 0.9rem;
-        }
-        
-        .mode-indicator {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: rgba(0, 198, 255, 0.2);
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            color: var(--primary-color);
-            border: 1px solid var(--primary-color);
         }
         
         .app-container {
@@ -116,25 +95,19 @@
             }
             
             header {
-                padding: 25px;
+                padding: 20px;
                 margin-bottom: 30px;
             }
         }
         
         .card {
             background: var(--card-bg);
-            border-radius: 20px;
+            border-radius: 16px;
             box-shadow: var(--border-glow);
             padding: 20px;
             margin-bottom: 20px;
-            backdrop-filter: blur(15px);
+            backdrop-filter: blur(10px);
             border: 1px solid var(--glass-effect);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--hover-glow);
         }
         
         .card h2 {
@@ -163,7 +136,7 @@
             width: 100%;
             height: 250px;
             background: var(--darker-bg);
-            border-radius: 15px;
+            border-radius: 12px;
             overflow: hidden;
             border: 1px solid var(--glass-effect);
             display: flex;
@@ -194,7 +167,7 @@
         button {
             padding: 10px 15px;
             border: none;
-            border-radius: 10px;
+            border-radius: 8px;
             cursor: pointer;
             font-weight: bold;
             transition: all 0.3s;
@@ -202,9 +175,6 @@
             align-items: center;
             gap: 6px;
             font-size: 0.85rem;
-            background: rgba(20, 20, 35, 0.8);
-            color: var(--text-color);
-            border: 1px solid var(--glass-effect);
         }
         
         @media (min-width: 768px) {
@@ -222,7 +192,7 @@
         
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 114, 255, 0.5);
+            box-shadow: 0 6px 20px rgba(0, 114, 255, 0.4);
         }
         
         .btn-success {
@@ -233,7 +203,7 @@
         
         .btn-success:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 210, 106, 0.5);
+            box-shadow: 0 6px 20px rgba(0, 210, 106, 0.4);
         }
         
         .btn-danger {
@@ -244,7 +214,7 @@
         
         .btn-danger:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 46, 99, 0.5);
+            box-shadow: 0 6px 20px rgba(255, 46, 99, 0.4);
         }
         
         .btn-accent {
@@ -255,7 +225,7 @@
         
         .btn-accent:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(126, 66, 255, 0.5);
+            box-shadow: 0 6px 20px rgba(126, 66, 255, 0.4);
         }
         
         .product-form {
@@ -286,9 +256,9 @@
         input, textarea {
             width: 100%;
             padding: 10px 12px;
-            background: rgba(10, 10, 20, 0.7);
+            background: rgba(10, 15, 30, 0.7);
             border: 1px solid var(--glass-effect);
-            border-radius: 10px;
+            border-radius: 8px;
             color: var(--text-color);
             font-size: 0.9rem;
             transition: all 0.3s;
@@ -304,7 +274,7 @@
         input:focus, textarea:focus {
             outline: none;
             border-color: var(--primary-color);
-            box-shadow: 0 0 10px rgba(0, 198, 255, 0.5);
+            box-shadow: 0 0 10px rgba(0, 198, 255, 0.3);
         }
         
         .product-list {
@@ -350,17 +320,16 @@
         }
         
         .product-card {
-            background: rgba(20, 20, 35, 0.7);
-            border-radius: 15px;
+            background: rgba(15, 20, 35, 0.7);
+            border-radius: 12px;
             overflow: hidden;
             border: 1px solid var(--glass-effect);
             transition: transform 0.3s, box-shadow 0.3s;
-            position: relative;
         }
         
         .product-card:hover {
             transform: translateY(-5px);
-            box-shadow: var(--hover-glow);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
         }
         
         .product-image {
@@ -368,11 +337,6 @@
             height: 200px;
             object-fit: cover;
             cursor: pointer;
-            transition: transform 0.3s;
-        }
-        
-        .product-image:hover {
-            transform: scale(1.05);
         }
         
         .product-info {
@@ -396,9 +360,6 @@
             display: flex;
             justify-content: space-between;
             margin-bottom: 12px;
-            background: rgba(10, 10, 20, 0.5);
-            padding: 8px;
-            border-radius: 8px;
         }
         
         .price-wholesale, .price-retail {
@@ -417,7 +378,6 @@
         .product-actions {
             display: flex;
             gap: 8px;
-            justify-content: center;
         }
         
         .btn-sm {
@@ -427,23 +387,12 @@
             justify-content: center;
         }
         
-        .btn-whatsapp {
-            background: linear-gradient(135deg, #25D366, #128C7E);
-            color: white;
-            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
-        }
-        
-        .btn-whatsapp:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5);
-        }
-        
         .captured-image {
             width: 100%;
             max-height: 250px;
             object-fit: contain;
             margin-top: 15px;
-            border-radius: 10px;
+            border-radius: 8px;
             border: 1px solid var(--glass-effect);
             cursor: pointer;
             transition: transform 0.3s;
@@ -473,14 +422,14 @@
             height: 2px;
             background: var(--success-color);
             top: 50%;
-            animation: scan 2s infinite linear;
+            animation: scan 1s infinite linear;
             box-shadow: 0 0 10px var(--success-color);
         }
         
         @keyframes scan {
-            0% { top: 0%; }
-            50% { top: 100%; }
-            100% { top: 0%; }
+            0% { top: 10%; }
+            50% { top: 90%; }
+            100% { top: 10%; }
         }
         
         .notification {
@@ -495,14 +444,13 @@
             opacity: 0;
             transition: opacity 0.3s, transform 0.3s;
             transform: translateX(100px);
-            backdrop-filter: blur(15px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             display: flex;
             align-items: center;
             gap: 8px;
             font-size: 0.9rem;
             max-width: 300px;
-            border: 1px solid var(--glass-effect);
         }
         
         @media (min-width: 768px) {
@@ -567,7 +515,7 @@
         
         .btn-print:hover, .btn-share:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
         }
         
         footer {
@@ -587,19 +535,19 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(5, 5, 10, 0.95);
+            background: rgba(0, 0, 0, 0.95);
             z-index: 2000;
             justify-content: center;
             align-items: center;
-            backdrop-filter: blur(15px);
+            backdrop-filter: blur(10px);
             padding: 15px;
         }
         
         .modal-content {
             max-width: 100%;
             max-height: 100%;
-            border-radius: 15px;
-            box-shadow: var(--hover-glow);
+            border-radius: 12px;
+            box-shadow: 0 0 30px rgba(0, 198, 255, 0.5);
         }
         
         .close-modal {
@@ -676,17 +624,15 @@
             justify-content: center;
             padding: 15px;
             border: 2px dashed var(--primary-color);
-            border-radius: 10px;
+            border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s;
             margin-top: 10px;
             text-align: center;
-            background: rgba(10, 10, 20, 0.5);
         }
         
         .upload-area:hover {
             background: rgba(0, 198, 255, 0.1);
-            box-shadow: 0 0 15px rgba(0, 198, 255, 0.3);
         }
         
         .upload-area i {
@@ -712,9 +658,9 @@
         .share-link {
             flex: 1;
             padding: 10px 12px;
-            background: rgba(10, 10, 20, 0.7);
+            background: rgba(10, 15, 30, 0.7);
             border: 1px solid var(--glass-effect);
-            border-radius: 10px;
+            border-radius: 8px;
             color: var(--text-color);
             font-size: 0.9rem;
             overflow: hidden;
@@ -737,46 +683,73 @@
             height: 100%;
         }
         
-        .view-mode .product-form,
-        .view-mode .camera-section,
-        .view-mode .scanner-section {
-            display: none;
+        .scanner-frame {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70%;
+            height: 40%;
+            border: 3px solid var(--success-color);
+            border-radius: 12px;
+            box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
+            z-index: 10;
         }
         
-        .view-mode .mode-indicator {
-            background: rgba(255, 193, 7, 0.2);
-            color: #ffc107;
-            border-color: #ffc107;
+        .project-management {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(10, 15, 30, 0.5);
+            border-radius: 8px;
+            border: 1px solid var(--glass-effect);
         }
         
-        .admin-actions {
+        .project-buttons {
             display: flex;
-            gap: 8px;
-            margin-top: 10px;
+            gap: 10px;
+            flex-wrap: wrap;
         }
         
-        .admin-only {
-            display: block;
+        .project-list {
+            margin-top: 15px;
+            max-height: 200px;
+            overflow-y: auto;
         }
         
-        .view-mode .admin-only {
-            display: none;
+        .project-item {
+            padding: 10px;
+            margin-bottom: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .project-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .project-name {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .project-date {
+            font-size: 0.8rem;
+            color: var(--text-muted);
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <div class="mode-indicator" id="mode-indicator">
-                <i class="fas fa-user-shield"></i> Modo Administrador
-            </div>
             <h1><i class="fas fa-robot"></i> Sistema de Gestión de Productos</h1>
-            <p class="subtitle">Captura, escanea y gestiona tu inventario de forma futurista</p>
+            <p class="subtitle">Captura, escanea y gestiona tu inventario</p>
         </header>
         
         <div class="app-container">
             <!-- Sección de captura de fotos -->
-            <div class="card admin-only">
+            <div class="card">
                 <h2><i class="fas fa-camera"></i> Captura de Imagen del Producto</h2>
                 <div class="camera-section">
                     <div class="camera-container">
@@ -809,12 +782,13 @@
             </div>
             
             <!-- Sección de escaneo de código -->
-            <div class="card admin-only">
+            <div class="card">
                 <h2><i class="fas fa-barcode"></i> Escanear Código de Producto</h2>
                 <div class="scanner-section">
                     <div class="scanner-container">
                         <video id="scanner-preview" autoplay playsinline class="hidden"></video>
                         <canvas id="scanner-canvas" class="scanner-canvas hidden"></canvas>
+                        <div class="scanner-frame hidden"></div>
                         <div id="no-scanner" class="no-scanner-message">
                             <i class="fas fa-qrcode"></i>
                             <p>Inicia el escáner para leer códigos QR y de barras</p>
@@ -836,7 +810,7 @@
             </div>
             
             <!-- Formulario de información del producto -->
-            <div class="card product-form admin-only">
+            <div class="card product-form">
                 <h2><i class="fas fa-edit"></i> Información del Producto</h2>
                 <div class="form-group">
                     <label for="product-name">Nombre del Producto:</label>
@@ -847,11 +821,11 @@
                     <textarea id="product-description" rows="3" placeholder="Descripción del producto"></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="wholesale-price">Precio por Mayor (docenas):</label>
+                    <label for="wholesale-price">Precio por Mayor:</label>
                     <input type="number" id="wholesale-price" step="0.01" placeholder="0.00">
                 </div>
                 <div class="form-group">
-                    <label for="retail-price">Precio de Venta (unitario):</label>
+                    <label for="retail-price">Precio de Venta:</label>
                     <input type="number" id="retail-price" step="0.01" placeholder="0.00">
                 </div>
                 <div class="form-group" style="grid-column: 1 / -1; display: flex; gap: 10px; flex-direction: column;">
@@ -864,7 +838,7 @@
             <div class="card product-list">
                 <h2><i class="fas fa-boxes"></i> Lista de Productos</h2>
                 
-                <div class="search-container admin-only">
+                <div class="search-container">
                     <div class="search-box">
                         <i class="fas fa-search"></i>
                         <input type="text" id="search-product" placeholder="Buscar producto por nombre o código...">
@@ -876,12 +850,25 @@
                     <!-- Los productos se agregarán aquí dinámicamente -->
                 </div>
                 
-                <div class="action-section admin-only">
+                <!-- Gestión de proyectos -->
+                <div class="project-management">
+                    <h3><i class="fas fa-folder"></i> Gestión de Proyectos</h3>
+                    <div class="project-buttons">
+                        <button id="save-project" class="btn-success"><i class="fas fa-save"></i> Guardar Proyecto</button>
+                        <button id="load-project" class="btn-primary"><i class="fas fa-folder-open"></i> Cargar Proyecto</button>
+                        <button id="new-project" class="btn-accent"><i class="fas fa-plus"></i> Nuevo Proyecto</button>
+                    </div>
+                    <div class="project-list" id="project-list">
+                        <!-- Lista de proyectos guardados -->
+                    </div>
+                </div>
+                
+                <div class="action-section">
                     <button id="print-list" class="btn-print"><i class="fas fa-print"></i> Imprimir Lista</button>
                     <button id="share-list" class="btn-share"><i class="fas fa-share-alt"></i> Compartir Lista</button>
                 </div>
                 
-                <div id="share-link-container" class="share-link-container hidden admin-only">
+                <div id="share-link-container" class="share-link-container hidden">
                     <input type="text" id="share-link" class="share-link" readonly>
                     <button id="copy-link" class="btn-copy"><i class="fas fa-copy"></i> Copiar</button>
                 </div>
@@ -889,7 +876,7 @@
         </div>
         
         <footer>
-            <p>Sistema de Gestión de Productos Futurista &copy; 2023</p>
+            <p>Sistema de Gestión de Productos &copy; 2023</p>
         </footer>
     </div>
     
@@ -909,9 +896,10 @@
         let currentFacingMode = 'environment';
         let capturedImageData = null;
         let products = JSON.parse(localStorage.getItem('products')) || [];
+        let currentProject = localStorage.getItem('currentProject') || 'default';
+        let projects = JSON.parse(localStorage.getItem('projects')) || { 'default': { name: 'Proyecto Principal', products: [] } };
         let isScannerActive = false;
         let scannerAnimation = null;
-        let isViewMode = false;
 
         // Elementos DOM
         const cameraPreview = document.getElementById('camera-preview');
@@ -938,6 +926,10 @@
         const shareLinkContainer = document.getElementById('share-link-container');
         const shareLink = document.getElementById('share-link');
         const copyLinkBtn = document.getElementById('copy-link');
+        const saveProjectBtn = document.getElementById('save-project');
+        const loadProjectBtn = document.getElementById('load-project');
+        const newProjectBtn = document.getElementById('new-project');
+        const projectList = document.getElementById('project-list');
         const notification = document.getElementById('notification');
         const searchProductInput = document.getElementById('search-product');
         const clearSearchBtn = document.getElementById('clear-search');
@@ -951,38 +943,36 @@
         const scannerPreview = document.getElementById('scanner-preview');
         const scannerCanvas = document.getElementById('scanner-canvas');
         const scannerOverlay = document.querySelector('.scanner-overlay');
-        const modeIndicator = document.getElementById('mode-indicator');
+        const scannerFrame = document.querySelector('.scanner-frame');
 
         // Inicialización
         document.addEventListener('DOMContentLoaded', function() {
-            // Verificar si estamos en modo vista
-            checkViewMode();
-            
-            loadProducts();
+            loadCurrentProject();
             updateProductsGrid();
+            updateProjectList();
             
-            // Event listeners solo para modo administrador
-            if (!isViewMode) {
-                startCameraBtn.addEventListener('click', startCamera);
-                switchCameraBtn.addEventListener('click', switchCamera);
-                capturePhotoBtn.addEventListener('click', capturePhoto);
-                retakePhotoBtn.addEventListener('click', retakePhoto);
-                startScannerBtn.addEventListener('click', startScanner);
-                stopScannerBtn.addEventListener('click', stopScanner);
-                manualCodeBtn.addEventListener('click', manualCodeInput);
-                saveProductBtn.addEventListener('click', saveProduct);
-                clearFormBtn.addEventListener('click', clearForm);
-                printListBtn.addEventListener('click', printList);
-                shareListBtn.addEventListener('click', generateShareLink);
-                copyLinkBtn.addEventListener('click', copyShareLink);
-                searchProductInput.addEventListener('input', filterProducts);
-                clearSearchBtn.addEventListener('click', clearSearch);
-                uploadArea.addEventListener('click', () => imageUpload.click());
-                imageUpload.addEventListener('change', handleImageUpload);
-            }
-            
+            // Event listeners
+            startCameraBtn.addEventListener('click', startCamera);
+            switchCameraBtn.addEventListener('click', switchCamera);
+            capturePhotoBtn.addEventListener('click', capturePhoto);
+            retakePhotoBtn.addEventListener('click', retakePhoto);
+            startScannerBtn.addEventListener('click', startScanner);
+            stopScannerBtn.addEventListener('click', stopScanner);
+            manualCodeBtn.addEventListener('click', manualCodeInput);
+            saveProductBtn.addEventListener('click', saveProduct);
+            clearFormBtn.addEventListener('click', clearForm);
+            printListBtn.addEventListener('click', printList);
+            shareListBtn.addEventListener('click', generateShareLink);
+            copyLinkBtn.addEventListener('click', copyShareLink);
+            saveProjectBtn.addEventListener('click', saveCurrentProject);
+            loadProjectBtn.addEventListener('click', loadProject);
+            newProjectBtn.addEventListener('click', createNewProject);
+            searchProductInput.addEventListener('input', filterProducts);
+            clearSearchBtn.addEventListener('click', clearSearch);
             capturedImage.addEventListener('click', openImageModal);
             closeModal.addEventListener('click', closeImageModal);
+            uploadArea.addEventListener('click', () => imageUpload.click());
+            imageUpload.addEventListener('change', handleImageUpload);
             
             window.addEventListener('click', function(event) {
                 if (event.target === imageModal) {
@@ -991,25 +981,13 @@
             });
             
             // Mostrar productos guardados al cargar la página
-            if (products.length > 0 && !isViewMode) {
-                showNotification(`Se cargaron ${products.length} productos`, 'success');
+            if (products.length > 0) {
+                showNotification(`Se cargaron ${products.length} productos del proyecto "${projects[currentProject].name}"`, 'success');
             }
-        });
-
-        // Verificar si estamos en modo vista
-        function checkViewMode() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const viewParam = urlParams.get('view');
             
-            if (viewParam === 'true') {
-                isViewMode = true;
-                document.body.classList.add('view-mode');
-                modeIndicator.innerHTML = '<i class="fas fa-eye"></i> Modo Vista';
-                modeIndicator.style.background = 'rgba(41, 128, 185, 0.2)';
-                modeIndicator.style.color = '#2980b9';
-                modeIndicator.style.borderColor = '#2980b9';
-            }
-        }
+            // Cargar datos desde URL si existen
+            loadFromURL();
+        });
 
         // Funciones de cámara
         async function startCamera() {
@@ -1099,7 +1077,7 @@
             imageUpload.value = '';
         }
 
-        // Funciones de escáner
+        // Funciones de escáner MEJORADO
         async function startScanner() {
             try {
                 if (scannerStream) {
@@ -1109,7 +1087,9 @@
                 
                 const constraints = {
                     video: { 
-                        facingMode: 'environment'
+                        facingMode: 'environment',
+                        width: { ideal: 1280 },
+                        height: { ideal: 720 }
                     },
                     audio: false
                 };
@@ -1122,12 +1102,17 @@
                 scannerPreview.classList.remove('hidden');
                 scannerCanvas.classList.remove('hidden');
                 scannerOverlay.classList.remove('hidden');
+                scannerFrame.classList.remove('hidden');
                 
                 startScannerBtn.disabled = true;
                 stopScannerBtn.disabled = false;
                 
                 isScannerActive = true;
-                scanForCodes();
+                
+                // Iniciar escaneo más rápido
+                setTimeout(() => {
+                    scanForCodes();
+                }, 500);
                 
                 showNotification('Escáner iniciado. Apunta a un código QR o de barras.', 'success');
             } catch (error) {
@@ -1156,6 +1141,7 @@
             scannerPreview.classList.add('hidden');
             scannerCanvas.classList.add('hidden');
             scannerOverlay.classList.add('hidden');
+            scannerFrame.classList.add('hidden');
             
             showNotification('Escáner detenido', 'success');
         }
@@ -1174,11 +1160,17 @@
                 // Dibujar el frame actual en el canvas
                 context.drawImage(scannerPreview, 0, 0, canvas.width, canvas.height);
                 
-                // Obtener los datos de la imagen para el escaneo
-                const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+                // Obtener los datos de la imagen para el escaneo (solo el área central)
+                const frameSize = Math.min(canvas.width, canvas.height) * 0.6;
+                const x = (canvas.width - frameSize) / 2;
+                const y = (canvas.height - frameSize) / 2;
+                
+                const imageData = context.getImageData(x, y, frameSize, frameSize);
                 
                 // Escanear códigos QR
-                const code = jsQR(imageData.data, imageData.width, imageData.height);
+                const code = jsQR(imageData.data, imageData.width, imageData.height, {
+                    inversionAttempts: "dontInvert",
+                });
                 
                 if (code) {
                     productCodeInput.value = code.data;
@@ -1188,7 +1180,7 @@
                 }
             }
             
-            // Continuar escaneando
+            // Continuar escaneando (más rápido)
             scannerAnimation = requestAnimationFrame(scanForCodes);
         }
 
@@ -1241,8 +1233,8 @@
                 showNotification('Producto guardado correctamente', 'success');
             }
             
-            // Guardar en localStorage
-            localStorage.setItem('products', JSON.stringify(products));
+            // Guardar en el proyecto actual
+            saveCurrentProject();
             
             // Actualizar la tabla
             updateProductsGrid();
@@ -1262,8 +1254,65 @@
             imageUpload.value = '';
         }
 
-        function loadProducts() {
-            // Los productos ya se cargan al inicio desde localStorage
+        // Gestión de proyectos
+        function saveCurrentProject() {
+            projects[currentProject].products = products;
+            projects[currentProject].lastModified = new Date().toISOString();
+            localStorage.setItem('projects', JSON.stringify(projects));
+            localStorage.setItem('currentProject', currentProject);
+            showNotification(`Proyecto "${projects[currentProject].name}" guardado`, 'success');
+        }
+
+        function loadCurrentProject() {
+            if (projects[currentProject]) {
+                products = projects[currentProject].products || [];
+            }
+        }
+
+        function createNewProject() {
+            const projectName = prompt('Ingresa el nombre del nuevo proyecto:');
+            if (projectName) {
+                const projectId = 'project_' + Date.now();
+                projects[projectId] = {
+                    name: projectName,
+                    products: [],
+                    created: new Date().toISOString()
+                };
+                currentProject = projectId;
+                products = [];
+                saveCurrentProject();
+                updateProductsGrid();
+                updateProjectList();
+                showNotification(`Nuevo proyecto "${projectName}" creado`, 'success');
+            }
+        }
+
+        function loadProject() {
+            // Ya se muestra la lista de proyectos, se cargan al hacer clic
+        }
+
+        function updateProjectList() {
+            projectList.innerHTML = '';
+            Object.keys(projects).forEach(projectId => {
+                const project = projects[projectId];
+                const projectItem = document.createElement('div');
+                projectItem.className = 'project-item';
+                if (projectId === currentProject) {
+                    projectItem.style.background = 'rgba(0, 198, 255, 0.2)';
+                }
+                projectItem.innerHTML = `
+                    <div class="project-name">${project.name}</div>
+                    <div class="project-date">${new Date(project.lastModified || project.created).toLocaleDateString()} - ${project.products ? project.products.length : 0} productos</div>
+                `;
+                projectItem.addEventListener('click', () => {
+                    currentProject = projectId;
+                    products = project.products || [];
+                    updateProductsGrid();
+                    updateProjectList();
+                    showNotification(`Proyecto "${project.name}" cargado`, 'success');
+                });
+                projectList.appendChild(projectItem);
+            });
         }
 
         function updateProductsGrid(filteredProducts = null) {
@@ -1280,33 +1329,9 @@
                 productCard.className = 'product-card';
                 
                 // Imagen o placeholder
-                let imageHtml = '<div style="width: 100%; height: 200px; background: rgba(10, 10, 20, 0.7); display: flex; align-items: center; justify-content: center; color: var(--text-muted);"><i class="fas fa-image fa-2x"></i></div>';
+                let imageHtml = '<div style="width: 100%; height: 200px; background: rgba(10, 15, 30, 0.7); display: flex; align-items: center; justify-content: center; color: var(--text-muted);"><i class="fas fa-image fa-2x"></i></div>';
                 if (product.image) {
                     imageHtml = `<img src="${product.image}" alt="${product.name}" class="product-image" onclick="openProductImage('${product.code}')">`;
-                }
-                
-                // Botones según el modo
-                let actionButtons = '';
-                if (isViewMode) {
-                    actionButtons = `
-                        <button class="btn-whatsapp btn-sm" onclick="contactWhatsApp('${product.code}')">
-                            <i class="fab fa-whatsapp"></i> Solicitar
-                        </button>
-                    `;
-                } else {
-                    actionButtons = `
-                        <div class="admin-actions">
-                            <button class="btn-primary btn-sm" onclick="editProduct('${product.code}')">
-                                <i class="fas fa-edit"></i> Editar
-                            </button>
-                            <button class="btn-danger btn-sm" onclick="deleteProduct('${product.code}')">
-                                <i class="fas fa-trash"></i> Eliminar
-                            </button>
-                            <button class="btn-whatsapp btn-sm" onclick="contactWhatsApp('${product.code}')">
-                                <i class="fab fa-whatsapp"></i> WhatsApp
-                            </button>
-                        </div>
-                    `;
                 }
                 
                 productCard.innerHTML = `
@@ -1315,10 +1340,13 @@
                         <div class="product-name">${product.name}</div>
                         <div class="product-code">Código: ${product.code}</div>
                         <div class="product-prices">
-                            <div class="price-wholesale">Docena: $${product.wholesalePrice.toFixed(2)}</div>
-                            <div class="price-retail">Unitario: $${product.retailPrice.toFixed(2)}</div>
+                            <div class="price-wholesale">Mayor: $${product.wholesalePrice.toFixed(2)}</div>
+                            <div class="price-retail">Venta: $${product.retailPrice.toFixed(2)}</div>
                         </div>
-                        ${actionButtons}
+                        <div class="product-actions">
+                            <button class="btn-primary btn-sm" onclick="editProduct('${product.code}')"><i class="fas fa-edit"></i> Editar</button>
+                            <button class="btn-danger btn-sm" onclick="deleteProduct('${product.code}')"><i class="fas fa-trash"></i> Eliminar</button>
+                        </div>
                     </div>
                 `;
                 
@@ -1374,22 +1402,10 @@
             
             if (confirm(`¿Está seguro de que desea eliminar el producto "${product.name}"?`)) {
                 products = products.filter(p => p.code !== code);
-                localStorage.setItem('products', JSON.stringify(products));
+                saveCurrentProject();
                 updateProductsGrid();
                 showNotification('Producto eliminado correctamente', 'success');
             }
-        }
-
-        function contactWhatsApp(code) {
-            const product = products.find(p => p.code === code);
-            if (!product) return;
-            
-            const phoneNumber = "593986122265";
-            const message = `Hola, estoy interesado en el producto: ${product.name} (Código: ${product.code}). Precio por docena: $${product.wholesalePrice}, Precio unitario: $${product.retailPrice}.`;
-            const encodedMessage = encodeURIComponent(message);
-            const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-            
-            window.open(whatsappURL, '_blank');
         }
 
         function printList() {
@@ -1397,8 +1413,8 @@
         }
 
         function generateShareLink() {
-            // Crear un enlace que active el modo vista
-            const url = `${window.location.origin}${window.location.pathname}?view=true`;
+            // Crear un enlace que contenga el ID del proyecto
+            const url = `${window.location.origin}${window.location.pathname}?project=${currentProject}`;
             
             shareLink.value = url;
             shareLinkContainer.classList.remove('hidden');
@@ -1410,6 +1426,26 @@
             shareLink.select();
             document.execCommand('copy');
             showNotification('Enlace copiado al portapapeles', 'success');
+        }
+
+        function loadFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const projectId = urlParams.get('project');
+            
+            if (projectId && projects[projectId]) {
+                currentProject = projectId;
+                products = projects[projectId].products || [];
+                updateProductsGrid();
+                updateProjectList();
+                showNotification(`Proyecto compartido "${projects[projectId].name}" cargado`, 'success');
+                
+                // Ocultar elementos de edición en modo vista
+                document.querySelectorAll('.camera-section, .scanner-section, .product-form, .project-management').forEach(el => {
+                    el.style.display = 'none';
+                });
+                
+                document.querySelector('h1').innerHTML = '<i class="fas fa-eye"></i> Vista de Productos - ' + projects[projectId].name;
+            }
         }
 
         function openImageModal() {
@@ -1449,28 +1485,6 @@
         window.editProduct = editProduct;
         window.deleteProduct = deleteProduct;
         window.openProductImage = openProductImage;
-        window.contactWhatsApp = contactWhatsApp;
-
-        // Cargar datos desde URL si existen
-        window.addEventListener('load', function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const dataParam = urlParams.get('data');
-            
-            if (dataParam && !isViewMode) {
-                try {
-                    const decodedData = atob(dataParam);
-                    const sharedProducts = JSON.parse(decodedData);
-                    
-                    if (Array.isArray(sharedProducts) && sharedProducts.length > 0) {
-                        // Solo mostrar los productos compartidos, no reemplazar los existentes
-                        updateProductsGrid(sharedProducts);
-                        showNotification(`Se cargaron ${sharedProducts.length} productos compartidos`, 'success');
-                    }
-                } catch (e) {
-                    console.error('Error al cargar datos compartidos:', e);
-                }
-            }
-        });
     </script>
 </body>
 </html>
