@@ -3,790 +3,719 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ProductScan Pro - Gestión de Productos</title>
+    <title>Sistema de Gestión de Productos</title>
+    <script src="https://cdn.jsdelivr.net/npm/quagga@0.12.1/dist/quagga.min.js"></script>
     <style>
         :root {
-            --primary: #6c63ff;
-            --primary-dark: #5a52d5;
-            --secondary: #00b4d8;
-            --dark: #1a1a2e;
-            --light: #f8f9fa;
-            --success: #28a745;
-            --danger: #dc3545;
-            --warning: #ffc107;
-            --gray: #6c757d;
-            --card-bg: rgba(255, 255, 255, 0.1);
-            --glass: rgba(255, 255, 255, 0.05);
-            --blur: blur(10px);
+            --primary-color: #3498db;
+            --secondary-color: #2980b9;
+            --success-color: #27ae60;
+            --danger-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
         }
-
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
+        
         body {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-            color: var(--light);
-            min-height: 100vh;
-            padding: 20px;
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
         }
-
+        
         .container {
             max-width: 1200px;
             margin: 0 auto;
+            padding: 20px;
         }
-
+        
         header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-            margin-bottom: 30px;
-            border-bottom: 1px solid var(--glass);
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .logo-icon {
-            width: 50px;
-            height: 50px;
-            background: var(--primary);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            font-weight: bold;
-        }
-
-        .logo-text {
-            font-size: 24px;
-            font-weight: 700;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .contact-btn {
-            background: var(--primary);
+            background-color: var(--primary-color);
             color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 50px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            font-weight: 500;
+            padding: 15px 0;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+            margin-bottom: 20px;
         }
-
-        .contact-btn:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(108, 99, 255, 0.4);
+        
+        h1 {
+            font-size: 24px;
         }
-
-        .main-content {
+        
+        .app-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin-bottom: 40px;
+            gap: 20px;
         }
-
+        
         @media (max-width: 768px) {
-            .main-content {
+            .app-container {
                 grid-template-columns: 1fr;
             }
         }
-
+        
         .card {
-            background: var(--card-bg);
-            backdrop-filter: var(--blur);
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-            border: 1px solid var(--glass);
-        }
-
-        .card-title {
-            font-size: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
             margin-bottom: 20px;
+        }
+        
+        .card h2 {
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        
+        .camera-section {
             display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .card-title i {
-            color: var(--primary);
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-
-        input, textarea, select {
-            width: 100%;
-            padding: 12px 15px;
-            border-radius: 10px;
-            border: 1px solid var(--glass);
-            background: rgba(0, 0, 0, 0.2);
-            color: var(--light);
-            font-size: 16px;
-            transition: all 0.3s ease;
-        }
-
-        input:focus, textarea:focus, select:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 2px rgba(108, 99, 255, 0.2);
-        }
-
-        .price-inputs {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
+            flex-direction: column;
             gap: 15px;
         }
-
-        .btn {
-            padding: 12px 25px;
-            border: none;
-            border-radius: 10px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .btn-primary {
-            background: var(--primary);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-        }
-
-        .btn-secondary {
-            background: var(--secondary);
-            color: white;
-        }
-
-        .btn-secondary:hover {
-            background: #0093b8;
-            transform: translateY(-2px);
-        }
-
-        .btn-block {
+        
+        .camera-container {
+            position: relative;
             width: 100%;
+            height: 300px;
+            background-color: #000;
+            border-radius: 8px;
+            overflow: hidden;
         }
-
+        
+        #camera-preview, #scanner-preview {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .camera-controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .btn-success {
+            background-color: var(--success-color);
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background-color: #219653;
+        }
+        
+        .btn-danger {
+            background-color: var(--danger-color);
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+        
+        .scanner-section {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
         .scanner-container {
             position: relative;
             width: 100%;
             height: 300px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 20px;
+            background-color: #000;
+            border-radius: 8px;
             overflow: hidden;
         }
-
-        .scanner-overlay {
-            position: absolute;
-            width: 80%;
-            height: 2px;
-            background: var(--primary);
-            box-shadow: 0 0 10px var(--primary);
-            animation: scan 2s infinite linear;
+        
+        .product-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
         }
-
-        @keyframes scan {
-            0% {
-                top: 10%;
-            }
-            50% {
-                top: 90%;
-            }
-            100% {
-                top: 10%;
-            }
-        }
-
-        .scanner-placeholder {
-            text-align: center;
-            color: var(--gray);
-        }
-
-        .scanner-placeholder i {
-            font-size: 50px;
+        
+        .form-group {
             margin-bottom: 15px;
-            color: var(--primary);
         }
-
-        .products-list {
-            margin-top: 30px;
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
         }
-
-        .table-container {
-            overflow-x: auto;
-            border-radius: 10px;
+        
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
         }
-
+        
+        .product-list {
+            grid-column: 1 / -1;
+        }
+        
         table {
             width: 100%;
             border-collapse: collapse;
         }
-
+        
         th, td {
-            padding: 15px;
+            padding: 12px 15px;
             text-align: left;
-            border-bottom: 1px solid var(--glass);
+            border-bottom: 1px solid #ddd;
         }
-
+        
         th {
-            background: rgba(0, 0, 0, 0.2);
-            font-weight: 600;
+            background-color: var(--light-color);
+            font-weight: bold;
         }
-
+        
         tr:hover {
-            background: rgba(255, 255, 255, 0.05);
+            background-color: #f9f9f9;
         }
-
-        .action-btn {
-            background: none;
-            border: none;
-            color: var(--gray);
-            cursor: pointer;
-            margin-right: 10px;
-            transition: all 0.3s ease;
-        }
-
-        .action-btn:hover {
-            color: var(--primary);
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 40px 0;
-            color: var(--gray);
-        }
-
-        .empty-state i {
-            font-size: 50px;
-            margin-bottom: 15px;
-        }
-
-        footer {
-            text-align: center;
-            padding: 20px 0;
-            margin-top: 40px;
-            border-top: 1px solid var(--glass);
-            color: var(--gray);
-        }
-
-        .export-buttons {
+        
+        .actions {
             display: flex;
-            gap: 15px;
-            margin-top: 20px;
+            gap: 5px;
         }
-
-        @media (max-width: 576px) {
-            .export-buttons {
-                flex-direction: column;
-            }
+        
+        .btn-sm {
+            padding: 5px 10px;
+            font-size: 12px;
         }
-
-        .modal {
+        
+        .captured-image {
+            width: 100%;
+            max-height: 200px;
+            object-fit: contain;
+            margin-top: 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        
+        .hidden {
             display: none;
-            position: fixed;
+        }
+        
+        .scanner-overlay {
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(5px);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
+            pointer-events: none;
+            border: 2px solid var(--success-color);
         }
-
-        .modal-content {
-            background: var(--dark);
-            border-radius: 20px;
-            padding: 30px;
-            width: 90%;
-            max-width: 500px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            border: 1px solid var(--glass);
+        
+        .scanner-line {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background-color: var(--success-color);
+            top: 50%;
+            animation: scan 2s infinite linear;
         }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
+        
+        @keyframes scan {
+            0% { top: 0%; }
+            50% { top: 100%; }
+            100% { top: 0%; }
         }
-
-        .close-modal {
-            background: none;
-            border: none;
-            color: var(--gray);
-            font-size: 24px;
-            cursor: pointer;
-        }
-
-        .modal-footer {
-            display: flex;
-            justify-content: flex-end;
-            gap: 15px;
-            margin-top: 25px;
-        }
-
-        .whatsapp-contact {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 15px;
-            background: rgba(37, 211, 102, 0.1);
-            border-radius: 10px;
-            margin-top: 20px;
-            border: 1px solid rgba(37, 211, 102, 0.3);
-        }
-
-        .whatsapp-icon {
-            width: 40px;
-            height: 40px;
-            background: #25D366;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 4px;
             color: white;
-            font-size: 20px;
+            font-weight: bold;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .notification.show {
+            opacity: 1;
+        }
+        
+        .notification.success {
+            background-color: var(--success-color);
+        }
+        
+        .notification.error {
+            background-color: var(--danger-color);
+        }
+        
+        .print-section {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .btn-print {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 12px 25px;
+            font-size: 16px;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 15px;
+            color: #7f8c8d;
+            font-size: 14px;
         }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <div class="logo">
-                <div class="logo-icon">PS</div>
-                <div class="logo-text">ProductScan Pro</div>
-            </div>
-            <a href="https://wa.me/593986122265" class="contact-btn" target="_blank">
-                <i class="fab fa-whatsapp"></i> Contactar por WhatsApp
-            </a>
+            <h1>Sistema de Gestión de Productos</h1>
         </header>
-
-        <div class="main-content">
+        
+        <div class="app-container">
+            <!-- Sección de captura de fotos -->
             <div class="card">
-                <h2 class="card-title"><i class="fas fa-camera"></i> Escanear Código</h2>
-                <div class="scanner-container">
-                    <div class="scanner-overlay"></div>
-                    <div class="scanner-placeholder">
-                        <i class="fas fa-qrcode"></i>
-                        <p>Presiona el botón para activar la cámara y escanear el código</p>
+                <h2>Captura de Imagen del Producto</h2>
+                <div class="camera-section">
+                    <div class="camera-container">
+                        <video id="camera-preview" autoplay playsinline></video>
+                        <canvas id="camera-capture" class="hidden"></canvas>
+                    </div>
+                    <div class="camera-controls">
+                        <button id="start-camera" class="btn-primary">Iniciar Cámara</button>
+                        <button id="switch-camera" class="btn-primary">Cambiar Cámara</button>
+                        <button id="capture-photo" class="btn-success" disabled>Capturar Foto</button>
+                    </div>
+                    <div id="captured-image-container" class="hidden">
+                        <h3>Imagen Capturada:</h3>
+                        <img id="captured-image" class="captured-image" alt="Imagen capturada">
+                        <button id="retake-photo" class="btn-danger">Volver a Tomar</button>
                     </div>
                 </div>
-                <button class="btn btn-primary btn-block" id="startScanner">
-                    <i class="fas fa-camera"></i> Activar Escáner
-                </button>
             </div>
-
+            
+            <!-- Sección de escaneo de código -->
             <div class="card">
-                <h2 class="card-title"><i class="fas fa-edit"></i> Agregar Producto</h2>
-                <form id="productForm">
-                    <div class="form-group">
-                        <label for="productCode">Código del Producto</label>
-                        <input type="text" id="productCode" placeholder="Código escaneado o ingresado manualmente" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="productName">Nombre del Producto</label>
-                        <input type="text" id="productName" placeholder="Nombre del producto" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="productDescription">Descripción</label>
-                        <textarea id="productDescription" rows="3" placeholder="Descripción del producto"></textarea>
-                    </div>
-                    <div class="form-group price-inputs">
-                        <div>
-                            <label for="wholesalePrice">Precio al por Mayor</label>
-                            <input type="number" id="wholesalePrice" placeholder="0.00" step="0.01" required>
-                        </div>
-                        <div>
-                            <label for="unitPrice">Precio por Unidad</label>
-                            <input type="number" id="unitPrice" placeholder="0.00" step="0.01" required>
+                <h2>Escanear Código de Producto</h2>
+                <div class="scanner-section">
+                    <div class="scanner-container">
+                        <div id="scanner-preview"></div>
+                        <div class="scanner-overlay">
+                            <div class="scanner-line"></div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="productCategory">Categoría</label>
-                        <select id="productCategory">
-                            <option value="">Seleccionar categoría</option>
-                            <option value="electronics">Electrónicos</option>
-                            <option value="clothing">Ropa</option>
-                            <option value="food">Alimentos</option>
-                            <option value="home">Hogar</option>
-                            <option value="other">Otros</option>
-                        </select>
+                    <div class="camera-controls">
+                        <button id="start-scanner" class="btn-primary">Iniciar Escáner</button>
+                        <button id="stop-scanner" class="btn-danger" disabled>Detener Escáner</button>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-block">
-                        <i class="fas fa-save"></i> Guardar Producto
-                    </button>
-                </form>
+                    <div class="form-group">
+                        <label for="product-code">Código del Producto:</label>
+                        <input type="text" id="product-code" placeholder="Código escaneado aparecerá aquí">
+                    </div>
+                </div>
             </div>
-        </div>
-
-        <div class="card products-list">
-            <h2 class="card-title"><i class="fas fa-list"></i> Lista de Productos</h2>
-            <div class="table-container">
-                <table id="productsTable">
+            
+            <!-- Formulario de información del producto -->
+            <div class="card product-form">
+                <h2>Información del Producto</h2>
+                <div class="form-group">
+                    <label for="product-name">Nombre del Producto:</label>
+                    <input type="text" id="product-name" placeholder="Ingrese el nombre del producto">
+                </div>
+                <div class="form-group">
+                    <label for="product-description">Descripción:</label>
+                    <textarea id="product-description" rows="3" placeholder="Descripción del producto"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="wholesale-price">Precio por Mayor:</label>
+                    <input type="number" id="wholesale-price" step="0.01" placeholder="0.00">
+                </div>
+                <div class="form-group">
+                    <label for="retail-price">Precio de Venta:</label>
+                    <input type="number" id="retail-price" step="0.01" placeholder="0.00">
+                </div>
+                <div class="form-group">
+                    <button id="save-product" class="btn-success">Guardar Producto</button>
+                    <button id="clear-form" class="btn-danger">Limpiar Formulario</button>
+                </div>
+            </div>
+            
+            <!-- Lista de productos -->
+            <div class="card product-list">
+                <h2>Lista de Productos</h2>
+                <table id="products-table">
                     <thead>
                         <tr>
                             <th>Código</th>
+                            <th>Imagen</th>
                             <th>Nombre</th>
                             <th>Precio Mayor</th>
-                            <th>Precio Unidad</th>
-                            <th>Categoría</th>
+                            <th>Precio Venta</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
-                    <tbody id="productsTableBody">
+                    <tbody id="products-list">
                         <!-- Los productos se agregarán aquí dinámicamente -->
                     </tbody>
                 </table>
-                <div id="emptyState" class="empty-state">
-                    <i class="fas fa-box-open"></i>
-                    <h3>No hay productos agregados</h3>
-                    <p>Comienza escaneando o agregando un producto manualmente</p>
-                </div>
-            </div>
-            
-            <div class="export-buttons">
-                <button class="btn btn-secondary" id="exportJSON">
-                    <i class="fas fa-file-code"></i> Exportar como JSON
-                </button>
-                <button class="btn btn-secondary" id="exportCSV">
-                    <i class="fas fa-file-csv"></i> Exportar como CSV
-                </button>
-                <button class="btn btn-secondary" id="importData">
-                    <i class="fas fa-file-import"></i> Importar Datos
-                </button>
             </div>
         </div>
-
-        <div class="whatsapp-contact">
-            <div class="whatsapp-icon">
-                <i class="fab fa-whatsapp"></i>
-            </div>
-            <div>
-                <h3>¿Necesitas ayuda?</h3>
-                <p>Contáctanos por WhatsApp para soporte inmediato</p>
-                <a href="https://wa.me/593986122265" class="contact-btn" target="_blank">
-                    <i class="fab fa-whatsapp"></i> +593 98 612 2265
-                </a>
-            </div>
+        
+        <!-- Botón de impresión -->
+        <div class="print-section">
+            <button id="print-list" class="btn-print">Imprimir Lista de Productos</button>
         </div>
-
+        
         <footer>
-            <p>ProductScan Pro &copy; 2023 - Sistema de Gestión de Productos</p>
+            <p>Sistema de Gestión de Productos &copy; 2023</p>
         </footer>
     </div>
-
-    <!-- Modal para importar datos -->
-    <div class="modal" id="importModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Importar Datos de Productos</h2>
-                <button class="close-modal">&times;</button>
-            </div>
-            <p>Selecciona un archivo JSON o CSV con los datos de tus productos:</p>
-            <div class="form-group">
-                <input type="file" id="fileInput" accept=".json,.csv">
-            </div>
-            <div class="modal-footer">
-                <button class="btn" id="cancelImport">Cancelar</button>
-                <button class="btn btn-primary" id="confirmImport">Importar</button>
-            </div>
-        </div>
-    </div>
+    
+    <!-- Notificación -->
+    <div id="notification" class="notification"></div>
 
     <script>
-        // Datos de ejemplo
+        // Variables globales
+        let currentStream = null;
+        let currentFacingMode = 'environment'; // 'user' para frontal, 'environment' para trasera
+        let capturedImageData = null;
+        let scannerActive = false;
         let products = JSON.parse(localStorage.getItem('products')) || [];
 
-        // Elementos del DOM
-        const productForm = document.getElementById('productForm');
-        const productsTableBody = document.getElementById('productsTableBody');
-        const emptyState = document.getElementById('emptyState');
-        const exportJSONBtn = document.getElementById('exportJSON');
-        const exportCSVBtn = document.getElementById('exportCSV');
-        const importDataBtn = document.getElementById('importData');
-        const importModal = document.getElementById('importModal');
-        const closeModalBtn = document.querySelector('.close-modal');
-        const cancelImportBtn = document.getElementById('cancelImport');
-        const confirmImportBtn = document.getElementById('confirmImport');
-        const fileInput = document.getElementById('fileInput');
-        const startScannerBtn = document.getElementById('startScanner');
+        // Elementos DOM
+        const cameraPreview = document.getElementById('camera-preview');
+        const cameraCapture = document.getElementById('camera-capture');
+        const capturedImage = document.getElementById('captured-image');
+        const capturedImageContainer = document.getElementById('captured-image-container');
+        const startCameraBtn = document.getElementById('start-camera');
+        const switchCameraBtn = document.getElementById('switch-camera');
+        const capturePhotoBtn = document.getElementById('capture-photo');
+        const retakePhotoBtn = document.getElementById('retake-photo');
+        const startScannerBtn = document.getElementById('start-scanner');
+        const stopScannerBtn = document.getElementById('stop-scanner');
+        const productCodeInput = document.getElementById('product-code');
+        const productNameInput = document.getElementById('product-name');
+        const productDescriptionInput = document.getElementById('product-description');
+        const wholesalePriceInput = document.getElementById('wholesale-price');
+        const retailPriceInput = document.getElementById('retail-price');
+        const saveProductBtn = document.getElementById('save-product');
+        const clearFormBtn = document.getElementById('clear-form');
+        const productsList = document.getElementById('products-list');
+        const printListBtn = document.getElementById('print-list');
+        const notification = document.getElementById('notification');
 
-        // Función para renderizar la tabla de productos
-        function renderProductsTable() {
-            if (products.length === 0) {
-                productsTableBody.innerHTML = '';
-                emptyState.style.display = 'block';
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProducts();
+            updateProductsTable();
+            
+            // Event listeners
+            startCameraBtn.addEventListener('click', startCamera);
+            switchCameraBtn.addEventListener('click', switchCamera);
+            capturePhotoBtn.addEventListener('click', capturePhoto);
+            retakePhotoBtn.addEventListener('click', retakePhoto);
+            startScannerBtn.addEventListener('click', startScanner);
+            stopScannerBtn.addEventListener('click', stopScanner);
+            saveProductBtn.addEventListener('click', saveProduct);
+            clearFormBtn.addEventListener('click', clearForm);
+            printListBtn.addEventListener('click', printList);
+        });
+
+        // Funciones de cámara
+        async function startCamera() {
+            try {
+                if (currentStream) {
+                    stopCamera();
+                }
+                
+                const constraints = {
+                    video: { 
+                        facingMode: currentFacingMode,
+                        width: { ideal: 1280 },
+                        height: { ideal: 720 }
+                    },
+                    audio: false
+                };
+                
+                currentStream = await navigator.mediaDevices.getUserMedia(constraints);
+                cameraPreview.srcObject = currentStream;
+                
+                startCameraBtn.disabled = true;
+                capturePhotoBtn.disabled = false;
+                switchCameraBtn.disabled = false;
+                
+                showNotification('Cámara iniciada correctamente', 'success');
+            } catch (error) {
+                console.error('Error al acceder a la cámara:', error);
+                showNotification('Error al acceder a la cámara', 'error');
+            }
+        }
+
+        function stopCamera() {
+            if (currentStream) {
+                currentStream.getTracks().forEach(track => track.stop());
+                currentStream = null;
+            }
+            
+            cameraPreview.srcObject = null;
+            startCameraBtn.disabled = false;
+            capturePhotoBtn.disabled = true;
+            switchCameraBtn.disabled = true;
+        }
+
+        function switchCamera() {
+            currentFacingMode = currentFacingMode === 'environment' ? 'user' : 'environment';
+            startCamera();
+        }
+
+        function capturePhoto() {
+            const context = cameraCapture.getContext('2d');
+            cameraCapture.width = cameraPreview.videoWidth;
+            cameraCapture.height = cameraPreview.videoHeight;
+            context.drawImage(cameraPreview, 0, 0, cameraCapture.width, cameraCapture.height);
+            
+            capturedImageData = cameraCapture.toDataURL('image/png');
+            capturedImage.src = capturedImageData;
+            capturedImageContainer.classList.remove('hidden');
+            
+            showNotification('Foto capturada correctamente', 'success');
+        }
+
+        function retakePhoto() {
+            capturedImageContainer.classList.add('hidden');
+            capturedImageData = null;
+        }
+
+        // Funciones de escáner
+        function startScanner() {
+            if (scannerActive) return;
+            
+            scannerActive = true;
+            startScannerBtn.disabled = true;
+            stopScannerBtn.disabled = false;
+            
+            Quagga.init({
+                inputStream: {
+                    name: "Live",
+                    type: "LiveStream",
+                    target: document.querySelector('#scanner-preview'),
+                    constraints: {
+                        width: 640,
+                        height: 480,
+                        facingMode: "environment"
+                    }
+                },
+                decoder: {
+                    readers: [
+                        "code_128_reader",
+                        "ean_reader",
+                        "ean_8_reader",
+                        "code_39_reader",
+                        "upc_reader",
+                        "upc_e_reader"
+                    ]
+                }
+            }, function(err) {
+                if (err) {
+                    console.error(err);
+                    showNotification('Error al iniciar el escáner', 'error');
+                    return;
+                }
+                
+                Quagga.start();
+                showNotification('Escáner iniciado', 'success');
+            });
+
+            Quagga.onDetected(function(result) {
+                const code = result.codeResult.code;
+                productCodeInput.value = code;
+                showNotification(`Código escaneado: ${code}`, 'success');
+                
+                // Detener el escáner después de detectar un código
+                stopScanner();
+            });
+        }
+
+        function stopScanner() {
+            if (!scannerActive) return;
+            
+            Quagga.stop();
+            scannerActive = false;
+            startScannerBtn.disabled = false;
+            stopScannerBtn.disabled = true;
+        }
+
+        // Funciones de gestión de productos
+        function saveProduct() {
+            const code = productCodeInput.value.trim();
+            const name = productNameInput.value.trim();
+            const description = productDescriptionInput.value.trim();
+            const wholesalePrice = parseFloat(wholesalePriceInput.value) || 0;
+            const retailPrice = parseFloat(retailPriceInput.value) || 0;
+            
+            if (!code) {
+                showNotification('Por favor, escanee un código de producto', 'error');
                 return;
             }
             
-            emptyState.style.display = 'none';
-            productsTableBody.innerHTML = '';
-            
-            products.forEach((product, index) => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${product.code}</td>
-                    <td>${product.name}</td>
-                    <td>$${product.wholesalePrice.toFixed(2)}</td>
-                    <td>$${product.unitPrice.toFixed(2)}</td>
-                    <td>${product.category}</td>
-                    <td>
-                        <button class="action-btn edit-product" data-index="${index}">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button class="action-btn delete-product" data-index="${index}">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </td>
-                `;
-                productsTableBody.appendChild(row);
-            });
-            
-            // Agregar event listeners para los botones de editar y eliminar
-            document.querySelectorAll('.edit-product').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    const index = e.currentTarget.getAttribute('data-index');
-                    editProduct(index);
-                });
-            });
-            
-            document.querySelectorAll('.delete-product').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    const index = e.currentTarget.getAttribute('data-index');
-                    deleteProduct(index);
-                });
-            });
-        }
-
-        // Función para agregar un producto
-        function addProduct(product) {
-            products.push(product);
-            localStorage.setItem('products', JSON.stringify(products));
-            renderProductsTable();
-        }
-
-        // Función para editar un producto
-        function editProduct(index) {
-            const product = products[index];
-            
-            // Llenar el formulario con los datos del producto
-            document.getElementById('productCode').value = product.code;
-            document.getElementById('productName').value = product.name;
-            document.getElementById('productDescription').value = product.description || '';
-            document.getElementById('wholesalePrice').value = product.wholesalePrice;
-            document.getElementById('unitPrice').value = product.unitPrice;
-            document.getElementById('productCategory').value = product.category;
-            
-            // Eliminar el producto de la lista
-            products.splice(index, 1);
-            localStorage.setItem('products', JSON.stringify(products));
-            renderProductsTable();
-            
-            // Hacer scroll al formulario
-            document.getElementById('productForm').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        // Función para eliminar un producto
-        function deleteProduct(index) {
-            if (confirm('¿Estás seguro de que quieres eliminar este producto?')) {
-                products.splice(index, 1);
-                localStorage.setItem('products', JSON.stringify(products));
-                renderProductsTable();
+            if (!name) {
+                showNotification('Por favor, ingrese un nombre para el producto', 'error');
+                return;
             }
-        }
-
-        // Event listener para el formulario
-        productForm.addEventListener('submit', (e) => {
-            e.preventDefault();
+            
+            // Verificar si el producto ya existe
+            const existingIndex = products.findIndex(p => p.code === code);
             
             const product = {
-                code: document.getElementById('productCode').value,
-                name: document.getElementById('productName').value,
-                description: document.getElementById('productDescription').value,
-                wholesalePrice: parseFloat(document.getElementById('wholesalePrice').value),
-                unitPrice: parseFloat(document.getElementById('unitPrice').value),
-                category: document.getElementById('productCategory').value
+                code,
+                name,
+                description,
+                wholesalePrice,
+                retailPrice,
+                image: capturedImageData,
+                timestamp: new Date().toISOString()
             };
             
-            addProduct(product);
-            productForm.reset();
+            if (existingIndex >= 0) {
+                // Actualizar producto existente
+                products[existingIndex] = product;
+                showNotification('Producto actualizado correctamente', 'success');
+            } else {
+                // Agregar nuevo producto
+                products.push(product);
+                showNotification('Producto guardado correctamente', 'success');
+            }
             
-            // Mostrar mensaje de éxito
-            alert('Producto agregado correctamente');
-        });
-
-        // Función para exportar a JSON
-        function exportToJSON() {
-            const dataStr = JSON.stringify(products, null, 2);
-            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            // Guardar en localStorage
+            localStorage.setItem('products', JSON.stringify(products));
             
-            const exportFileDefaultName = 'productos.json';
+            // Actualizar la tabla
+            updateProductsTable();
             
-            const linkElement = document.createElement('a');
-            linkElement.setAttribute('href', dataUri);
-            linkElement.setAttribute('download', exportFileDefaultName);
-            linkElement.click();
+            // Limpiar formulario
+            clearForm();
         }
 
-        // Función para exportar a CSV
-        function exportToCSV() {
-            let csvContent = "Código,Nombre,Descripción,Precio Mayor,Precio Unidad,Categoría\n";
-            
-            products.forEach(product => {
-                const row = [
-                    product.code,
-                    `"${product.name}"`,
-                    `"${product.description || ''}"`,
-                    product.wholesalePrice,
-                    product.unitPrice,
-                    product.category
-                ];
-                csvContent += row.join(',') + '\n';
-            });
-            
-            const encodedUri = encodeURI('data:text/csv;charset=utf-8,' + csvContent);
-            const link = document.createElement('a');
-            link.setAttribute('href', encodedUri);
-            link.setAttribute('download', 'productos.csv');
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+        function clearForm() {
+            productCodeInput.value = '';
+            productNameInput.value = '';
+            productDescriptionInput.value = '';
+            wholesalePriceInput.value = '';
+            retailPriceInput.value = '';
+            capturedImageContainer.classList.add('hidden');
+            capturedImageData = null;
         }
 
-        // Función para importar datos
-        function importData() {
-            importModal.style.display = 'flex';
+        function loadProducts() {
+            // Los productos ya se cargan al inicio desde localStorage
         }
 
-        // Event listeners para los botones de exportación/importación
-        exportJSONBtn.addEventListener('click', exportToJSON);
-        exportCSVBtn.addEventListener('click', exportToCSV);
-        importDataBtn.addEventListener('click', importData);
-
-        // Event listeners para el modal de importación
-        closeModalBtn.addEventListener('click', () => {
-            importModal.style.display = 'none';
-        });
-        
-        cancelImportBtn.addEventListener('click', () => {
-            importModal.style.display = 'none';
-        });
-        
-        confirmImportBtn.addEventListener('click', () => {
-            const file = fileInput.files[0];
-            if (!file) {
-                alert('Por favor selecciona un archivo');
+        function updateProductsTable() {
+            productsList.innerHTML = '';
+            
+            if (products.length === 0) {
+                productsList.innerHTML = '<tr><td colspan="6" style="text-align: center;">No hay productos registrados</td></tr>';
                 return;
             }
             
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                try {
-                    let importedProducts;
-                    
-                    if (file.name.endsWith('.json')) {
-                        importedProducts = JSON.parse(e.target.result);
-                    } else if (file.name.endsWith('.csv')) {
-                        // Implementar parser CSV básico
-                        const lines = e.target.result.split('\n');
-                        const headers = lines[0].split(',');
-                        importedProducts = [];
-                        
-                        for (let i = 1; i < lines.length; i++) {
-                            if (lines[i].trim() === '') continue;
-                            
-                            const values = lines[i].split(',');
-                            const product = {
-                                code: values[0],
-                                name: values[1].replace(/"/g, ''),
-                                description: values[2].replace(/"/g, ''),
-                                wholesalePrice: parseFloat(values[3]),
-                                unitPrice: parseFloat(values[4]),
-                                category: values[5]
-                            };
-                            importedProducts.push(product);
-                        }
-                    } else {
-                        alert('Formato de archivo no soportado');
-                        return;
-                    }
-                    
-                    // Validar que los productos tengan la estructura correcta
-                    if (Array.isArray(importedProducts) && importedProducts.length > 0) {
-                        products = importedProducts;
-                        localStorage.setItem('products', JSON.stringify(products));
-                        renderProductsTable();
-                        alert('Datos importados correctamente');
-                        importModal.style.display = 'none';
-                    } else {
-                        alert('El archivo no contiene datos válidos');
-                    }
-                } catch (error) {
-                    alert('Error al procesar el archivo: ' + error.message);
-                }
-            };
-            
-            reader.readAsText(file);
-        });
-
-        // Simulación de escáner (en un entorno real usarías una librería como QuaggaJS o jsQR)
-        startScannerBtn.addEventListener('click', () => {
-            alert('En un entorno real, aquí se activaría la cámara para escanear códigos de barras o QR. Para este ejemplo, simularemos un escaneo.');
-            
-            // Simular escaneo después de 2 segundos
-            setTimeout(() => {
-                const simulatedCode = 'PROD' + Math.floor(1000 + Math.random() * 9000);
-                document.getElementById('productCode').value = simulatedCode;
-                document.getElementById('productName').value = `Producto ${simulatedCode}`;
-                document.getElementById('wholesalePrice').value = (Math.random() * 100 + 10).toFixed(2);
-                document.getElementById('unitPrice').value = (Math.random() * 20 + 5).toFixed(2);
+            products.forEach(product => {
+                const row = document.createElement('tr');
                 
-                alert(`Código escaneado: ${simulatedCode}. Los campos se han llenado automáticamente.`);
-            }, 2000);
-        });
+                // Imagen pequeña o placeholder
+                let imageHtml = '<div style="width: 50px; height: 50px; background: #eee; display: flex; align-items: center; justify-content: center;">Sin imagen</div>';
+                if (product.image) {
+                    imageHtml = `<img src="${product.image}" alt="${product.name}" style="width: 50px; height: 50px; object-fit: cover;">`;
+                }
+                
+                row.innerHTML = `
+                    <td>${product.code}</td>
+                    <td>${imageHtml}</td>
+                    <td>${product.name}</td>
+                    <td>$${product.wholesalePrice.toFixed(2)}</td>
+                    <td>$${product.retailPrice.toFixed(2)}</td>
+                    <td class="actions">
+                        <button class="btn-primary btn-sm" onclick="editProduct('${product.code}')">Editar</button>
+                        <button class="btn-danger btn-sm" onclick="deleteProduct('${product.code}')">Eliminar</button>
+                    </td>
+                `;
+                
+                productsList.appendChild(row);
+            });
+        }
 
-        // Inicializar la tabla al cargar la página
-        renderProductsTable();
+        function editProduct(code) {
+            const product = products.find(p => p.code === code);
+            if (!product) return;
+            
+            productCodeInput.value = product.code;
+            productNameInput.value = product.name;
+            productDescriptionInput.value = product.description;
+            wholesalePriceInput.value = product.wholesalePrice;
+            retailPriceInput.value = product.retailPrice;
+            
+            if (product.image) {
+                capturedImage.src = product.image;
+                capturedImageContainer.classList.remove('hidden');
+                capturedImageData = product.image;
+            }
+            
+            // Desplazar hacia el formulario
+            document.querySelector('.product-form').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function deleteProduct(code) {
+            if (confirm('¿Está seguro de que desea eliminar este producto?')) {
+                products = products.filter(p => p.code !== code);
+                localStorage.setItem('products', JSON.stringify(products));
+                updateProductsTable();
+                showNotification('Producto eliminado correctamente', 'success');
+            }
+        }
+
+        function printList() {
+            window.print();
+        }
+
+        function showNotification(message, type) {
+            notification.textContent = message;
+            notification.className = `notification ${type}`;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Hacer las funciones disponibles globalmente para los botones
+        window.editProduct = editProduct;
+        window.deleteProduct = deleteProduct;
     </script>
 </body>
 </html>
