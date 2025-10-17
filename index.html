@@ -10,6 +10,7 @@
             --secondary-color: #2c3e50;
             --accent-color: #e74c3c;
             --success-color: #2ecc71;
+            --warning-color: #f39c12;
             --light-color: #ecf0f1;
             --dark-color: #34495e;
             --border-color: #bdc3c7;
@@ -221,6 +222,14 @@
             background-color: #128C7E;
         }
         
+        .btn-warning {
+            background-color: var(--warning-color);
+        }
+        
+        .btn-warning:hover {
+            background-color: #e67e22;
+        }
+        
         .btn-danger {
             background-color: var(--accent-color);
         }
@@ -259,7 +268,7 @@
         
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 25px;
         }
         
@@ -269,6 +278,7 @@
             overflow: hidden;
             transition: transform 0.3s, box-shadow 0.3s;
             background: white;
+            position: relative;
         }
         
         .product-card:hover {
@@ -488,6 +498,61 @@
             flex: 1;
             color: #5d6d7e;
         }
+        
+        .edit-form {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid var(--warning-color);
+        }
+        
+        .product-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .product-actions .btn {
+            flex: 1;
+            padding: 10px;
+            font-size: 14px;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .modal h3 {
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+        }
+        
+        .modal-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+            justify-content: flex-end;
+        }
     </style>
 </head>
 <body>
@@ -631,12 +696,56 @@
         </section>
     </div>
 
+    <!-- Modal para editar producto -->
+    <div id="edit-modal" class="modal">
+        <div class="modal-content">
+            <h3><i class="fas fa-edit"></i> Editar Producto</h3>
+            
+            <div class="form-group">
+                <label for="edit-product-name">Nombre del Producto</label>
+                <input type="text" id="edit-product-name" placeholder="Ingresar nombre del producto">
+            </div>
+            
+            <div class="form-group">
+                <label for="edit-barcode">Código de Barras</label>
+                <input type="text" id="edit-barcode" placeholder="Código de barras">
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="edit-wholesale-price">Precio al por Mayor</label>
+                    <input type="number" id="edit-wholesale-price" placeholder="0.00" step="0.01" min="0">
+                </div>
+                
+                <div class="form-group">
+                    <label for="edit-unit-price">Precio Unitario</label>
+                    <input type="number" id="edit-unit-price" placeholder="0.00" step="0.01" min="0">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="edit-concept">Concepto / Descripción</label>
+                <textarea id="edit-concept" placeholder="Describe el producto, sus características, usos, etc."></textarea>
+            </div>
+            
+            <div class="modal-actions">
+                <button id="cancel-edit" class="btn btn-danger">
+                    <i class="fas fa-times"></i> Cancelar
+                </button>
+                <button id="update-product" class="btn btn-success">
+                    <i class="fas fa-save"></i> Actualizar
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script>
         // Variables globales
         let products = JSON.parse(localStorage.getItem('products')) || [];
         let stream = null;
         let photoTaken = false;
         let currentProduct = null;
+        let editingProductId = null;
         
         // Elementos DOM
         const navButtons = document.querySelectorAll('.nav-btn');
@@ -655,6 +764,9 @@
         const productsContainer = document.getElementById('products-container');
         const contactWhatsappBtn = document.getElementById('contact-whatsapp');
         const storedInfo = document.getElementById('stored-info');
+        const editModal = document.getElementById('edit-modal');
+        const cancelEditBtn = document.getElementById('cancel-edit');
+        const updateProductBtn = document.getElementById('update-product');
         
         // Navegación entre secciones
         navButtons.forEach(button => {
@@ -852,9 +964,12 @@
                                 <div class="unit-price">$${product.unitPrice.toFixed(2)}</div>
                             </div>
                         </div>
-                        <div class="action-buttons">
-                            <button class="btn contact-whatsapp" data-product="${product.name}">
-                                <i class="fab fa-whatsapp"></i> Consultar
+                        <div class="product-actions">
+                            <button class="btn btn-whatsapp contact-whatsapp" data-product="${product.name}">
+                                <i class="fab fa-whatsapp"></i> WhatsApp
+                            </button>
+                            <button class="btn btn-warning edit-product" data-id="${product.id}">
+                                <i class="fas fa-edit"></i> Editar
                             </button>
                             <button class="btn btn-danger delete-product" data-id="${product.id}">
                                 <i class="fas fa-trash"></i> Eliminar
@@ -879,6 +994,14 @@
                 });
             });
             
+            // Agregar event listeners a los botones de editar
+            document.querySelectorAll('.edit-product').forEach(button => {
+                button.addEventListener('click', () => {
+                    const productId = button.getAttribute('data-id');
+                    openEditModal(productId);
+                });
+            });
+            
             // Agregar event listeners a los botones de eliminar
             document.querySelectorAll('.delete-product').forEach(button => {
                 button.addEventListener('click', () => {
@@ -891,6 +1014,64 @@
                 });
             });
         }
+        
+        // Abrir modal de edición
+        function openEditModal(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            
+            editingProductId = productId;
+            
+            // Llenar el formulario con los datos del producto
+            document.getElementById('edit-product-name').value = product.name;
+            document.getElementById('edit-barcode').value = product.barcode;
+            document.getElementById('edit-wholesale-price').value = product.wholesalePrice;
+            document.getElementById('edit-unit-price').value = product.unitPrice;
+            document.getElementById('edit-concept').value = product.concept;
+            
+            // Mostrar el modal
+            editModal.style.display = 'flex';
+        }
+        
+        // Cerrar modal de edición
+        cancelEditBtn.addEventListener('click', () => {
+            editModal.style.display = 'none';
+            editingProductId = null;
+        });
+        
+        // Actualizar producto
+        updateProductBtn.addEventListener('click', () => {
+            if (!editingProductId) return;
+            
+            const productName = document.getElementById('edit-product-name').value.trim();
+            const barcode = document.getElementById('edit-barcode').value.trim();
+            const wholesalePrice = document.getElementById('edit-wholesale-price').value;
+            const unitPrice = document.getElementById('edit-unit-price').value;
+            const concept = document.getElementById('edit-concept').value.trim();
+            
+            if (!productName || !barcode || !wholesalePrice || !unitPrice || !concept) {
+                alert('Por favor, completa todos los campos obligatorios.');
+                return;
+            }
+            
+            // Actualizar el producto
+            const productIndex = products.findIndex(p => p.id === editingProductId);
+            if (productIndex !== -1) {
+                products[productIndex].name = productName;
+                products[productIndex].barcode = barcode;
+                products[productIndex].wholesalePrice = parseFloat(wholesalePrice);
+                products[productIndex].unitPrice = parseFloat(unitPrice);
+                products[productIndex].concept = concept;
+                
+                localStorage.setItem('products', JSON.stringify(products));
+                displayProducts();
+                
+                editModal.style.display = 'none';
+                editingProductId = null;
+                
+                alert('¡Producto actualizado exitosamente!');
+            }
+        });
         
         // Contactar por WhatsApp desde la sección de productos
         contactWhatsappBtn.addEventListener('click', () => {
@@ -918,6 +1099,14 @@
             );
             
             displayProducts(filteredProducts);
+        });
+        
+        // Cerrar modal al hacer clic fuera de él
+        window.addEventListener('click', (event) => {
+            if (event.target === editModal) {
+                editModal.style.display = 'none';
+                editingProductId = null;
+            }
         });
         
         // Inicializar la aplicación
