@@ -3,413 +3,287 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Gestión de Productos - Futurista</title>
-    <script src="https://cdn.jsdelivr.net/npm/quagga@0.12.1/dist/quagga.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Visualizador de Fotos con Almacenamiento HTML</title>
     <style>
-        :root {
-            --primary-color: #00c6ff;
-            --secondary-color: #0072ff;
-            --accent-color: #7e42ff;
-            --success-color: #00d26a;
-            --danger-color: #ff2e63;
-            --dark-bg: #0f1525;
-            --darker-bg: #0a0f1a;
-            --card-bg: rgba(20, 25, 40, 0.8);
-            --text-color: #e0e0ff;
-            --text-muted: #a0a0c0;
-            --glass-effect: rgba(255, 255, 255, 0.05);
-            --border-glow: 0 0 10px rgba(0, 198, 255, 0.3);
-        }
-        
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
-            background: linear-gradient(135deg, var(--dark-bg) 0%, var(--darker-bg) 100%);
-            color: var(--text-color);
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: #333;
             line-height: 1.6;
-            min-height: 100vh;
             padding: 20px;
+            min-height: 100vh;
         }
         
         .container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
-        }
-        
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-            padding: 20px;
-            background: var(--card-bg);
-            border-radius: 16px;
-            box-shadow: var(--border-glow);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--glass-effect);
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 30px;
             position: relative;
             overflow: hidden;
-        }
-        
-        header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
         }
         
         h1 {
-            font-size: 2.5rem;
-            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            text-align: center;
             margin-bottom: 10px;
-            text-shadow: 0 0 20px rgba(0, 198, 255, 0.5);
+            color: #2c3e50;
+            font-size: 2.5rem;
         }
         
-        .subtitle {
-            color: var(--text-muted);
+        .description {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #7f8c8d;
             font-size: 1.1rem;
         }
         
-        .app-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 25px;
-        }
-        
-        @media (max-width: 1024px) {
-            .app-container {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        .card {
-            background: var(--card-bg);
-            border-radius: 16px;
-            box-shadow: var(--border-glow);
-            padding: 25px;
-            margin-bottom: 25px;
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--glass-effect);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 0 20px rgba(0, 198, 255, 0.5);
-        }
-        
-        .card h2 {
-            margin-bottom: 20px;
-            color: var(--primary-color);
-            border-bottom: 1px solid var(--glass-effect);
-            padding-bottom: 10px;
-            font-size: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .card h2 i {
-            color: var(--accent-color);
-        }
-        
-        .camera-section, .scanner-section {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-        
-        .camera-container, .scanner-container {
-            position: relative;
-            width: 100%;
-            height: 350px;
-            background: var(--darker-bg);
-            border-radius: 12px;
-            overflow: hidden;
-            border: 1px solid var(--glass-effect);
-        }
-        
-        #camera-preview, #scanner-preview {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .camera-controls, .scanner-controls {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        
-        button {
-            padding: 12px 20px;
-            border: none;
-            border-radius: 8px;
+        .upload-area {
+            border: 2px dashed #3498db;
+            border-radius: 10px;
+            padding: 40px 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            background-color: #f8fafc;
+            transition: all 0.3s ease;
             cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.95rem;
         }
         
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            box-shadow: 0 4px 15px rgba(0, 114, 255, 0.3);
+        .upload-area:hover, .upload-area.drag-over {
+            background-color: #e1f0fa;
+            border-color: #2980b9;
         }
         
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 114, 255, 0.4);
+        .upload-icon {
+            font-size: 48px;
+            color: #3498db;
+            margin-bottom: 15px;
         }
         
-        .btn-success {
-            background: linear-gradient(135deg, var(--success-color), #00a852);
-            color: white;
-            box-shadow: 0 4px 15px rgba(0, 210, 106, 0.3);
+        .upload-text {
+            margin-bottom: 15px;
+            font-size: 18px;
+            font-weight: 500;
         }
         
-        .btn-success:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 210, 106, 0.4);
-        }
-        
-        .btn-danger {
-            background: linear-gradient(135deg, var(--danger-color), #c4003a);
-            color: white;
-            box-shadow: 0 4px 15px rgba(255, 46, 99, 0.3);
-        }
-        
-        .btn-danger:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 46, 99, 0.4);
-        }
-        
-        .btn-accent {
-            background: linear-gradient(135deg, var(--accent-color), #5a2bc2);
-            color: white;
-            box-shadow: 0 4px 15px rgba(126, 66, 255, 0.3);
-        }
-        
-        .btn-accent:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(126, 66, 255, 0.4);
-        }
-        
-        .product-form {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-        
-        @media (max-width: 768px) {
-            .product-form {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-            color: var(--text-muted);
-        }
-        
-        input, textarea {
-            width: 100%;
-            padding: 12px 15px;
-            background: rgba(10, 15, 30, 0.7);
-            border: 1px solid var(--glass-effect);
-            border-radius: 8px;
-            color: var(--text-color);
-            font-size: 1rem;
-            transition: all 0.3s;
-        }
-        
-        input:focus, textarea:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 10px rgba(0, 198, 255, 0.3);
-        }
-        
-        .product-list {
-            grid-column: 1 / -1;
-        }
-        
-        .search-container {
-            margin-bottom: 20px;
-            display: flex;
-            gap: 15px;
-        }
-        
-        .search-box {
-            flex: 1;
-            position: relative;
-        }
-        
-        .search-box i {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-muted);
-        }
-        
-        .search-box input {
-            padding-left: 45px;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        
-        th, td {
-            padding: 15px;
-            text-align: left;
-            border-bottom: 1px solid var(--glass-effect);
-        }
-        
-        th {
-            background: rgba(10, 15, 30, 0.7);
-            font-weight: bold;
-            color: var(--primary-color);
-        }
-        
-        tr:hover {
-            background: rgba(255, 255, 255, 0.05);
-        }
-        
-        .actions {
-            display: flex;
-            gap: 8px;
-        }
-        
-        .btn-sm {
-            padding: 8px 12px;
-            font-size: 0.85rem;
-        }
-        
-        .captured-image {
-            width: 100%;
-            max-height: 300px;
-            object-fit: contain;
-            margin-top: 15px;
-            border-radius: 8px;
-            border: 1px solid var(--glass-effect);
-            cursor: pointer;
-            transition: transform 0.3s;
-        }
-        
-        .captured-image:hover {
-            transform: scale(1.02);
-        }
-        
-        .hidden {
+        .file-input {
             display: none;
         }
         
-        .scanner-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            border: 2px solid var(--success-color);
-        }
-        
-        .scanner-line {
-            position: absolute;
-            width: 100%;
-            height: 2px;
-            background: var(--success-color);
-            top: 50%;
-            animation: scan 2s infinite linear;
-            box-shadow: 0 0 10px var(--success-color);
-        }
-        
-        @keyframes scan {
-            0% { top: 0%; }
-            50% { top: 100%; }
-            100% { top: 0%; }
-        }
-        
-        .notification {
-            position: fixed;
-            top: 30px;
-            right: 30px;
-            padding: 15px 25px;
-            border-radius: 10px;
+        .upload-btn {
+            background-color: #3498db;
             color: white;
-            font-weight: bold;
-            z-index: 1000;
-            opacity: 0;
-            transition: opacity 0.3s, transform 0.3s;
-            transform: translateX(100px);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            margin: 5px;
         }
         
-        .notification.show {
-            opacity: 1;
-            transform: translateX(0);
+        .upload-btn:hover {
+            background-color: #2980b9;
         }
         
-        .notification.success {
-            background: linear-gradient(135deg, var(--success-color), #00a852);
-            border-left: 4px solid #00ff88;
+        .download-btn {
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            margin: 5px;
         }
         
-        .notification.error {
-            background: linear-gradient(135deg, var(--danger-color), #c4003a);
-            border-left: 4px solid #ff2e63;
+        .download-btn:hover {
+            background-color: #27ae60;
         }
         
-        .print-section {
-            text-align: center;
+        .download-btn:disabled {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+        }
+        
+        .save-html-btn {
+            background-color: #9b59b6;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            margin: 5px;
+        }
+        
+        .save-html-btn:hover {
+            background-color: #8e44ad;
+        }
+        
+        .save-html-btn:disabled {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+        }
+        
+        .clear-btn {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            margin: 5px;
+        }
+        
+        .clear-btn:hover {
+            background-color: #c0392b;
+        }
+        
+        .info-text {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+        
+        .progress-container {
+            margin: 20px 0;
+            display: none;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background-color: #ecf0f1;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+            width: 0%;
+            transition: width 0.3s;
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
             margin-top: 30px;
         }
         
-        .btn-print {
-            background: linear-gradient(135deg, #8e44ad, #9b59b6);
+        .photo-item {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+            aspect-ratio: 1;
+            cursor: pointer;
+        }
+        
+        .photo-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .photo-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
             color: white;
-            padding: 15px 30px;
-            font-size: 1.1rem;
-            box-shadow: 0 4px 15px rgba(142, 68, 173, 0.3);
+            padding: 8px;
+            font-size: 12px;
+            transform: translateY(100%);
+            transition: transform 0.3s;
         }
         
-        .btn-print:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(142, 68, 173, 0.4);
+        .photo-item:hover .photo-info {
+            transform: translateY(0);
         }
         
-        footer {
+        .photo-actions {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            display: flex;
+            gap: 5px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .photo-item:hover .photo-actions {
+            opacity: 1;
+        }
+        
+        .action-btn {
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+        
+        .download-single-btn {
+            background: rgba(46, 204, 113, 0.8);
+        }
+        
+        .delete-btn {
+            background: rgba(231, 76, 60, 0.8);
+        }
+        
+        .empty-state {
             text-align: center;
-            margin-top: 50px;
-            padding: 20px;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            border-top: 1px solid var(--glass-effect);
+            padding: 40px;
+            color: #7f8c8d;
+            grid-column: 1 / -1;
+        }
+        
+        .empty-state i {
+            font-size: 60px;
+            margin-bottom: 20px;
+            color: #bdc3c7;
+        }
+        
+        .counter {
+            text-align: center;
+            margin-top: 20px;
+            font-weight: bold;
+            color: #2c3e50;
+            font-size: 1.2rem;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            gap: 10px;
         }
         
         /* Modal para imagen ampliada */
@@ -420,21 +294,27 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            z-index: 2000;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
             justify-content: center;
             align-items: center;
-            backdrop-filter: blur(10px);
+            flex-direction: column;
         }
         
         .modal-content {
             max-width: 90%;
-            max-height: 90%;
-            border-radius: 12px;
-            box-shadow: 0 0 30px rgba(0, 198, 255, 0.5);
+            max-height: 80%;
+            object-fit: contain;
+            border-radius: 5px;
         }
         
-        .close-modal {
+        .modal-info {
+            color: white;
+            margin-top: 15px;
+            text-align: center;
+        }
+        
+        .modal-close {
             position: absolute;
             top: 20px;
             right: 30px;
@@ -445,694 +325,617 @@
             transition: color 0.3s;
         }
         
-        .close-modal:hover {
-            color: var(--primary-color);
+        .modal-close:hover {
+            color: #e74c3c;
         }
         
-        /* Estilos para impresión */
-        @media print {
-            body * {
-                visibility: hidden;
-            }
-            
-            .product-list, .product-list * {
-                visibility: visible;
-            }
-            
-            .product-list {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                box-shadow: none;
-                background: white;
-                color: black;
-            }
-            
-            .card {
-                box-shadow: none;
-                border: 1px solid #ddd;
-            }
-            
-            .actions, .search-container, .print-section, header, footer {
-                display: none;
-            }
+        .modal-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            transform: translateY(-50%);
         }
         
-        /* Responsive adicional */
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+        
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+        
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #2ecc71;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .notification.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
         @media (max-width: 768px) {
+            .gallery {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
             h1 {
                 font-size: 2rem;
             }
             
-            .camera-container, .scanner-container {
-                height: 250px;
-            }
-            
-            .camera-controls, .scanner-controls {
+            .controls {
                 flex-direction: column;
                 align-items: center;
             }
             
-            button {
-                width: 100%;
-                justify-content: center;
+            .upload-btn, .download-btn, .save-html-btn, .clear-btn {
+                width: 80%;
             }
             
-            .search-container {
-                flex-direction: column;
+            .modal-nav {
+                padding: 0 10px;
             }
             
-            table {
-                display: block;
-                overflow-x: auto;
+            .nav-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
             }
-        }
-        
-        /* Efectos de partículas para el fondo */
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-        }
-        
-        .particle {
-            position: absolute;
-            background: rgba(0, 198, 255, 0.3);
-            border-radius: 50%;
-            animation: float 15s infinite linear;
-        }
-        
-        @keyframes float {
-            0% {
-                transform: translateY(0) translateX(0);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100vh) translateX(100px);
-                opacity: 0;
-            }
-        }
-        
-        .no-camera-message {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            color: var(--text-muted);
-            text-align: center;
-            padding: 20px;
-        }
-        
-        .no-camera-message i {
-            font-size: 50px;
-            margin-bottom: 15px;
-            color: var(--primary-color);
         }
     </style>
 </head>
 <body>
-    <div class="particles" id="particles"></div>
-    
     <div class="container">
-        <header>
-            <h1><i class="fas fa-robot"></i> Sistema de Gestión de Productos</h1>
-            <p class="subtitle">Captura, escanea y gestiona tu inventario de forma futurista</p>
-        </header>
+        <h1>Visualizador de Fotos con Almacenamiento HTML</h1>
+        <p class="description">Sube tus fotos, visualízalas y guárdalas todas en un único archivo HTML</p>
         
-        <div class="app-container">
-            <!-- Sección de captura de fotos -->
-            <div class="card">
-                <h2><i class="fas fa-camera"></i> Captura de Imagen del Producto</h2>
-                <div class="camera-section">
-                    <div class="camera-container">
-                        <video id="camera-preview" autoplay playsinline></video>
-                        <div id="no-camera" class="no-camera-message">
-                            <i class="fas fa-camera-slash"></i>
-                            <p>La cámara no está disponible o no se ha iniciado</p>
-                        </div>
-                        <canvas id="camera-capture" class="hidden"></canvas>
-                    </div>
-                    <div class="camera-controls">
-                        <button id="start-camera" class="btn-primary"><i class="fas fa-play"></i> Iniciar Cámara</button>
-                        <button id="switch-camera" class="btn-accent"><i class="fas fa-sync-alt"></i> Cambiar Cámara</button>
-                        <button id="capture-photo" class="btn-success" disabled><i class="fas fa-camera"></i> Capturar Foto</button>
-                    </div>
-                    <div id="captured-image-container" class="hidden">
-                        <h3>Imagen Capturada:</h3>
-                        <img id="captured-image" class="captured-image" alt="Imagen capturada">
-                        <button id="retake-photo" class="btn-danger"><i class="fas fa-redo"></i> Volver a Tomar</button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Sección de escaneo de código -->
-            <div class="card">
-                <h2><i class="fas fa-barcode"></i> Escanear Código de Producto</h2>
-                <div class="scanner-section">
-                    <div class="scanner-container">
-                        <div id="scanner-preview"></div>
-                        <div id="no-scanner" class="no-camera-message">
-                            <i class="fas fa-qrcode"></i>
-                            <p>El escáner no está disponible o no se ha iniciado</p>
-                        </div>
-                        <div class="scanner-overlay hidden">
-                            <div class="scanner-line"></div>
-                        </div>
-                    </div>
-                    <div class="scanner-controls">
-                        <button id="start-scanner" class="btn-primary"><i class="fas fa-search"></i> Iniciar Escáner</button>
-                        <button id="stop-scanner" class="btn-danger" disabled><i class="fas fa-stop"></i> Detener Escáner</button>
-                    </div>
-                    <div class="form-group">
-                        <label for="product-code">Código del Producto:</label>
-                        <input type="text" id="product-code" placeholder="Código escaneado aparecerá aquí">
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Formulario de información del producto -->
-            <div class="card product-form">
-                <h2><i class="fas fa-edit"></i> Información del Producto</h2>
-                <div class="form-group">
-                    <label for="product-name">Nombre del Producto:</label>
-                    <input type="text" id="product-name" placeholder="Ingrese el nombre del producto">
-                </div>
-                <div class="form-group">
-                    <label for="product-description">Descripción:</label>
-                    <textarea id="product-description" rows="3" placeholder="Descripción del producto"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="wholesale-price">Precio por Mayor:</label>
-                    <input type="number" id="wholesale-price" step="0.01" placeholder="0.00">
-                </div>
-                <div class="form-group">
-                    <label for="retail-price">Precio de Venta:</label>
-                    <input type="number" id="retail-price" step="0.01" placeholder="0.00">
-                </div>
-                <div class="form-group" style="grid-column: 1 / -1; display: flex; gap: 15px;">
-                    <button id="save-product" class="btn-success"><i class="fas fa-save"></i> Guardar Producto</button>
-                    <button id="clear-form" class="btn-danger"><i class="fas fa-broom"></i> Limpiar Formulario</button>
-                </div>
-            </div>
-            
-            <!-- Lista de productos -->
-            <div class="card product-list">
-                <h2><i class="fas fa-boxes"></i> Lista de Productos</h2>
-                
-                <div class="search-container">
-                    <div class="search-box">
-                        <i class="fas fa-search"></i>
-                        <input type="text" id="search-product" placeholder="Buscar producto por nombre o código...">
-                    </div>
-                    <button id="clear-search" class="btn-accent"><i class="fas fa-times"></i> Limpiar</button>
-                </div>
-                
-                <table id="products-table">
-                    <thead>
-                        <tr>
-                            <th>Código</th>
-                            <th>Imagen</th>
-                            <th>Nombre</th>
-                            <th>Precio Mayor</th>
-                            <th>Precio Venta</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody id="products-list">
-                        <!-- Los productos se agregarán aquí dinámicamente -->
-                    </tbody>
-                </table>
-            </div>
+        <div class="upload-area" id="uploadArea">
+            <div class="upload-icon">📁</div>
+            <p class="upload-text">Arrastra tus fotos aquí o haz clic para seleccionar</p>
+            <button class="upload-btn">Seleccionar Fotos</button>
+            <p class="info-text">Puedes seleccionar hasta 1000 fotos al mismo tiempo</p>
+            <input type="file" id="fileInput" class="file-input" multiple accept="image/*">
         </div>
         
-        <!-- Botón de impresión -->
-        <div class="print-section">
-            <button id="print-list" class="btn-print"><i class="fas fa-print"></i> Imprimir Lista de Productos</button>
+        <div class="progress-container" id="progressContainer">
+            <div class="progress-bar">
+                <div class="progress" id="progressBar"></div>
+            </div>
+            <p id="progressText">Procesando fotos...</p>
         </div>
         
-        <footer>
-            <p>Sistema de Gestión de Productos Futurista &copy; 2023</p>
-        </footer>
+        <div class="counter" id="counter">0 fotos seleccionadas</div>
+        
+        <div class="controls">
+            <button class="download-btn" id="downloadBtn" disabled>Descargar Todas las Fotos (ZIP)</button>
+            <button class="save-html-btn" id="saveHtmlBtn" disabled>Guardar como HTML Único</button>
+            <button class="clear-btn" id="clearBtn">Limpiar Todas las Fotos</button>
+        </div>
+        
+        <div class="gallery" id="gallery">
+            <div class="empty-state" id="emptyState">
+                <i>📷</i>
+                <p>No hay fotos seleccionadas todavía</p>
+            </div>
+        </div>
     </div>
-    
+
     <!-- Modal para imagen ampliada -->
-    <div id="image-modal" class="modal">
-        <span class="close-modal">&times;</span>
-        <img class="modal-content" id="modal-image">
+    <div class="modal" id="imageModal">
+        <span class="modal-close" id="modalClose">&times;</span>
+        <div class="modal-nav">
+            <button class="nav-btn" id="prevBtn">&#10094;</button>
+            <button class="nav-btn" id="nextBtn">&#10095;</button>
+        </div>
+        <img class="modal-content" id="modalImage">
+        <div class="modal-info" id="modalInfo"></div>
     </div>
-    
-    <!-- Notificación -->
-    <div id="notification" class="notification"></div>
+
+    <div class="notification" id="notification">¡Descarga completada!</div>
 
     <script>
-        // Variables globales
-        let currentStream = null;
-        let currentFacingMode = 'environment'; // 'user' para frontal, 'environment' para trasera
-        let capturedImageData = null;
-        let scannerActive = false;
-        let products = JSON.parse(localStorage.getItem('products')) || [];
-
-        // Elementos DOM
-        const cameraPreview = document.getElementById('camera-preview');
-        const cameraCapture = document.getElementById('camera-capture');
-        const capturedImage = document.getElementById('captured-image');
-        const capturedImageContainer = document.getElementById('captured-image-container');
-        const startCameraBtn = document.getElementById('start-camera');
-        const switchCameraBtn = document.getElementById('switch-camera');
-        const capturePhotoBtn = document.getElementById('capture-photo');
-        const retakePhotoBtn = document.getElementById('retake-photo');
-        const startScannerBtn = document.getElementById('start-scanner');
-        const stopScannerBtn = document.getElementById('stop-scanner');
-        const productCodeInput = document.getElementById('product-code');
-        const productNameInput = document.getElementById('product-name');
-        const productDescriptionInput = document.getElementById('product-description');
-        const wholesalePriceInput = document.getElementById('wholesale-price');
-        const retailPriceInput = document.getElementById('retail-price');
-        const saveProductBtn = document.getElementById('save-product');
-        const clearFormBtn = document.getElementById('clear-form');
-        const productsList = document.getElementById('products-list');
-        const printListBtn = document.getElementById('print-list');
-        const notification = document.getElementById('notification');
-        const searchProductInput = document.getElementById('search-product');
-        const clearSearchBtn = document.getElementById('clear-search');
-        const imageModal = document.getElementById('image-modal');
-        const modalImage = document.getElementById('modal-image');
-        const closeModal = document.querySelector('.close-modal');
-        const noCameraMessage = document.getElementById('no-camera');
-        const noScannerMessage = document.getElementById('no-scanner');
-        const scannerOverlay = document.querySelector('.scanner-overlay');
-
-        // Inicialización
         document.addEventListener('DOMContentLoaded', function() {
-            createParticles();
-            loadProducts();
-            updateProductsTable();
+            const uploadArea = document.getElementById('uploadArea');
+            const fileInput = document.getElementById('fileInput');
+            const gallery = document.getElementById('gallery');
+            const emptyState = document.getElementById('emptyState');
+            const counter = document.getElementById('counter');
+            const progressContainer = document.getElementById('progressContainer');
+            const progressBar = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
+            const downloadBtn = document.getElementById('downloadBtn');
+            const saveHtmlBtn = document.getElementById('saveHtmlBtn');
+            const clearBtn = document.getElementById('clearBtn');
+            const notification = document.getElementById('notification');
             
-            // Event listeners
-            startCameraBtn.addEventListener('click', startCamera);
-            switchCameraBtn.addEventListener('click', switchCamera);
-            capturePhotoBtn.addEventListener('click', capturePhoto);
-            retakePhotoBtn.addEventListener('click', retakePhoto);
-            startScannerBtn.addEventListener('click', startScanner);
-            stopScannerBtn.addEventListener('click', stopScanner);
-            saveProductBtn.addEventListener('click', saveProduct);
-            clearFormBtn.addEventListener('click', clearForm);
-            printListBtn.addEventListener('click', printList);
-            searchProductInput.addEventListener('input', filterProducts);
-            clearSearchBtn.addEventListener('click', clearSearch);
-            capturedImage.addEventListener('click', openImageModal);
-            closeModal.addEventListener('click', closeImageModal);
-            window.addEventListener('click', function(event) {
-                if (event.target === imageModal) {
-                    closeImageModal();
+            // Elementos del modal
+            const imageModal = document.getElementById('imageModal');
+            const modalImage = document.getElementById('modalImage');
+            const modalInfo = document.getElementById('modalInfo');
+            const modalClose = document.getElementById('modalClose');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            let selectedFiles = [];
+            let currentImageIndex = 0;
+            const MAX_FILES = 1000;
+            
+            // Abrir selector de archivos al hacer clic en el área de carga
+            uploadArea.addEventListener('click', function() {
+                fileInput.click();
+            });
+            
+            // Manejar la selección de archivos
+            fileInput.addEventListener('change', function(e) {
+                handleFiles(e.target.files);
+            });
+            
+            // Manejar el arrastre de archivos
+            uploadArea.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                uploadArea.classList.add('drag-over');
+            });
+            
+            uploadArea.addEventListener('dragleave', function() {
+                uploadArea.classList.remove('drag-over');
+            });
+            
+            uploadArea.addEventListener('drop', function(e) {
+                e.preventDefault();
+                uploadArea.classList.remove('drag-over');
+                
+                if (e.dataTransfer.files.length) {
+                    handleFiles(e.dataTransfer.files);
                 }
             });
             
-            // Mostrar productos guardados al cargar la página
-            if (products.length > 0) {
-                showNotification(`Se cargaron ${products.length} productos del almacenamiento local`, 'success');
-            }
-        });
-
-        // Crear partículas para el fondo
-        function createParticles() {
-            const particlesContainer = document.getElementById('particles');
-            const particleCount = 30;
+            // Botón para descargar todas las imágenes
+            downloadBtn.addEventListener('click', function() {
+                downloadAllImages();
+            });
             
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('particle');
-                
-                const size = Math.random() * 5 + 2;
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
-                
-                particle.style.left = `${Math.random() * 100}vw`;
-                particle.style.top = `${Math.random() * 100}vh`;
-                
-                particle.style.animationDuration = `${Math.random() * 20 + 10}s`;
-                particle.style.animationDelay = `${Math.random() * 5}s`;
-                
-                particlesContainer.appendChild(particle);
-            }
-        }
-
-        // Funciones de cámara
-        async function startCamera() {
-            try {
-                if (currentStream) {
-                    stopCamera();
+            // Botón para guardar como HTML único
+            saveHtmlBtn.addEventListener('click', function() {
+                saveAsSingleHTML();
+            });
+            
+            // Botón para limpiar todas las imágenes
+            clearBtn.addEventListener('click', function() {
+                selectedFiles = [];
+                updateCounter();
+                renderGallery();
+            });
+            
+            // Cerrar modal
+            modalClose.addEventListener('click', function() {
+                imageModal.style.display = 'none';
+            });
+            
+            // Navegación en el modal
+            prevBtn.addEventListener('click', function() {
+                navigateModal(-1);
+            });
+            
+            nextBtn.addEventListener('click', function() {
+                navigateModal(1);
+            });
+            
+            // Cerrar modal al hacer clic fuera de la imagen
+            imageModal.addEventListener('click', function(e) {
+                if (e.target === imageModal) {
+                    imageModal.style.display = 'none';
                 }
-                
-                const constraints = {
-                    video: { 
-                        facingMode: currentFacingMode
-                    },
-                    audio: false
-                };
-                
-                currentStream = await navigator.mediaDevices.getUserMedia(constraints);
-                cameraPreview.srcObject = currentStream;
-                
-                // Ocultar mensaje de cámara no disponible
-                noCameraMessage.classList.add('hidden');
-                cameraPreview.classList.remove('hidden');
-                
-                startCameraBtn.disabled = true;
-                capturePhotoBtn.disabled = false;
-                switchCameraBtn.disabled = false;
-                
-                showNotification('Cámara iniciada correctamente', 'success');
-            } catch (error) {
-                console.error('Error al acceder a la cámara:', error);
-                showNotification('Error al acceder a la cámara. Asegúrese de permitir el acceso.', 'error');
-                
-                // Mostrar mensaje de cámara no disponible
-                noCameraMessage.classList.remove('hidden');
-                cameraPreview.classList.add('hidden');
-            }
-        }
-
-        function stopCamera() {
-            if (currentStream) {
-                currentStream.getTracks().forEach(track => track.stop());
-                currentStream = null;
-            }
+            });
             
-            cameraPreview.srcObject = null;
-            startCameraBtn.disabled = false;
-            capturePhotoBtn.disabled = true;
-            switchCameraBtn.disabled = true;
-            
-            // Mostrar mensaje de cámara no disponible
-            noCameraMessage.classList.remove('hidden');
-            cameraPreview.classList.add('hidden');
-        }
-
-        function switchCamera() {
-            currentFacingMode = currentFacingMode === 'environment' ? 'user' : 'environment';
-            startCamera();
-        }
-
-        function capturePhoto() {
-            const context = cameraCapture.getContext('2d');
-            cameraCapture.width = cameraPreview.videoWidth;
-            cameraCapture.height = cameraPreview.videoHeight;
-            context.drawImage(cameraPreview, 0, 0, cameraCapture.width, cameraCapture.height);
-            
-            capturedImageData = cameraCapture.toDataURL('image/png');
-            capturedImage.src = capturedImageData;
-            capturedImageContainer.classList.remove('hidden');
-            
-            showNotification('Foto capturada correctamente', 'success');
-        }
-
-        function retakePhoto() {
-            capturedImageContainer.classList.add('hidden');
-            capturedImageData = null;
-        }
-
-        // Funciones de escáner
-        function startScanner() {
-            if (scannerActive) return;
-            
-            scannerActive = true;
-            startScannerBtn.disabled = true;
-            stopScannerBtn.disabled = false;
-            
-            // Ocultar mensaje de escáner no disponible
-            noScannerMessage.classList.add('hidden');
-            scannerOverlay.classList.remove('hidden');
-            
-            // Configurar Quagga para escanear códigos de barras
-            Quagga.init({
-                inputStream: {
-                    name: "Live",
-                    type: "LiveStream",
-                    target: document.querySelector('#scanner-preview'),
-                    constraints: {
-                        width: 640,
-                        height: 480,
-                        facingMode: "environment"
+            // Navegación con teclado
+            document.addEventListener('keydown', function(e) {
+                if (imageModal.style.display === 'flex') {
+                    if (e.key === 'ArrowLeft') {
+                        navigateModal(-1);
+                    } else if (e.key === 'ArrowRight') {
+                        navigateModal(1);
+                    } else if (e.key === 'Escape') {
+                        imageModal.style.display = 'none';
                     }
-                },
-                decoder: {
-                    readers: [
-                        "code_128_reader",
-                        "ean_reader",
-                        "ean_8_reader",
-                        "code_39_reader",
-                        "upc_reader",
-                        "upc_e_reader"
-                    ]
-                },
-                locator: {
-                    patchSize: "medium",
-                    halfSample: true
-                },
-                locate: true,
-                numOfWorkers: 2
-            }, function(err) {
-                if (err) {
-                    console.error('Error al iniciar Quagga:', err);
-                    showNotification('Error al iniciar el escáner. Intente de nuevo.', 'error');
-                    stopScanner();
+                }
+            });
+            
+            // Función para procesar los archivos seleccionados
+            function handleFiles(files) {
+                const newFiles = Array.from(files);
+                
+                // Verificar si excede el límite
+                if (selectedFiles.length + newFiles.length > MAX_FILES) {
+                    alert(`Solo puedes subir hasta ${MAX_FILES} fotos. Ya tienes ${selectedFiles.length} seleccionadas.`);
                     return;
                 }
                 
-                Quagga.start();
-                showNotification('Escáner iniciado. Apunte la cámara a un código de barras.', 'success');
-            });
-
-            Quagga.onDetected(function(result) {
-                const code = result.codeResult.code;
-                productCodeInput.value = code;
-                showNotification(`Código escaneado: ${code}`, 'success');
+                // Agregar nuevos archivos
+                selectedFiles = [...selectedFiles, ...newFiles];
                 
-                // Detener el escáner después de detectar un código
-                stopScanner();
-            });
-        }
-
-        function stopScanner() {
-            if (!scannerActive) return;
-            
-            Quagga.stop();
-            scannerActive = false;
-            startScannerBtn.disabled = false;
-            stopScannerBtn.disabled = true;
-            
-            // Mostrar mensaje de escáner no disponible
-            noScannerMessage.classList.remove('hidden');
-            scannerOverlay.classList.add('hidden');
-        }
-
-        // Funciones de gestión de productos
-        function saveProduct() {
-            const code = productCodeInput.value.trim();
-            const name = productNameInput.value.trim();
-            const description = productDescriptionInput.value.trim();
-            const wholesalePrice = parseFloat(wholesalePriceInput.value) || 0;
-            const retailPrice = parseFloat(retailPriceInput.value) || 0;
-            
-            if (!code) {
-                showNotification('Por favor, escanee un código de producto', 'error');
-                return;
-            }
-            
-            if (!name) {
-                showNotification('Por favor, ingrese un nombre para el producto', 'error');
-                return;
-            }
-            
-            // Verificar si el producto ya existe
-            const existingIndex = products.findIndex(p => p.code === code);
-            
-            const product = {
-                code,
-                name,
-                description,
-                wholesalePrice,
-                retailPrice,
-                image: capturedImageData,
-                timestamp: new Date().toISOString()
-            };
-            
-            if (existingIndex >= 0) {
-                // Actualizar producto existente
-                products[existingIndex] = product;
-                showNotification('Producto actualizado correctamente', 'success');
-            } else {
-                // Agregar nuevo producto
-                products.push(product);
-                showNotification('Producto guardado correctamente', 'success');
-            }
-            
-            // Guardar en localStorage
-            localStorage.setItem('products', JSON.stringify(products));
-            
-            // Actualizar la tabla
-            updateProductsTable();
-            
-            // Limpiar formulario
-            clearForm();
-        }
-
-        function clearForm() {
-            productCodeInput.value = '';
-            productNameInput.value = '';
-            productDescriptionInput.value = '';
-            wholesalePriceInput.value = '';
-            retailPriceInput.value = '';
-            capturedImageContainer.classList.add('hidden');
-            capturedImageData = null;
-        }
-
-        function loadProducts() {
-            // Los productos ya se cargan al inicio desde localStorage
-        }
-
-        function updateProductsTable(filteredProducts = null) {
-            const productsToShow = filteredProducts || products;
-            productsList.innerHTML = '';
-            
-            if (productsToShow.length === 0) {
-                productsList.innerHTML = '<tr><td colspan="6" style="text-align: center;">No hay productos registrados</td></tr>';
-                return;
-            }
-            
-            productsToShow.forEach(product => {
-                const row = document.createElement('tr');
+                // Actualizar contador
+                updateCounter();
                 
-                // Imagen pequeña o placeholder
-                let imageHtml = '<div style="width: 60px; height: 60px; background: rgba(10, 15, 30, 0.7); display: flex; align-items: center; justify-content: center; border-radius: 8px; color: var(--text-muted);"><i class="fas fa-image"></i></div>';
-                if (product.image) {
-                    imageHtml = `<img src="${product.image}" alt="${product.name}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px; cursor: pointer;" onclick="openProductImage('${product.code}')">`;
+                // Mostrar progreso
+                showProgress();
+                
+                // Procesar archivos con un pequeño retraso para simular procesamiento
+                setTimeout(() => {
+                    renderGallery();
+                    hideProgress();
+                }, 1000);
+            }
+            
+            // Actualizar el contador de archivos
+            function updateCounter() {
+                counter.textContent = `${selectedFiles.length} fotos seleccionadas`;
+                
+                // Habilitar o deshabilitar los botones
+                if (selectedFiles.length > 0) {
+                    downloadBtn.disabled = false;
+                    saveHtmlBtn.disabled = false;
+                } else {
+                    downloadBtn.disabled = true;
+                    saveHtmlBtn.disabled = true;
+                }
+            }
+            
+            // Mostrar barra de progreso
+            function showProgress() {
+                progressContainer.style.display = 'block';
+                progressBar.style.width = '0%';
+                progressText.textContent = 'Procesando fotos...';
+                
+                // Simular progreso
+                let width = 0;
+                const interval = setInterval(() => {
+                    if (width >= 100) {
+                        clearInterval(interval);
+                    } else {
+                        width += 5;
+                        progressBar.style.width = width + '%';
+                    }
+                }, 50);
+            }
+            
+            // Ocultar barra de progreso
+            function hideProgress() {
+                setTimeout(() => {
+                    progressContainer.style.display = 'none';
+                }, 500);
+            }
+            
+            // Renderizar la galería
+            function renderGallery() {
+                // Ocultar estado vacío si hay archivos
+                if (selectedFiles.length > 0) {
+                    emptyState.style.display = 'none';
+                } else {
+                    emptyState.style.display = 'block';
                 }
                 
-                row.innerHTML = `
-                    <td>${product.code}</td>
-                    <td>${imageHtml}</td>
-                    <td>${product.name}</td>
-                    <td>$${product.wholesalePrice.toFixed(2)}</td>
-                    <td>$${product.retailPrice.toFixed(2)}</td>
-                    <td class="actions">
-                        <button class="btn-primary btn-sm" onclick="editProduct('${product.code}')"><i class="fas fa-edit"></i></button>
-                        <button class="btn-danger btn-sm" onclick="deleteProduct('${product.code}')"><i class="fas fa-trash"></i></button>
-                    </td>
-                `;
+                // Limpiar galería
+                gallery.innerHTML = '';
+                if (selectedFiles.length === 0) {
+                    gallery.appendChild(emptyState);
+                    return;
+                }
                 
-                productsList.appendChild(row);
-            });
-        }
-
-        function filterProducts() {
-            const searchTerm = searchProductInput.value.toLowerCase();
-            if (searchTerm === '') {
-                updateProductsTable();
-                return;
+                // Crear elementos para cada foto
+                selectedFiles.forEach((file, index) => {
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(e) {
+                        const photoItem = document.createElement('div');
+                        photoItem.className = 'photo-item';
+                        
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        img.alt = file.name;
+                        
+                        // Hacer clic para ampliar
+                        img.addEventListener('click', function() {
+                            openModal(index);
+                        });
+                        
+                        const photoInfo = document.createElement('div');
+                        photoInfo.className = 'photo-info';
+                        photoInfo.textContent = file.name.length > 20 ? file.name.substring(0, 20) + '...' : file.name;
+                        
+                        const photoActions = document.createElement('div');
+                        photoActions.className = 'photo-actions';
+                        
+                        const downloadSingleBtn = document.createElement('button');
+                        downloadSingleBtn.className = 'action-btn download-single-btn';
+                        downloadSingleBtn.innerHTML = '⤓';
+                        downloadSingleBtn.title = 'Descargar esta imagen';
+                        downloadSingleBtn.addEventListener('click', function(e) {
+                            e.stopPropagation();
+                            downloadSingleImage(file);
+                        });
+                        
+                        const deleteBtn = document.createElement('button');
+                        deleteBtn.className = 'action-btn delete-btn';
+                        deleteBtn.innerHTML = '×';
+                        deleteBtn.title = 'Eliminar esta imagen';
+                        deleteBtn.addEventListener('click', function(e) {
+                            e.stopPropagation();
+                            deletePhoto(index);
+                        });
+                        
+                        photoActions.appendChild(downloadSingleBtn);
+                        photoActions.appendChild(deleteBtn);
+                        
+                        photoItem.appendChild(img);
+                        photoItem.appendChild(photoInfo);
+                        photoItem.appendChild(photoActions);
+                        
+                        gallery.appendChild(photoItem);
+                    };
+                    
+                    reader.readAsDataURL(file);
+                });
             }
             
-            const filteredProducts = products.filter(product => 
-                product.name.toLowerCase().includes(searchTerm) || 
-                product.code.toLowerCase().includes(searchTerm)
-            );
-            
-            updateProductsTable(filteredProducts);
-        }
-
-        function clearSearch() {
-            searchProductInput.value = '';
-            updateProductsTable();
-        }
-
-        function editProduct(code) {
-            const product = products.find(p => p.code === code);
-            if (!product) return;
-            
-            productCodeInput.value = product.code;
-            productNameInput.value = product.name;
-            productDescriptionInput.value = product.description;
-            wholesalePriceInput.value = product.wholesalePrice;
-            retailPriceInput.value = product.retailPrice;
-            
-            if (product.image) {
-                capturedImage.src = product.image;
-                capturedImageContainer.classList.remove('hidden');
-                capturedImageData = product.image;
+            // Eliminar una foto
+            function deletePhoto(index) {
+                selectedFiles.splice(index, 1);
+                updateCounter();
+                renderGallery();
             }
             
-            // Desplazar hacia el formulario
-            document.querySelector('.product-form').scrollIntoView({ behavior: 'smooth' });
+            // Abrir modal con imagen ampliada
+            function openModal(index) {
+                currentImageIndex = index;
+                const file = selectedFiles[index];
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    modalImage.src = e.target.result;
+                    modalInfo.textContent = `${file.name} (${index + 1} de ${selectedFiles.length})`;
+                    imageModal.style.display = 'flex';
+                };
+                
+                reader.readAsDataURL(file);
+            }
             
-            showNotification(`Editando producto: ${product.name}`, 'success');
+            // Navegar entre imágenes en el modal
+            function navigateModal(direction) {
+                currentImageIndex += direction;
+                
+                // Circular navigation
+                if (currentImageIndex >= selectedFiles.length) {
+                    currentImageIndex = 0;
+                } else if (currentImageIndex < 0) {
+                    currentImageIndex = selectedFiles.length - 1;
+                }
+                
+                openModal(currentImageIndex);
+            }
+            
+            // Descargar una imagen individual
+            function downloadSingleImage(file) {
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(file);
+                link.download = file.name;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                showNotification(`Imagen "${file.name}" descargada`);
+            }
+            
+            // Descargar todas las imágenes como ZIP
+            function downloadAllImages() {
+                if (selectedFiles.length === 0) return;
+                
+                showNotification("Preparando descarga...");
+                
+                // Usar JSZip si está disponible, de lo contrario descargar individualmente
+                if (typeof JSZip !== 'undefined') {
+                    const zip = new JSZip();
+                    let processed = 0;
+                    
+                    selectedFiles.forEach((file, index) => {
+                        const reader = new FileReader();
+                        
+                        reader.onload = function(e) {
+                            // Agregar archivo al ZIP
+                            zip.file(file.name, e.target.result.split(',')[1], {base64: true});
+                            
+                            processed++;
+                            
+                            // Cuando se procesen todos los archivos, generar el ZIP
+                            if (processed === selectedFiles.length) {
+                                zip.generateAsync({type: "blob"})
+                                .then(function(content) {
+                                    saveAs(content, "mis_fotos.zip");
+                                    showNotification("¡Descarga completada!");
+                                });
+                            }
+                        };
+                        
+                        reader.readAsDataURL(file);
+                    });
+                } else {
+                    // Descargar individualmente si JSZip no está disponible
+                    selectedFiles.forEach((file, index) => {
+                        setTimeout(() => {
+                            downloadSingleImage(file);
+                        }, index * 300);
+                    });
+                    showNotification("Descargando imágenes individualmente...");
+                }
+            }
+            
+            // Guardar todo como un único archivo HTML
+            function saveAsSingleHTML() {
+                if (selectedFiles.length === 0) return;
+                
+                showNotification("Generando archivo HTML...");
+                
+                // Crear el contenido HTML con todas las imágenes
+                let htmlContent = `<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Galería de Fotos</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
-        function deleteProduct(code) {
-            const product = products.find(p => p.code === code);
-            if (!product) return;
-            
-            if (confirm(`¿Está seguro de que desea eliminar el producto "${product.name}"?`)) {
-                products = products.filter(p => p.code !== code);
-                localStorage.setItem('products', JSON.stringify(products));
-                updateProductsTable();
-                showNotification('Producto eliminado correctamente', 'success');
+        
+        body {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .photo-item {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            aspect-ratio: 1;
+        }
+        
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .photo-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 8px;
+            font-size: 12px;
+        }
+        
+        .counter {
+            text-align: center;
+            margin: 20px 0;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        @media (max-width: 768px) {
+            .gallery {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             }
         }
-
-        function printList() {
-            window.print();
-        }
-
-        function openImageModal() {
-            if (capturedImageData) {
-                modalImage.src = capturedImageData;
-                imageModal.style.display = 'flex';
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Mi Galería de Fotos</h1>
+        <div class="counter">${selectedFiles.length} fotos en la galería</div>
+        <div class="gallery">`;
+                
+                // Agregar cada imagen al HTML
+                selectedFiles.forEach((file, index) => {
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(e) {
+                        htmlContent += `
+            <div class="photo-item">
+                <img src="${e.target.result}" alt="${file.name}">
+                <div class="photo-info">${file.name}</div>
+            </div>`;
+                        
+                        // Cuando se procesen todas las imágenes, completar el HTML y descargar
+                        if (index === selectedFiles.length - 1) {
+                            htmlContent += `
+        </div>
+    </div>
+</body>
+</html>`;
+                            
+                            // Crear y descargar el archivo HTML
+                            const blob = new Blob([htmlContent], {type: 'text/html'});
+                            const url = URL.createObjectURL(blob);
+                            const a = document.createElement('a');
+                            a.href = url;
+                            a.download = 'mi_galeria_fotos.html';
+                            document.body.appendChild(a);
+                            a.click();
+                            document.body.removeChild(a);
+                            URL.revokeObjectURL(url);
+                            
+                            showNotification("¡Archivo HTML guardado!");
+                        }
+                    };
+                    
+                    reader.readAsDataURL(file);
+                });
             }
-        }
-
-        function closeImageModal() {
-            imageModal.style.display = 'none';
-        }
-
-        function openProductImage(code) {
-            const product = products.find(p => p.code === code);
-            if (product && product.image) {
-                modalImage.src = product.image;
-                imageModal.style.display = 'flex';
+            
+            // Mostrar notificación
+            function showNotification(message) {
+                notification.textContent = message;
+                notification.classList.add('show');
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 3000);
             }
-        }
-
-        function showNotification(message, type) {
-            notification.textContent = message;
-            notification.className = `notification ${type}`;
-            notification.classList.add('show');
-            
-            // Añadir icono según el tipo
-            const icon = type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle';
-            notification.innerHTML = `<i class="fas ${icon}"></i> ${message}`;
-            
-            setTimeout(() => {
-                notification.classList.remove('show');
-            }, 3000);
-        }
-
-        // Hacer las funciones disponibles globalmente para los botones
-        window.editProduct = editProduct;
-        window.deleteProduct = deleteProduct;
-        window.openProductImage = openProductImage;
+        });
     </script>
 </body>
 </html>
